@@ -1,7 +1,6 @@
 
 package Beans;
 
-import java.util.Date;
 
 /**
  *
@@ -10,7 +9,7 @@ import java.util.Date;
 public class OrdenDeServicio {
      private int idOrden;
     //formato: YYYY-MM-DD, new SimpleDateFormat("dd-MM-yyyy").format(objeto creado con Date))
-    private Date date;
+    private String date;
     private String nombreCliente;
     private String nombreMecanico;
     private String placaMoto;
@@ -22,7 +21,7 @@ public class OrdenDeServicio {
     private String autorizacionRuta;
     private int idEstado;
 
-    public OrdenDeServicio(Date date, String nombreCliente, String nombreMecanico, String placaMoto, String motivo, String descripcionDiagnostico, String documentos, String anticipo, double valorAnticipo, String autorizacionRuta, int idEstado) {
+    public OrdenDeServicio(String date, String nombreCliente, String nombreMecanico, String placaMoto, String motivo, String descripcionDiagnostico, String documentos, String anticipo, double valorAnticipo, String autorizacionRuta, int idEstado) {
         this.date = date;
         this.nombreCliente = nombreCliente;
         this.nombreMecanico = nombreMecanico;
@@ -37,7 +36,7 @@ public class OrdenDeServicio {
     }
     
 
-    public OrdenDeServicio(int idOrden, Date date, String nombreCliente, String nombreMecanico, String placaMoto, String motivo, String descripcionDiagnostico, String documentos, String anticipo, double valorAnticipo, String autorizacionRuta, int idEstado) {
+    public OrdenDeServicio(int idOrden, String date, String nombreCliente, String nombreMecanico, String placaMoto, String motivo, String descripcionDiagnostico, String documentos, String anticipo, double valorAnticipo, String autorizacionRuta, int idEstado) {
         this.idOrden = idOrden;
         this.date = date;
         this.nombreCliente = nombreCliente;
@@ -66,11 +65,11 @@ public class OrdenDeServicio {
         this.idOrden = idOrden;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

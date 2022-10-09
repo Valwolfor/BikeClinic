@@ -34,12 +34,8 @@ public class ServletMotivoRegistro extends HttpServlet {
 
         OrdenController estadoC = new OrdenController();
 
-        String date2 = request.getParameter("fecha");
-        String formatPattern = "YYYY/MM/dd";
-        SimpleDateFormat formatter = new SimpleDateFormat(formatPattern);
-        date2= formatter.format(LocalDateTime.now());
-        try {
-            Date date = formatter.parse(date2);//puede fallar.
+        
+            String date = request.getParameter("fecha");//puede fallar.
 
             String nombreCliente = request.getParameter("cliente");
             String nombreMecanico = request.getParameter("mecanico");
@@ -58,9 +54,7 @@ public class ServletMotivoRegistro extends HttpServlet {
             out.println(registroStr);
             out.flush();
             out.close();
-        } catch (ParseException ex) {
-            Logger.getLogger(ServletMotivoRegistro.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
     }
 
     @Override

@@ -31,7 +31,7 @@ public class OrdenController implements IOrdenController{
             //List para guardar objeticos :D
             while (rs.next()) {
                 int idOrden = rs.getInt("idOrden");
-                Date date = rs.getDate("fecha");
+                String date = rs.getString("fecha");
                 String nombreCliente = rs.getString("Cliente");
                 String nombreMecanico = rs.getString("Mecánico");
                 String placaMoto = rs.getString("moto");
@@ -61,11 +61,11 @@ public class OrdenController implements IOrdenController{
     }
 
     @Override
-    public String registrarOrden(Date date, String nombreCliente, String nombreMecanico, String placaMoto, String motivo, String descripcionDiagnostico, String documentos, String anticipo, double valorAnticipo, String autorizacionRuta, int idEstado) {
+    public String registrarOrden(String date, String nombreCliente, String nombreMecanico, String placaMoto, String motivo, String descripcionDiagnostico, String documentos, String anticipo, double valorAnticipo, String autorizacionRuta, int idEstado) {
         
         Gson gson = new Gson();
         DBConnection conn = new DBConnection();
-        String sql = "INSERT into Orden_servicios  (fecha, cliente, mecanico, moto, documentos, valorAnticipo, descripcionDiagnostico, estado, autorizacionRuta, anticipo) VALUES('" + date + "', '" + nombreCliente + "', '" + nombreMecanico + "', '" + placaMoto + "', '" + documentos + "', '" + valorAnticipo + "', '" + descripcionDiagnostico + "', '" + idEstado + "', '" + autorizacionRuta + "', '" + anticipo + "')";
+        String sql = "INSERT into Orden_servicios  (fecha, cliente, mecanico, moto, documentos, valorAnticipo, descripcionDiagnostico, estado, autorizacionRuta, anticipo) VALUES('" + date + "', '" + nombreCliente + "', '" + nombreMecanico + "', '" + placaMoto + "', '" + documentos + "', '" + valorAnticipo + "', '" + motivo + "', '" + "', '" + idEstado + "', '" + autorizacionRuta + "', '" + anticipo + "')";
         try {
             Statement st = conn.conectar().createStatement();
             st.executeUpdate(sql);

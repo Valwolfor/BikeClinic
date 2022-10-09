@@ -520,12 +520,12 @@ function registrarMotivo() {
     let fecha = new Date().getFullYear();
     fecha += "-" + new Date().getMonth();
     fecha += "-" + new Date().getDate();
-    let cliente = idClienteO;
+    let cliente = 123455555;//idClienteO;
     let mecanico = document.getElementById('Mecanico').value;
-    let moto = placaMotoO;
-    let motivo = $("#Documento").val();
+    let moto = ""//placaMotoO;
+    let motivo = $("#motivote").val();
     let descripcionDiagnostico = document.getElementById('Dmotivo').value;
-//    let motivo = document.getElementById('Motivo').value;
+
     let documentos = (document.querySelector('input[value=Licencia-de-Tránsito]:checked') ? "Licencia de Tránsito" : null);
     documentos += (document.querySelector('input[value=Soat]:checked') ? ", Soat" : null);
     documentos += (document.querySelector('input[value=Tecnomecánica]:checked') ? ", Tecnomecánica" : null);
