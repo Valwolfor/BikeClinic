@@ -23,7 +23,7 @@ public class ProductoController implements IProductoController {
         DBConnection conn = new DBConnection();
 
         //Consulta para setear.INSERT. ID no se pasa porque es autoincremental
-        String sql = "INSERT INTO productos(nombre, valorProducto) values('" + nombre + "', " + valorProducto + ")";
+        String sql = "INSERT INTO Productos(nombre, valorProducto) values('" + nombre + "', " + valorProducto + ")";
 
         try {
             Statement st = conn.conectar().createStatement();
@@ -52,7 +52,7 @@ public class ProductoController implements IProductoController {
         //Para los Json
         Gson gson = new Gson();
         DBConnection conn = new DBConnection();
-        String sql = "SELECT * FROM productos";
+        String sql = "SELECT * FROM Productos";
 
         List<String> listaProductos = new ArrayList<>();
         try {
@@ -84,7 +84,7 @@ public class ProductoController implements IProductoController {
     public String actualizarProducto(int idProducto, String nombre, double valorProducto) {
 
         DBConnection conn = new DBConnection();
-        String sql = "UPDATE productos set nombre= '" + nombre + "', valorProducto = " + valorProducto + "WHERE idProducto = " + idProducto;
+        String sql = "UPDATE Productos set nombre= '" + nombre + "', valorProducto = " + valorProducto + "WHERE idProducto = " + idProducto;
         try {
             Statement st = conn.conectar().createStatement();
             st.executeUpdate(sql);

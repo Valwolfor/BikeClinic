@@ -29,7 +29,13 @@ $(document).ready(function () {
 
     });
     
-    $("#flexRadioIndicadoresN").change( function (event) {
+    $("#btnReMotivo").click(function (event) {
+        event.preventDefault();
+        registrarMotivo();
+
+    });
+    //para decrpción indicadores
+    $("#flexRadioIndicadoresN").change(function (event) {
         event.preventDefault();
         let indicadores = document.querySelector('input[name=flexRadioIndicadores]:checked').value;
         if (indicadores !== 'No apto') {
@@ -42,8 +48,8 @@ $(document).ready(function () {
             $("#alertDesc-estado").removeClass("d-none");
         }
     });
-    
-    $("#flexRadioIndicadoresA").change( function (event) {
+
+    $("#flexRadioIndicadoresA").change(function (event) {
         event.preventDefault();
         let indicadores = document.querySelector('input[name=flexRadioIndicadores]:checked').value;
         if (indicadores !== 'No apto') {
@@ -56,7 +62,6 @@ $(document).ready(function () {
             $("#alertDesc-estado").removeClass("d-none");
         }
     });
-    
 });
 
 //ok js, Validado
@@ -234,7 +239,6 @@ function pasarPestañaCliente() {
     $("#nav-moto").addClass("show");
     $("#nav-moto").addClass("active");
 }
-
 //ZONA de moto
 //Funciona validado
 function validarMoto() {
@@ -392,26 +396,17 @@ function mostrarMecanicos(listaMecanicos) {
 function registrarEstado() {
 
     let indicadores = document.querySelector('input[name=flexRadioIndicadores]:checked').value;
-    desIndicadores;
-
-//    if (indicadores === 'No apto') {
-//        $("#DescripcionInd").prop('disabled', false);
-//        desIndicadores = $("#DescripcionInd").val();
-//        $("#alertDesc-estado").removeClass("d-none");
-//    } else {
-//        desIndicadores = null;
-//    }
-
+    
     let aceite = document.querySelector('input[name=flexRadioAceite]:checked').value;
     let nivelAceite = document.querySelector('input[name=flexRadioAceiteNivel]:checked').value;
     let liquidoFrenos = document.querySelector('input[name=flexRadioLFrenos]:checked').value;
     let liquidoEmbrague = document.querySelector('input[name=flexRadioLEmbrague]:checked').value;
     let liquidoRefrigerante = document.querySelector('input[name=flexRadioLRefrigerante]:checked').value;
-    
-    let lucesAptas = (document.querySelector('input[value=Farola]:checked') ? document.querySelector('input[value=Farola]:checked').value: null);
-    lucesAptas += (document.querySelector('input[value=Stop]:checked') ? ", " + document.querySelector('input[value=Stop]:checked').value: null);
-    lucesAptas += (document.querySelector('input[value=Direcionales]:checked') ? ", " + document.querySelector('input[value=Direcionales]:checked').value: null);
-    lucesAptas += (document.querySelector('input[value=Auxiliares]:checked') ? ", " + document.querySelector('input[value=Auxiliares]:checked').value: null);
+
+    let lucesAptas = (document.querySelector('input[value=Farola]:checked') ? document.querySelector('input[value=Farola]:checked').value : null);
+    lucesAptas += (document.querySelector('input[value=Stop]:checked') ? ", " + document.querySelector('input[value=Stop]:checked').value : null);
+    lucesAptas += (document.querySelector('input[value=Direcionales]:checked') ? ", " + document.querySelector('input[value=Direcionales]:checked').value : null);
+    lucesAptas += (document.querySelector('input[value=Auxiliares]:checked') ? ", " + document.querySelector('input[value=Auxiliares]:checked').value : null);
 
     let espejos = document.querySelector('input[name=flexRadioEspejo]:checked').value;
     let claxon = document.querySelector('input[name=flexRadioClaxon]:checked').value;
@@ -516,70 +511,94 @@ function pasarPestañaEstado() {
     $("#nav-motivo").addClass("show");
     $("#nav-motivo").addClass("active");
 }
- 
- 
- EsTOY AQUIIIIIII!!!
+
 //ZONA ORDEN de servicio
-//MOTIVO 
+//MOTIVO  validar y back
 function registrarMotivo() {
 
     //idOrden autogenera Se debe obtener después
-    fecha = new Date().getUTCFullYear();
-    fecha += "-" + new Date().getUTCMonth();
-    fecha += "-" + new Date().getUTCDate();
+    let fecha = new Date().getFullYear();
+    fecha += "-" + new Date().getMonth();
+    fecha += "-" + new Date().getDate();
     let cliente = idClienteO;
     let mecanico = document.getElementById('Mecanico').value;
     let moto = placaMotoO;
-    let motivo = document.getElementById('Motivo').value;
-    let documentos = document.querySelector('input[value=Farola]:checked').value;
-    documentos += ", " + document.querySelector('#inlineCheckbox2');
-    documentos += ", " + document.querySelector('#inlineCheckbox3');
-    let anticipo = document.getElementById("flexSwitchCheckAnticipo").value;
-
-    let valorAnticipo;
-    if (anticipo === 'Sí') {
-        $("#valAnticipo").prop('disabled', false);
-        valorAnticipo = $("#valAnticipo").val();
-    } else {
-        anticipo = "No";
-        valorAnticipo = 0;
-    }
-    ;
-
-    let autorizacionRuta = document.getElementById("flexSwitchCheckRuta").value;
-
-    if (autorizacionRuta === 'Sí') {
-    } else {
-        autorizacionRuta = "No";
-    }
-    ;
-
-    let descripcionDiagnostico = $("#Dmotivo").val();
-    let estado = estadoO;
+    let motivo = $("#Documento").val();
+    let descripcionDiagnostico = document.getElementById('Dmotivo').value;
+//    let motivo = document.getElementById('Motivo').value;
+    let documentos = (document.querySelector('input[value=Licencia-de-Tránsito]:checked') ? "Licencia de Tránsito" : null);
+    documentos += (document.querySelector('input[value=Soat]:checked') ? ", Soat" : null);
+    documentos += (document.querySelector('input[value=Tecnomecánica]:checked') ? ", Tecnomecánica" : null);
+    let autorizacionRuta = (document.querySelector('input[value=ruta') ? "Sí" : "No");
+    let anticipo = (document.querySelector('input[value=anticipo') ? "Sí" : "No");
+    let valorAnticipo = $("#valAnticipo").val();
+    let estado = 10;//cambiar estadoO
 
     $.ajax({
         type: "GET",
         dataType: "html",
-        url: "./ServletMotoRegistro",
+        url: "./ServletMotivoRegistro",
         data: $.param({
-            placaMoto: placaMoto,
-            idMotor: idMotor,
-            idChasis: idChasis,
-            marca: marca,
-            modelo: modelo,
-            anioRegistro: anioRegistro,
-            Clientes_idCliente: Clientes_idCliente
+            fecha: fecha,
+            cliente: cliente,
+            mecanico: mecanico,
+            moto: moto,
+            motivo: motivo,
+            descripcionDiagnostico: descripcionDiagnostico,
+            documentos: documentos,
+            autorizacionRuta: autorizacionRuta,
+            anticipo: anticipo,
+            valorAnticipo: valorAnticipo,
+            estado: estado
         }),
         success: function (result) {
             let parsedResult = JSON.parse(result);
             if (parsedResult !== false) {
-                pasarPestañaMoto();
-                console.log("Se registró correctamente la moto");
+                obtenerIdMotivo(estado);
+                pasarPestañaMotivo();
+                console.log("Se registró correctamente el motivo");
             } else {
                 //ta listo esto.
-                $("#register-moto").removeClass("d-none");
+                $("#register-motivo").removeClass("d-none");
             }
         }
     });
+}
+
+//todo
+function obtenerIdMotivo(estado){
+    
+    $.ajax({
+        type: "GET",
+        dataType: "html",
+        url: "./ServletMotivoBuscar",
+        data: $.param({
+            estado: estado
+        }),
+        success: function (result) {
+            let parsedResult = JSON.parse(result);
+            if (parsedResult !== false) {
+                console.log("El motivo con " + estado + " ya está registrado");
+                idOrden = parsedResult.idOrden;
+            }
+        }
+    });
+}
+
+function pasarPestañaMotivo(){
+    $("#nav-motivo-tab").removeClass("active");
+    $('#nav-motivo-tab').prop('aria-selected', false);
+    $("#nav-motivo-tab").prop('disabled', true);
+    //panel (creo que se puede hacer en una sola.
+    $("#nav-motivo").removeClass("show");
+    $("#nav-motivo").removeClass("active");
+
+    //next tab
+    $("#nav-servicio-tab").addClass("active");
+    $('#nav-servicio-tab').prop('aria-selected', true);
+    $("#nav-servicio-tab").prop('disabled', false);
+    //panel
+    $("#nav-servicio").addClass("show");
+    $("#nav-servicio").addClass("active");
 }
 

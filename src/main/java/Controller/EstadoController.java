@@ -21,7 +21,7 @@ public class EstadoController implements IEstadoController {
           //Para los Json
         Gson gson = new Gson();
         DBConnection conn = new DBConnection();
-        String sql = "SELECT o.idOrden AS moto, e.*  FROM estado e JOIN orden_servicios o ON o.estado = e.idEstado";
+        String sql = "SELECT o.idOrden AS moto, e.*  FROM Estado e JOIN Orden_servicios o ON o.estado = e.idEstado";
 
         List<String> listaEstados = new ArrayList<>();
         try {
@@ -77,7 +77,7 @@ public class EstadoController implements IEstadoController {
     
         Gson gson = new Gson();
         DBConnection conn = new DBConnection();
-        String sql = "INSERT into estado  (indicadores, desIndicadores, aceite, nivelAceite, liquidoFrenos, liquidoEmbrague, liquidoRefrigerante, lucesAptas, espejos, claxon, tanque, llantaDelantera, llantaTrasera, motor, chasis, acelerador, escape, trasmision, embrague, frenos, cadena, apoyaPies, kilometraje, combustible) VALUES('" + indicadores + "', '" + desIndicadores + "', '" + aceite + "', '" + nivelAceite + "', '" + liquidoFrenos + "', '" + liquidoEmbrague + "', '" + liquidoRefrigerante + "', '" + lucesAptas + "', '" + espejos + "', '" + claxon + "', '" + tanque + "', '" + llantaDelantera + "', '" + llantaTrasera + "','" + motor + "', '" + chasis + "', '" + acelerador + "', '" + escape + "', '" + trasmision + "', '" + embrague + "', '" + frenos + "', '" + cadena + "', '" + apoyaPies + "', " + kilometraje + ", '" + combustible + "')";
+        String sql = "INSERT into Estado  (indicadores, desIndicadores, aceite, nivelAceite, liquidoFrenos, liquidoEmbrague, liquidoRefrigerante, lucesAptas, espejos, claxon, tanque, llantaDelantera, llantaTrasera, motor, chasis, acelerador, escape, trasmision, embrague, frenos, cadena, apoyaPies, kilometraje, combustible) VALUES('" + indicadores + "', '" + desIndicadores + "', '" + aceite + "', '" + nivelAceite + "', '" + liquidoFrenos + "', '" + liquidoEmbrague + "', '" + liquidoRefrigerante + "', '" + lucesAptas + "', '" + espejos + "', '" + claxon + "', '" + tanque + "', '" + llantaDelantera + "', '" + llantaTrasera + "','" + motor + "', '" + chasis + "', '" + acelerador + "', '" + escape + "', '" + trasmision + "', '" + embrague + "', '" + frenos + "', '" + cadena + "', '" + apoyaPies + "', " + kilometraje + ", '" + combustible + "')";
         try {
             Statement st = conn.conectar().createStatement();
             st.executeUpdate(sql);
@@ -101,7 +101,7 @@ public class EstadoController implements IEstadoController {
         
         Gson gson = new Gson();
         DBConnection conn = new DBConnection();
-        String sql = "SELECT * FROM estado WHERE kilometraje = '" + kilometraje + "'";
+        String sql = "SELECT * FROM Estado WHERE kilometraje = '" + kilometraje + "'";
 
         try {
             Statement st = conn.conectar().createStatement();

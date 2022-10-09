@@ -20,7 +20,7 @@ public class ServicioController implements IServicioController {
         //Para los Json
         Gson gson = new Gson();
         DBConnection conn = new DBConnection();
-        String sql = "SELECT * FROM servicios";
+        String sql = "SELECT * FROM Servicios";
 
         List<String> listaServicios = new ArrayList<>();
         try {
@@ -54,7 +54,7 @@ public class ServicioController implements IServicioController {
     public String actualizarServicio(int idServicio, String nombreServicio, String detalleServicio, double valorServicio) {
         
         DBConnection conn = new DBConnection();
-        String sql = "UPDATE servicios set nombreProceso = '" + nombreServicio + "', detalleProceso = '" + detalleServicio + "', valorProceso = " + valorServicio + " WHERE idServicio = " + idServicio;
+        String sql = "UPDATE Servicios set nombreProceso = '" + nombreServicio + "', detalleProceso = '" + detalleServicio + "', valorProceso = " + valorServicio + " WHERE idServicio = " + idServicio;
         try {
             Statement st = conn.conectar().createStatement();
             st.executeUpdate(sql);
@@ -76,7 +76,7 @@ public class ServicioController implements IServicioController {
         DBConnection conn = new DBConnection();
 
         //Consulta para setear.INSERT. ID no se pasa porque es autoincremental
-        String sql = "INSERT INTO servicios(nombreProceso, detalleProceso, valorProceso) values('" + nombreServicio + "', '" + detalleServicio + "', " + valorServicio + ")";
+        String sql = "INSERT INTO Servicios(nombreProceso, detalleProceso, valorProceso) values('" + nombreServicio + "', '" + detalleServicio + "', " + valorServicio + ")";
 
         try {
             Statement st = conn.conectar().createStatement();

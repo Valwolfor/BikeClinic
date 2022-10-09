@@ -17,7 +17,7 @@ public class ClienteController implements IClienteController {
 
         Gson gson = new Gson();
         DBConnection conn = new DBConnection();
-        String sql = "INSERT into clientes (idCliente, tipoId, nombre, primerApellido, segundoApellido, correo, numeroConctacto) VALUES(" + id + ", '" + tipoID + "', '" + nombre + "', '" + primerApellido + "', '" + segundoApellido + "', '" + correo + "', '" + numeroContacto + "')";
+        String sql = "INSERT into Clientes (idCliente, tipoId, nombre, primerApellido, segundoApellido, correo, numeroConctacto) VALUES(" + id + ", '" + tipoID + "', '" + nombre + "', '" + primerApellido + "', '" + segundoApellido + "', '" + correo + "', '" + numeroContacto + "')";
         try {
             Statement st = conn.conectar().createStatement();
             st.executeUpdate(sql);
@@ -41,7 +41,7 @@ public class ClienteController implements IClienteController {
         
         
         DBConnection conn = new DBConnection();
-        String sql = "UPDATE clientes set tipoId = '" + tipoID + "', nombre = '" + nombre + "', primerApellido = '" + primerApellido + "', segundoApellido = '" + segundoApellido + "', correo = '" + correo + "', numeroConctacto = '" + numeroContacto + "' WHERE idCliente = " + id;
+        String sql = "UPDATE Clientes set tipoId = '" + tipoID + "', nombre = '" + nombre + "', primerApellido = '" + primerApellido + "', segundoApellido = '" + segundoApellido + "', correo = '" + correo + "', numeroConctacto = '" + numeroContacto + "' WHERE idCliente = " + id;
         
         try {
             Statement st = conn.conectar().createStatement();
@@ -63,7 +63,7 @@ public class ClienteController implements IClienteController {
     
         Gson gson = new Gson();
         DBConnection conn = new DBConnection();
-        String sql = "SELECT * FROM clientes WHERE idCliente = " + id;
+        String sql = "SELECT * FROM Clientes WHERE idCliente = " + id;
         
         try {
             Statement st = conn.conectar().createStatement();

@@ -20,7 +20,7 @@ public class MotoController implements IMotoController {
         //Para los Json
         Gson gson = new Gson();
         DBConnection conn = new DBConnection();
-        String sql = "SELECT m.*, CONCAT(c.nombre, ' ', c.primerApellido) AS Cliente FROM motos m JOIN clientes c ON c.idCliente = m.Clientes_idCliente";
+        String sql = "SELECT m.*, CONCAT(c.nombre, ' ', c.primerApellido) AS Cliente FROM Motos m JOIN Clientes c ON c.idCliente = m.Clientes_idCliente";
 
         List<String> listaMotos = new ArrayList<>();
         try {
@@ -60,7 +60,7 @@ public class MotoController implements IMotoController {
     
         Gson gson = new Gson();
         DBConnection conn = new DBConnection();
-        String sql = "INSERT into motos  (placaMoto, idMotor, idChasis, marca, modelo, añoRegistro, Clientes_idCliente) VALUES('" + placa + "', '" + idMotor + "', '" + idChasis + "', '" + marca + "', '" + modelo + "', '" + añoRegistro + "', " + idCliente + ")";
+        String sql = "INSERT into Motos  (placaMoto, idMotor, idChasis, marca, modelo, añoRegistro, Clientes_idCliente) VALUES('" + placa + "', '" + idMotor + "', '" + idChasis + "', '" + marca + "', '" + modelo + "', '" + añoRegistro + "', " + idCliente + ")";
         try {
             Statement st = conn.conectar().createStatement();
             st.executeUpdate(sql);
@@ -84,7 +84,7 @@ public class MotoController implements IMotoController {
 
         Gson gson = new Gson();
         DBConnection conn = new DBConnection();
-        String sql = "SELECT * FROM motos WHERE placaMoto = '" + placaMoto + "'";
+        String sql = "SELECT * FROM Motos WHERE placaMoto = '" + placaMoto + "'";
 
         try {
             Statement st = conn.conectar().createStatement();

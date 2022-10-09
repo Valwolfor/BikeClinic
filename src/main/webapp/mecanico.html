@@ -48,10 +48,10 @@
             <section class="container shadow rounded bg-light ">
                 <nav>
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                        <button class="nav-link active" id="nav-cliente-tab" data-bs-toggle="tab" data-bs-target="#nav-cliente" type="button" role="tab" aria-controls="nav-cliente" aria-selected="true" >Registro cliente</button>
+                        <button class="nav-link /*active*/" id="nav-cliente-tab" data-bs-toggle="tab" data-bs-target="#nav-cliente" type="button" role="tab" aria-controls="nav-cliente" aria-selected="false" disabled>Registro cliente</button><!-- true -->
                         <button class="nav-link " id="nav-moto-tab" data-bs-toggle="tab" data-bs-target="#nav-moto" type="button" role="tab" aria-controls="nav-moto" aria-selected="false" disabled>Registro moto</button>
                         <button class="nav-link" id="nav-estado-tab" data-bs-toggle="tab" data-bs-target="#nav-estado" type="button" role="tab" aria-controls="nav-estado" aria-selected="false" disabled>Estado vehículo</button>
-                        <button class="nav-link" id="nav-motivo-tab" data-bs-toggle="tab" data-bs-target="#nav-motivo" type="button" role="tab" aria-controls="nav-motivo" aria-selected="false" disabled>Motivo de ingreso</button>
+                        <button class="nav-link active /*eliminar*/" id="nav-motivo-tab" data-bs-toggle="tab" data-bs-target="#nav-motivo" type="button" role="tab" aria-controls="nav-motivo" aria-selected="true" >Motivo de ingreso</button><!-- false disabled -->
                         <button class="nav-link" id="nav-servicio-tab" data-bs-toggle="tab" data-bs-target="#nav-servicio" type="button" role="tab" aria-controls="nav-servicio" aria-selected="false" disabled>Servicios a realizar</button>
                     </div>
                 </nav>
@@ -59,7 +59,7 @@
                 <!-- Los pane de las tabs -->
                 <!-- CLIENTE -->
                 <div class="tab-content border-dark m-3" id="nav-tabContent">
-                    <div class="tab-pane fade show active" id="nav-cliente" role="tabpanel" aria-labelledby="nav-cliente-tab" tabindex="0">
+                    <div class="tab-pane fade /*show active*/" id="nav-cliente" role="tabpanel" aria-labelledby="nav-cliente-tab" tabindex="0">
                         <article>
                             <fieldset>
                                 <legend>
@@ -225,7 +225,7 @@
                             </fieldset>
                         </article>
                     </div>
-                    <div class="tab-pane fade" id="nav-motivo" role="tabpanel" aria-labelledby="nav-motivo-tab" tabindex="0">
+                    <div class="tab-pane fade show active /*eliminar*/" id="nav-motivo" role="tabpanel" aria-labelledby="nav-motivo-tab" tabindex="0">
                         <article>
                             <fieldset >
                                 <legend>
@@ -238,16 +238,16 @@
                                                 Motivo de ingreso:
                                             </label>
                                             <select name = "Motivo" id = "Motivo" class="form-select ">
-                                                <option value="1">
+                                                <option value="Diagnóstico y reparación">
                                                     Diagnóstico y reparación
                                                 </option>
-                                                <option value="2">
+                                                <option value="Mantenimiento">
                                                     Mantenimiento
                                                 </option>
-                                                <option value="3">
+                                                <option value="Reparación">
                                                     Reparación
                                                 </option>
-                                                <option value="4">
+                                                <option value="Personalización">
                                                     Personalización
                                                 </option>
                                             </select>
@@ -258,38 +258,62 @@
                                             </label>
                                             <textarea class = "form-control" id = "Dmotivo" name = "Dmotivo" required></textarea>
                                         </div>
-                                        
+                                        <!-- documentos -->
+                                        <div class="col-3 mb-2">
+                                            <p>Documentos en resguardo :</p>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="Licencia-de-Tránsito" id="flexCheckLicencia">
+                                                <label class="form-check-label" for="flexCheckLicencia">
+                                                    Licencia de Tránsito
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="Soat" id="flexCheckSoat" >
+                                                <label class="form-check-label" for="flexCheckSoat">
+                                                    Soat
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="Tecnomecánica" id="flexCheckTecnomecanica">
+                                                <label class="form-check-label" for="flexCheckTecnomecanica">
+                                                    Tecnomecánica
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <hr/>
                                         <div class="col-2 mb-3">
+                                            <p class="mb-1">El cliente: </p>
                                             <div class="form-check form-switch mb-2">
                                                 <label class="form-check-label" for="flexSwitchCheckRuta">Autoriza ruta</label>
-                                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckRuta" value="Sí">
+                                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckRuta" value="ruta">
                                             </div>
                                             <div class="form-check form-switch">
-                                                <label class="form-check-label" for="flexSwitchCheckAnticipo">Anticipo</label>
-                                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckAnticipo" value="Sí">
+                                                <label class="form-check-label" for="flexSwitchCheckAnticipo">Realiza anticipo</label>
+                                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckAnticipo" value="anticipo">
                                             </div>
                                         </div>
                                         <!-- Sí anticipo checked, quitar disabled -->
-                                        <div class="col-4 mb-3">
+                                        <div class="col-3 mb-3">
                                             <label class = "form-label">
                                                 Valor del anticipo:
                                             </label>
-                                            <input id="valAnticipo" type="number" class="form-control " placeholder="Sin puntos o comas" disabled>
+                                            <input id="valAnticipo" type="number" class="form-control " placeholder="Sin puntos o comas">
                                         </div>
-                                        <div class="col-3 mb-5">
+                                        <div class="col-4 mb-5">
                                             <label for = "Mecanico" class = "form-label">
                                                 Seleccione mecánico:
                                             </label>
                                             <select name = "Mecanico" id = "Mecanico" class="form-select ">
 
                                             </select>
-                                        </div>   
-                                        <!-- Botón -->
-                                        <div>
-                                            <button id="btnReMotivo"  class = "btn btn-outline-primary mb-3">
-                                                Registrar Motivo
-                                            </button>
                                         </div>
+                                        
+                                    </div>
+                                    <!-- Botón -->
+                                    <div>
+                                        <button id="btnReMotivo"  class = "btn btn-outline-primary mb-3">
+                                            Registrar Motivo
+                                        </button>
                                     </div>
                                 </form>
                                 <div id="register-motivo" class=" mt-3 alert alert-warning alert-dismissible fade show d-none" role="alert">
@@ -297,19 +321,6 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                 </div>
                             </fieldset>
-                            <!--                            <h3 class="h5">Tabla de registro.</h3>
-                                                        <table class="table  table-hover  ">
-                                                            <thead class="table-dark">
-                                                                <tr >
-                                                                    <th>Header</th>
-                                                                    <th>Header2</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody id="tbodyMecMotivo" class="align-middle">
-                            
-                                                            </tbody>
-                                                        </table>
-                                                        <br/>-->
                         </article>
                     </div>
                     <div class="tab-pane fade" id="nav-estado" role="tabpanel" aria-labelledby="nav-estado-tab" tabindex="0">
@@ -557,13 +568,13 @@
                                         <p>Motor :</p>
 
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioMotor" id="flexRadioPistonA" value="Apto">
+                                            <input class="form-check-input" type="radio" name="flexRadioMotor" id="flexRadioMotorA" value="Apto">
                                             <label class="form-check-label" for="flexRadioMotorA">
                                                 Apto
                                             </label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioMotor" id="flexRadioPistonaN" value="No apto">
+                                            <input class="form-check-input" type="radio" name="flexRadioMotor" id="flexRadioMotorN" value="No apto">
                                             <label class="form-check-label" for="flexRadioMotorN">
                                                 No apto
                                             </label>
@@ -589,7 +600,7 @@
                                         <p>Acelerador :</p>
                                         <div class="form-check">
                                             <input class="form-check-input" type="radio" name="flexRadioAcelerador" id="flexRadioAceleradorA" value="Apto">
-                                            <label class="form-check-label" for="flexRadioAceleradoreA">
+                                            <label class="form-check-label" for="flexRadioAceleradorA">
                                                 Apto
                                             </label>
                                         </div>
@@ -651,13 +662,13 @@
                                         <p>Frenos :</p>
                                         <div class="form-check">
                                             <input class="form-check-input" type="radio" name="flexRadioFreno" id="flexRadioFrenoA" value="Aptos">
-                                            <label class="form-check-label" for="flexRadioFrenoDA">
+                                            <label class="form-check-label" for="flexRadioFrenoA">
                                                 Apto
                                             </label>
                                         </div>
                                         <div class="form-check">
                                             <input class="form-check-input" type="radio" name="flexRadioFreno" id="flexRadioFrenoN" value="No aptos">
-                                            <label class="form-check-label" for="flexRadioFrenoDN">
+                                            <label class="form-check-label" for="flexRadioFrenoN">
                                                 No aptos
                                             </label>
                                         </div>

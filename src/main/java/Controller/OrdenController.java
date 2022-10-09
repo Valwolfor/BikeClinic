@@ -22,7 +22,7 @@ public class OrdenController implements IOrdenController{
         //Para los Json
         Gson gson = new Gson();
         DBConnection conn = new DBConnection();
-        String sql = "Select o.idOrden, o.fecha, CONCAT(c.nombre, ' ', c.primerApellido) AS Cliente, CONCAT(u.nombre, ' ', u.primerApellido) AS Mecánico, o.moto, o.motivo, o.descripcionDiagnostico, o.documentos, o.anticipo, o.valorAnticipo, o.autorizacionRuta, o.estado from orden_servicios o JOIN clientes c ON c.idCliente = o.cliente JOIN usuarios u ON u.idUsuario = o.mecanico";
+        String sql = "SELECT o.idOrden, o.fecha, CONCAT(c.nombre, ' ', c.primerApellido) AS Cliente, CONCAT(u.nombre, ' ', u.primerApellido) AS Mecánico, o.moto, o.motivo, o.descripcionDiagnostico, o.documentos, o.anticipo, o.valorAnticipo, o.autorizacionRuta, o.estado FROM Orden_servicios o JOIN Clientes c ON c.idCliente = o.cliente JOIN Usuarios u ON u.idUsuario = o.mecanico";
 
         List<String> listaOrdenes = new ArrayList<>();
         try {
@@ -58,6 +58,59 @@ public class OrdenController implements IOrdenController{
         }
 
         return gson.toJson(listaOrdenes);
+    }
+
+    @Override
+    public String registrarOrden(Date date, String nombreCliente, String nombreMecanico, String placaMoto, String motivo, String descripcionDiagnostico, String documentos, String anticipo, double valorAnticipo, String autorizacionRuta, int idEstado) {
+        
+        Gson gson = new Gson();
+        DBConnection conn = new DBConnection();
+        String sql = "INSERT into Orden_servicios  (fecha, cliente, mecanico, moto, documentos, valorAnticipo, descripcionDiagnostico, estado, autorizacionRuta, anticipo) VALUES('" + date + "', '" + nombreCliente + "', '" + nombreMecanico + "', '" + placaMoto + "', '" + documentos + "', '" + valorAnticipo + "', '" + descripcionDiagnostico + "', '" + idEstado + "', '" + autorizacionRuta + "', '" + anticipo + "')";
+        try {
+            Statement st = conn.conectar().createStatement();
+            st.executeUpdate(sql);
+
+            OrdenDeServicio orden = new OrdenDeServicio(date, nombreCliente, nombreMecanico, placaMoto, motivo, descripcionDiagnostico, documentos, anticipo, valorAnticipo, autorizacionRuta, idEstado);
+
+            st.close();
+            System.out.println("Se realizó el registro de la moto.");
+            return gson.toJson(orden);
+
+        } catch (SQLException e) {
+            System.out.println("No se pudo conectar a la BD en registrar Orden controller : " + e.getMessage());
+        } finally {
+            conn.desconectar();
+        }
+        return "false";
+    }
+
+    @Override
+    public String buscarOrden(int idEstado) {
+        
+         Gson gson = new Gson();
+        DBConnection conn = new DBConnection();
+        String sql = "SELECT * FROM Orden_servicios WHERE estado = '" + idEstado + "'";
+
+        try {
+            Statement st = conn.conectar().createStatement();
+            ResultSet rs = st.executeQuery(sql);
+
+            rs.next();
+            int idOrden = Integer.parseInt(rs.getString("idEstado"));
+
+            OrdenDeServicio orden = new OrdenDeServicio(idOrden,idEstado);
+
+            st.close();
+            System.out.println("Se realizó la consulta de la orden.");
+            return gson.toJson(orden);
+
+        } catch (NumberFormatException | SQLException e) {
+            System.out.println("No se pudo relizar la busqueda del estado, por: " + e.toString());
+        } finally {
+            conn.desconectar();
+        }
+
+        return "false";
     }
     
 }

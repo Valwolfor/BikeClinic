@@ -22,6 +22,21 @@ public class OrdenDeServicio {
     private String autorizacionRuta;
     private int idEstado;
 
+    public OrdenDeServicio(Date date, String nombreCliente, String nombreMecanico, String placaMoto, String motivo, String descripcionDiagnostico, String documentos, String anticipo, double valorAnticipo, String autorizacionRuta, int idEstado) {
+        this.date = date;
+        this.nombreCliente = nombreCliente;
+        this.nombreMecanico = nombreMecanico;
+        this.placaMoto = placaMoto;
+        this.motivo = motivo;
+        this.descripcionDiagnostico = descripcionDiagnostico;
+        this.documentos = documentos;
+        this.anticipo = anticipo;
+        this.valorAnticipo = valorAnticipo;
+        this.autorizacionRuta = autorizacionRuta;
+        this.idEstado = idEstado;
+    }
+    
+
     public OrdenDeServicio(int idOrden, Date date, String nombreCliente, String nombreMecanico, String placaMoto, String motivo, String descripcionDiagnostico, String documentos, String anticipo, double valorAnticipo, String autorizacionRuta, int idEstado) {
         this.idOrden = idOrden;
         this.date = date;
@@ -37,6 +52,12 @@ public class OrdenDeServicio {
         this.idEstado = idEstado;
     }
 
+    public OrdenDeServicio(int idOrden, int idEstado) {
+        this.idOrden = idOrden;
+        this.idEstado = idEstado;
+    }
+
+    
     public int getIdOrden() {
         return idOrden;
     }

@@ -20,7 +20,7 @@ public class UsuarioController implements IUsuarioController {
         //Para los Json
         Gson gson = new Gson();
         DBConnection conn = new DBConnection();
-        String sql = "SELECT * FROM usuarios WHERE correo='" + correo + "'  and password='" + password + "'";
+        String sql = "SELECT * FROM Usuarios WHERE correo='" + correo + "'  and password='" + password + "'";
         try {
             PreparedStatement pstm = conn.conectar().prepareStatement(sql);
             ResultSet rs = pstm.executeQuery();
@@ -57,7 +57,7 @@ public class UsuarioController implements IUsuarioController {
         DBConnection conn = new DBConnection();
 
         //Consulta para setear.INSERT. Se actualiza.
-        String sql = "INSERT INTO usuarios values('" + id + "', '" + nombre + "', '" + primerApellido + "', '" + segundoApellido + "',  '" + correo + "', '" + numeroContacto + "', '" + estado + "', '" + password + "', '" + rol + "')";
+        String sql = "INSERT INTO Usuarios values('" + id + "', '" + nombre + "', '" + primerApellido + "', '" + segundoApellido + "',  '" + correo + "', '" + numeroContacto + "', '" + estado + "', '" + password + "', '" + rol + "')";
 
         try {
             Statement st = conn.conectar().prepareStatement(sql);
@@ -86,7 +86,7 @@ public class UsuarioController implements IUsuarioController {
         //Para los Json
         Gson gson = new Gson();
         DBConnection conn = new DBConnection();
-        String sql = "SELECT * FROM usuarios WHERE rol='Mecánico'";
+        String sql = "SELECT * FROM Usuarios WHERE rol='Mecánico'";
         
         //Para no llamar la contraseña
         String password = null;
@@ -135,7 +135,7 @@ public class UsuarioController implements IUsuarioController {
         */ 
         
         DBConnection conn = new DBConnection();
-        String sql = "UPDATE usuarios set estado = '" + estado + "' WHERE idUsuario = '" + id + "' and rol = 'Mecánico'";
+        String sql = "UPDATE Usuarios set estado = '" + estado + "' WHERE idUsuario = '" + id + "' and rol = 'Mecánico'";
         try {
             Statement st = conn.conectar().createStatement();
             st.executeUpdate(sql);

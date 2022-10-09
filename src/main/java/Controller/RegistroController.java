@@ -22,7 +22,7 @@ public class RegistroController implements IRegistroController {
 
         Gson gson = new Gson();
         DBConnection conn = new DBConnection();
-        String sql = "SELECT r.orden, r.idServiciosProductos, p.nombre, p.valorProducto, s.nombreProceso, s.detalleProceso, s.valorProceso, r.aprobado FROM registro_servicios_y_productos r JOIN productos p ON p.idProducto = r.producto JOIN servicios s ON s.idServicio = r.servicio";
+        String sql = "SELECT r.orden, r.idServiciosProductos, p.nombre, p.valorProducto, s.nombreProceso, s.detalleProceso, s.valorProceso, r.aprobado FROM Registro_servicios_y_productos r JOIN Productos p ON p.idProducto = r.producto JOIN Servicios s ON s.idServicio = r.servicio";
 
         List<String> listaRegistros = new ArrayList<>();
 
