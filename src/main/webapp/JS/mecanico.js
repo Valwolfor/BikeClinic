@@ -28,16 +28,35 @@ $(document).ready(function () {
         registrarEstado();
 
     });
-    $("#Placa").on('keyup', function (event) {
+    
+    $("#flexRadioIndicadoresN").change( function (event) {
         event.preventDefault();
-        if (indicadores === 'No apto') {
-            $("#flexRadioIndicadoresN").prop('disabled', false);
+        let indicadores = document.querySelector('input[name=flexRadioIndicadores]:checked').value;
+        if (indicadores !== 'No apto') {
+            desIndicadores = null;
+            $("#alertDesc-estado").addClass("d-none");
+            $("#DescripcionInd").prop('disabled', true);
+        } else {
+            $("#DescripcionInd").prop('disabled', false);
             desIndicadores = $("#DescripcionInd").val();
             $("#alertDesc-estado").removeClass("d-none");
-        } else {
-            desIndicadores = null;
         }
     });
+    
+    $("#flexRadioIndicadoresA").change( function (event) {
+        event.preventDefault();
+        let indicadores = document.querySelector('input[name=flexRadioIndicadores]:checked').value;
+        if (indicadores !== 'No apto') {
+            desIndicadores = null;
+            $("#alertDesc-estado").addClass("d-none");
+            $("#DescripcionInd").prop('disabled', true);
+        } else {
+            $("#DescripcionInd").prop('disabled', false);
+            desIndicadores = $("#DescripcionInd").val();
+            $("#alertDesc-estado").removeClass("d-none");
+        }
+    });
+    
 });
 
 //ok js, Validado
@@ -368,13 +387,12 @@ function mostrarMecanicos(listaMecanicos) {
 
 //ZONA estado
 //Funciona, Checkbox sin check funcionando.
-//Falta validación de 
+//Valida indicadores ok.
 // debería no dejar registrar con el mismo km
-
 function registrarEstado() {
 
     let indicadores = document.querySelector('input[name=flexRadioIndicadores]:checked').value;
-    let desIndicadores;
+    desIndicadores;
 
 //    if (indicadores === 'No apto') {
 //        $("#DescripcionInd").prop('disabled', false);
@@ -498,7 +516,9 @@ function pasarPestañaEstado() {
     $("#nav-motivo").addClass("show");
     $("#nav-motivo").addClass("active");
 }
-
+ 
+ 
+ EsTOY AQUIIIIIII!!!
 //ZONA ORDEN de servicio
 //MOTIVO 
 function registrarMotivo() {
