@@ -5,6 +5,7 @@ package Beans;
 import jakarta.persistence.*;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name="person")
 public abstract class Person {
     @Id()
@@ -20,6 +21,14 @@ public abstract class Person {
     private String contactNumber;
 
     public Person() {}
+
+    public Person(int id, String firstName, String lastName, String email, String contactNumber) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.contactNumber = contactNumber;
+    }
 
     public Integer getId() {
         return id;
