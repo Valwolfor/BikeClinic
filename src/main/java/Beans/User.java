@@ -5,6 +5,9 @@ import Beans.Util.UserRole;
 import Beans.Util.UserStatus;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Entity
 @Table(name = "user")
@@ -17,8 +20,8 @@ public class User extends Person {
     private String password;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "role")
-    private UserRole role;
+    @Column(name = "roles")
+    private List<UserRole> roles;
 
     public User() {
         // Empty constructor
@@ -28,7 +31,8 @@ public class User extends Person {
         super(id, firstName, lastName, email, contactNumber);
         this.status = status;
         this.password = password;
-        this.role = role;
+        this.roles = new ArrayList<>();
+        this.roles.add(role);
     }
 
     public UserStatus getStatus() {
@@ -47,12 +51,12 @@ public class User extends Person {
         this.password = password;
     }
 
-    public UserRole getRole() {
-        return role;
+    public List<UserRole> getRoles() {
+        return roles;
     }
 
     public void setRole(UserRole role) {
-        this.role = role;
+        this.roles.add(role);
     }
 
     @Override
@@ -65,7 +69,7 @@ public class User extends Person {
                 ", contactNumber='" + getContactNumber() + '\'' +
                 ", status='" + status + '\'' +
                 ", password='" + password + '\'' +
-                ", role='" + role + '\'' +
+                ", role='" + roles + '\'' +
                 '}';
     }
 }

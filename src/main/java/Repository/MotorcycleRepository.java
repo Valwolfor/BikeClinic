@@ -8,5 +8,5 @@ public interface MotorcycleRepository extends JpaRepository<Motorcycle, Long> {
 
     Motorcycle findByPlate (String plate);
 
-    Motorcycle findByOwner (Customer customer);
+    Motorcycle findByCustomer (Customer customer);
 }

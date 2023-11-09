@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface RecordRepository extends JpaRepository<RecordRepository, Long> {
+public interface RecordRepository extends JpaRepository<RecordServiceProduct, Long> {
     List<RecordServiceProduct> findByOrder(ServiceOrder order);
     List<RecordServiceProduct> findByService(Service service);
     List<RecordServiceProduct> findByProduct(Product product);

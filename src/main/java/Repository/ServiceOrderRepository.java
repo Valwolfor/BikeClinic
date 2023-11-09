@@ -16,6 +16,6 @@ public interface ServiceOrderRepository extends JpaRepository<ServiceOrder, Long
     @Query("SELECT so FROM ServiceOrder so WHERE so.mechanicId = :mechanicId")
     List<ServiceOrder> findByMchanicId(@Param("mechanicId") Integer mechanicId);
 
-    List<ServiceOrder> findByPlate (String plate);
+    List<ServiceOrder> findByMotorcyclePlate (String plate);
 
 }
