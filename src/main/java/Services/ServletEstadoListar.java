@@ -1,6 +1,6 @@
-package Servlets;
+package Services;
 
-import Controller.ServicioController;
+import Controller.EstadoController;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -13,31 +13,32 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author BMO
  */
-@WebServlet(name = "ServletServiciosListar", urlPatterns = {"/ServletServiciosListar"})
-public class ServletServiciosListar extends HttpServlet {
+@WebServlet(name = "ServletEstadoListar", urlPatterns = {"/ServletEstadoListar"})
+public class ServletEstadoListar extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
-    
-    public ServletServiciosListar(){
-    super();
-}
-    
+
+    public ServletEstadoListar() {
+        super();
+    }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        ServicioController servicioC = new ServicioController();
-        String registroStr = servicioC.obtenerServicios();
-        
+        EstadoController estadoController = new EstadoController();
+        //toma los datos de la BD y los manda a JS-Json de la intefaz
+//        StriEstadoControllerng correo = request.getParameter("correo");
+        String hvsStr = estadoController.listarEstado();
+
         response.setContentType("text/html;charset=UTF-8");
+        //Imprime el resultado.
         PrintWriter out = response.getWriter();
-        out.println(registroStr);
+        out.println(hvsStr);
 
         out.flush();
         out.close();
     }
 
-    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

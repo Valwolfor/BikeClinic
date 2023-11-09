@@ -1,10 +1,6 @@
 package Beans;
 
 import jakarta.persistence.*;
-import org.springframework.data.annotation.CreatedDate;
-
-
-import java.util.Date;
 
 @Entity
 public class Status {
@@ -13,7 +9,7 @@ public class Status {
     private Long id;
 
     @Column(name = "motorcycle_id")
-    private int motorcycleId;
+    private Long motorcycleId;
 
     private String indicators;
     @Column(name = "indicators_desc")
@@ -59,11 +55,11 @@ public class Status {
         this.id = id;
     }
 
-    public int getMotorcycleId() {
+    public Long getMotorcycleId() {
         return motorcycleId;
     }
 
-    public void setMotorcycleId(int motorcycleId) {
+    public void setMotorcycleId(Long motorcycleId) {
         this.motorcycleId = motorcycleId;
     }
 

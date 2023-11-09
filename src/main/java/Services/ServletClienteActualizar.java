@@ -1,4 +1,4 @@
-package Servlets;
+package Services;
 
 import Controller.ClienteController;
 import java.io.IOException;
@@ -13,21 +13,21 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author BMO
  */
-@WebServlet(name = "ServletClienteRegistro", urlPatterns = {"/ServletClienteRegistro"})
-public class ServletClienteRegistro extends HttpServlet {
+@WebServlet(name = "ServletClienteActualizar", urlPatterns = {"/ServletClienteActualizar"})
+public class ServletClienteActualizar extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
-    public ServletClienteRegistro() {
+    public ServletClienteActualizar() {
         super();
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        
         ClienteController clienteC = new ClienteController();
-
+        
         String tipoID = request.getParameter("tipoId");
         int idCliente = Integer.parseInt(request.getParameter("idCliente"));
         String nombre = request.getParameter("nombre");
@@ -35,8 +35,9 @@ public class ServletClienteRegistro extends HttpServlet {
         String segundoApellido = request.getParameter("segundoApellido");
         String correo = request.getParameter("correo");
         String numeroContacto = request.getParameter("numeroContacto");
-
-        String registroStr = clienteC.registrarCliente(tipoID, idCliente, nombre, primerApellido, segundoApellido, correo, numeroContacto);
+        
+        String registroStr = clienteC.actualizarCliente(tipoID, idCliente, nombre, primerApellido, segundoApellido, correo, numeroContacto);
+        
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         out.println(registroStr);
@@ -49,4 +50,5 @@ public class ServletClienteRegistro extends HttpServlet {
             throws ServletException, IOException {
         doGet(request, response);
     }
+
 }

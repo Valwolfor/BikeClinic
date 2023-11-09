@@ -8,7 +8,7 @@ import jakarta.persistence.*;
 public class Service {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idService;
+    private Integer idService;
 
     @Column(name = "service_name")
     private String serviceName;
@@ -19,11 +19,11 @@ public class Service {
     @Column(name = "service_value")
     private double serviceValue;
 
-    public int getIdService() {
+    public Integer getIdService() {
         return idService;
     }
 
-    public void setIdService(int idService) {
+    public void setIdService(Integer idService) {
         this.idService = idService;
     }
 

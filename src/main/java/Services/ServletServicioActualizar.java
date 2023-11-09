@@ -1,5 +1,5 @@
 
-package Servlets;
+package Services;
 
 import Controller.ServicioController;
 import java.io.IOException;

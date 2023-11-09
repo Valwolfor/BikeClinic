@@ -1,7 +1,7 @@
 
-package Servlets;
+package Services;
 
-import Controller.ProductoController;
+import Controller.MotoController;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -14,12 +14,12 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author BMO
  */
-@WebServlet(name = "ServletProductoRegistrar", urlPatterns = {"/ServletProductoRegistrar"})
-public class ServletProductoRegistrar extends HttpServlet {
-
+@WebServlet(name = "ServletMotoBuscar", urlPatterns = {"/ServletMotoBuscar"})
+public class ServletMotoBuscar extends HttpServlet {
+    
     private static final long serialVersionUID = 1L;
     
-    public ServletProductoRegistrar(){
+    public ServletMotoBuscar(){
         super();
     }
     
@@ -27,26 +27,24 @@ public class ServletProductoRegistrar extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        ProductoController productoC = new ProductoController();
-
-        String nombre = request.getParameter("nombre");
-        double valorProducto = Double.parseDouble(request.getParameter("valorProducto"));
-
-        //Guardar el resultado
-        String result = productoC.registrarProducto(nombre, valorProducto);
-
-        //Los response html.
+        MotoController motoC = new MotoController();
+        
+        String placaMoto = request.getParameter("placaMoto");
+        
+        String registroStr = motoC.buscarMoto(placaMoto);
+        
         response.setContentType("text/html;charset=UTF-8");
+        
         PrintWriter out = response.getWriter();
-        out.println(result);
+        out.println(registroStr);
         out.flush();
         out.close();
     }
 
+    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         doGet(request, response);
     }
-
 }

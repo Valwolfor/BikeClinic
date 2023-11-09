@@ -1,7 +1,6 @@
+package Services;
 
-package Servlets;
-
-import Controller.HVMotoController;
+import Controller.ServicioController;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -14,28 +13,26 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author BMO
  */
-@WebServlet(name = "ServletHVmotoListar", urlPatterns = {"/ServletHVmotoListar"})
-public class ServletHVmotoListar extends HttpServlet {
+@WebServlet(name = "ServletServiciosListar", urlPatterns = {"/ServletServiciosListar"})
+public class ServletServiciosListar extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
-
-    public ServletHVmotoListar() {
-        super();
-    }
+    
+    public ServletServiciosListar(){
+    super();
+}
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-          HVMotoController hvController = new HVMotoController();
-        //toma los datos de la BD y los manda a JS-Json de la intefaz
-//        String correo = request.getParameter("correo");
-        String hvsStr = hvController.listarHVMoto();
+        ServicioController servicioC = new ServicioController();
+        String registroStr = servicioC.obtenerServicios();
         
         response.setContentType("text/html;charset=UTF-8");
-        //Imprime el resultado.
         PrintWriter out = response.getWriter();
-        out.println(hvsStr);
-       
+        out.println(registroStr);
+
         out.flush();
         out.close();
     }
@@ -46,7 +43,5 @@ public class ServletHVmotoListar extends HttpServlet {
             throws ServletException, IOException {
         doGet(request, response);
     }
-
-    
 
 }

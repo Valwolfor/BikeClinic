@@ -1,6 +1,7 @@
-package Servlets;
 
-import Controller.OrdenController;
+package Services;
+
+import Controller.ProductoController;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -13,29 +14,31 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author BMO
  */
-@WebServlet(name = "ServletOrndeListar", urlPatterns = {"/ServletOrndeListar"})
-public class ServletOrndeListar extends HttpServlet {
+@WebServlet(name = "ServletProductoRegistrar", urlPatterns = {"/ServletProductoRegistrar"})
+public class ServletProductoRegistrar extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
-
-    public ServletOrndeListar() {
+    
+    public ServletProductoRegistrar(){
         super();
     }
-
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        ProductoController productoC = new ProductoController();
 
-        OrdenController motoController = new OrdenController();
-        //toma los datos de la BD y los manda a JS-Json de la intefaz
-//        String correo = request.getParameter("correo");
-        String hvsStr = motoController.listarOrdenes();
+        String nombre = request.getParameter("nombre");
+        double valorProducto = Double.parseDouble(request.getParameter("valorProducto"));
 
+        //Guardar el resultado
+        String result = productoC.registrarProducto(nombre, valorProducto);
+
+        //Los response html.
         response.setContentType("text/html;charset=UTF-8");
-        //Imprime el resultado.
         PrintWriter out = response.getWriter();
-        out.println(hvsStr);
-
+        out.println(result);
         out.flush();
         out.close();
     }

@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name = "service_order")
@@ -20,10 +19,10 @@ public class ServiceOrder {
     private Date date;
 
     @Column(name = "customer_name")
-    private String customerName;
+    private Integer customerId;
 
     @Column(name = "mechanic_name")
-    private String mechanicName;
+    private Integer mechanicId;
 
     @Column(name = "motorcycle_plate")
     private String motorcyclePlate;
@@ -75,20 +74,20 @@ public class ServiceOrder {
         this.date = date;
     }
 
-    public String getCustomerName() {
-        return customerName;
+    public Integer getCustomerId() {
+        return customerId;
     }
 
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
+    public void setCustomerId(Integer customerName) {
+        this.customerId = customerName;
     }
 
-    public String getMechanicName() {
-        return mechanicName;
+    public Integer getMechanicId() {
+        return mechanicId;
     }
 
-    public void setMechanicName(String mechanicName) {
-        this.mechanicName = mechanicName;
+    public void setMechanicId(Integer mechanicName) {
+        this.mechanicId = mechanicName;
     }
 
     public String getMotorcyclePlate() {
@@ -169,8 +168,8 @@ public class ServiceOrder {
                 "id=" + id +
                 ", orderId=" + orderId +
                 ", date=" + date +
-                ", customerName='" + customerName + '\'' +
-                ", mechanicName='" + mechanicName + '\'' +
+                ", customerName='" + customerId + '\'' +
+                ", mechanicName='" + mechanicId + '\'' +
                 ", motorcyclePlate='" + motorcyclePlate + '\'' +
                 ", reason='" + reason + '\'' +
                 ", diagnosticDescription='" + diagnosticDescription + '\'' +

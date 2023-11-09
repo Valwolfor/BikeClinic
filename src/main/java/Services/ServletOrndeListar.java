@@ -1,6 +1,6 @@
-package Servlets;
+package Services;
 
-import Controller.ServicioController;
+import Controller.OrdenController;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -13,12 +13,12 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author BMO
  */
-@WebServlet(name = "ServletServicioRegistrar", urlPatterns = {"/ServletServicioRegistrar"})
-public class ServletServicioRegistrar extends HttpServlet {
+@WebServlet(name = "ServletOrndeListar", urlPatterns = {"/ServletOrndeListar"})
+public class ServletOrndeListar extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
-    public ServletServicioRegistrar() {
+    public ServletOrndeListar() {
         super();
     }
 
@@ -26,19 +26,16 @@ public class ServletServicioRegistrar extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        ServicioController servicioC = new ServicioController();
+        OrdenController motoController = new OrdenController();
+        //toma los datos de la BD y los manda a JS-Json de la intefaz
+//        String correo = request.getParameter("correo");
+        String hvsStr = motoController.listarOrdenes();
 
-        String nombreServicio = request.getParameter("nombreServicio");
-        String detalleServicio = request.getParameter("detalleServicio");
-        double valorServicio = Double.parseDouble(request.getParameter("valorServicio"));
-
-        //Guardar el resultado
-        String result = servicioC.registrarServicio(nombreServicio, detalleServicio, valorServicio);
-
-        //Los response html.
         response.setContentType("text/html;charset=UTF-8");
+        //Imprime el resultado.
         PrintWriter out = response.getWriter();
-        out.println(result);
+        out.println(hvsStr);
+
         out.flush();
         out.close();
     }
