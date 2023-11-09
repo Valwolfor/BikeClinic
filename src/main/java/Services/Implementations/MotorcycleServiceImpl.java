@@ -4,6 +4,7 @@ import Beans.Customer;
 import Beans.Motorcycle;
 import Repository.MotorcycleRepository;
 import Services.Interfaces.MotorcycleService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,7 +38,10 @@ public class MotorcycleServiceImpl implements MotorcycleService {
             oldMotor.setEngineId(motorcycle.getEngineId());
             oldMotor.setRegistrationYear(motorcycle.getRegistrationYear());
         }
-        assert oldMotor != null;
+
+        if (oldMotor == null) {
+            throw new EntityNotFoundException("Registro de motocicleta no encontrado con ID: " + motorcycle.getId());
+        }
         return repository.save(oldMotor);
     }
 

@@ -3,6 +3,7 @@ package Services.Implementations;
 import Beans.ServiceOrder;
 import Repository.ServiceOrderRepository;
 import Services.Interfaces.ServiceOrderService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,6 +36,10 @@ public class ServiceOrderServiceImpl implements ServiceOrderService {
             oldServiceOrder.setRecordSP(serviceOrder.getRecordSP());
             oldServiceOrder.setDocuments(serviceOrder.getDocuments());
             oldServiceOrder.setRouteAuthorization(serviceOrder.getRouteAuthorization());
+        }
+
+        if (oldServiceOrder == null) {
+            throw new EntityNotFoundException("Orden de servicio no encontrada con ID: " + serviceOrder.getId());
         }
         return repository.save(oldServiceOrder);
     }

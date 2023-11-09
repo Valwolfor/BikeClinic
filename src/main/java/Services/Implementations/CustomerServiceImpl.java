@@ -3,6 +3,7 @@ package Services.Implementations;
 import Beans.Customer;
 import Repository.CustomerRepository;
 import Services.Interfaces.CustomerService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,8 +36,10 @@ public class CustomerServiceImpl implements CustomerService {
             oldCustomer.setContactNumber(customer.getContactNumber());
             oldCustomer.setEmail(customer.getEmail());
         }
-        //Se podría manejar con exceptiones pero me dio pereza.
-        assert oldCustomer != null;
+
+        if (oldCustomer == null) {
+            throw new EntityNotFoundException("Registro de customer no encontrado con ID: " + customer.getId());
+        }
         return repository.save(oldCustomer);
     }
 

@@ -5,6 +5,7 @@ import Beans.RecordServiceProduct;
 import Beans.ServiceOrder;
 import Repository.RecordRepository;
 import Services.Interfaces.RecordService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
@@ -37,7 +38,10 @@ public class RecordServiceImpl implements RecordService {
             oldRecord.setOrder(record.getOrder());
             oldRecord.setIsApproved(record.getIsApproved());
         }
-        assert oldRecord != null;
+
+        if (oldRecord == null) {
+            throw new EntityNotFoundException("Registro de servicio no encontrado con ID: " + record.getId());
+        }
         return repository.save(record);
     }
 

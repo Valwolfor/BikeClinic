@@ -20,16 +20,28 @@ public class StatusServiceImpl implements StatusService {
         this.repository = repository;
     }
 
+    /**
+     * Crea un nuevo estado de servicio.
+     *
+     * @param status El estado a crear.
+     * @return El estado creado.
+     */
     @Override
     public Status createStatus(Status status) {
         return repository.save(status);
     }
 
+    /**
+     * Actualiza la información de un estado de servicio existente.
+     *
+     * @param status El estado con la información actualizada.
+     * @return El estado actualizado.
+     */
     @Override
     public Status updateStatus(Status status) {
         Status oldStatus = repository.findById(status.getId()).orElse(null);
         if (oldStatus != null) {
-            //no se puede cambiar id ni el kilometraje
+            // No se puede cambiar el ID ni el kilometraje
             oldStatus.setBrakeFluid(status.getBrakeFluid());
             oldStatus.setBrakes(status.getBrakes());
             oldStatus.setChain(status.getChain());
@@ -58,21 +70,43 @@ public class StatusServiceImpl implements StatusService {
         return repository.save(oldStatus);
     }
 
+    /**
+     * Elimina un estado de servicio por su ID.
+     *
+     * @param id El ID del estado a eliminar.
+     */
     @Override
     public void deleteStatus(Long id) {
         repository.deleteById(id);
     }
 
+    /**
+     * Obtiene un estado de servicio por su ID.
+     *
+     * @param id El ID del estado a obtener.
+     * @return El estado de servicio encontrado.
+     */
     @Override
     public Status getStatusById(Long id) {
         return repository.getReferenceById(id);
     }
 
+    /**
+     * Obtiene un estado de servicio por el ID de la motocicleta asociada.
+     *
+     * @param id El ID de la motocicleta.
+     * @return El estado de servicio encontrado.
+     */
     @Override
     public Status getStatusByMotorcycleId(Long id) {
         return repository.findByMotorcycleId(id);
     }
 
+    /**
+     * Obtiene todos los estados de servicio.
+     *
+     * @return Lista de todos los estados de servicio.
+     */
     @Override
     public List<Status> getAllStatuss() {
         return repository.findAll();

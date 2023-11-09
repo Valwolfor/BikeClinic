@@ -3,6 +3,7 @@ package Services.Implementations;
 import Beans.Service;
 import Repository.ServiceRepository;
 import Services.Interfaces.ServiceService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,7 +33,10 @@ public class ServiceServiceImpl implements ServiceService {
             oldService.setServiceDetail(service.getServiceDetail());
             oldService.setServiceValue(service.getServiceValue());
         }
-        assert oldService != null;
+
+        if (oldService == null) {
+            throw new EntityNotFoundException("Servicio no encontrado con ID: " + service.getIdService());
+        }
         return repository.save(oldService);
     }
 

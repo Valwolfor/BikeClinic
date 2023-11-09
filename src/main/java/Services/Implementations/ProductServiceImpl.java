@@ -1,9 +1,9 @@
 package Services.Implementations;
 
 import Beans.Product;
-import Beans.User;
 import Repository.ProductRepository;
 import Services.Interfaces.ProductService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,7 +30,10 @@ public class ProductServiceImpl implements ProductService {
             oldProduct.setProductName(product.getProductName());
             oldProduct.setProductValue(product.getProductValue());
         }
-        assert oldProduct != null;
+
+        if (oldProduct == null) {
+            throw new EntityNotFoundException("Registro de producto no encontrado con ID: " + product.getIdProduct());
+        }
         return repository.save(oldProduct);
     }
 
@@ -50,7 +53,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getAllUsers() {
+    public List<Product> getAllProducts() {
         return repository.findAll();
     }
 }

@@ -1,7 +1,6 @@
 package Services.Interfaces;
 
 import Beans.Product;
-import Beans.User;
 
 import java.util.List;
 
@@ -11,5 +10,5 @@ public interface ProductService {
     void deleteProduct(Integer id);
     Product getProductById(Integer id);
     Product getProductByName(String name);
-    List<Product> getAllUsers();
+    List<Product> getAllProducts();
 }
