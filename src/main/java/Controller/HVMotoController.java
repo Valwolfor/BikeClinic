@@ -1,6 +1,5 @@
 package Controller;
 
-import Beans.HVmoto;
 import Connection.DBConnection;
 import com.google.gson.Gson;
 import java.sql.Date;

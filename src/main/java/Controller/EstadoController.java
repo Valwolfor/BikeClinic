@@ -1,7 +1,7 @@
 
 package Controller;
 
-import Beans.Estado;
+import Beans.Status;
 import Connection.DBConnection;
 import com.google.gson.Gson;
 import java.sql.ResultSet;
@@ -57,7 +57,7 @@ public class EstadoController implements IEstadoController {
                 String combustible = rs.getString("combustible");
                 
 //                Se crea objeto y se vuelve json.
-                Estado estado = new Estado(moto, idEstado, indicadores, desIndicadores, aceite, nivelAceite, liquidoFrenos, liquidoEmbrague, liquidoRefrigerante, lucesAptas, espejos, claxon, tanque, llantaDelantera, llantaTrasera, motor, chasis, acelerador, escape, trasmision, embrague, frenos, cadena, apoyaPies, kilometraje,  combustible);
+                Status estado = new Status(moto, idEstado, indicadores, desIndicadores, aceite, nivelAceite, liquidoFrenos, liquidoEmbrague, liquidoRefrigerante, lucesAptas, espejos, claxon, tanque, llantaDelantera, llantaTrasera, motor, chasis, acelerador, escape, trasmision, embrague, frenos, cadena, apoyaPies, kilometraje,  combustible);
 
                 //Para agregarle
                 listaEstados.add(gson.toJson(estado));
@@ -82,7 +82,7 @@ public class EstadoController implements IEstadoController {
             Statement st = conn.conectar().createStatement();
             st.executeUpdate(sql);
 
-            Estado estado = new Estado(indicadores, desIndicadores, aceite, nivelAceite, liquidoFrenos, liquidoEmbrague, liquidoRefrigerante, lucesAptas, espejos, claxon, tanque, llantaDelantera, llantaTrasera, motor, chasis, acelerador, escape, trasmision, embrague, frenos, cadena, apoyaPies, kilometraje, combustible);
+            Status estado = new Status(indicadores, desIndicadores, aceite, nivelAceite, liquidoFrenos, liquidoEmbrague, liquidoRefrigerante, lucesAptas, espejos, claxon, tanque, llantaDelantera, llantaTrasera, motor, chasis, acelerador, escape, trasmision, embrague, frenos, cadena, apoyaPies, kilometraje, combustible);
 
             st.close();
             System.out.println("Se realizó el registro de la moto.");
@@ -110,7 +110,7 @@ public class EstadoController implements IEstadoController {
             rs.next();
             int idEstado = Integer.parseInt(rs.getString("idEstado"));
 
-            Estado moto = new Estado(idEstado, kilometraje);
+            Status moto = new Status(idEstado, kilometraje);
 
             st.close();
             System.out.println("Se realizó la consulta del estado.");

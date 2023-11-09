@@ -1,6 +1,6 @@
 package Controller;
 
-import Beans.Producto;
+import Beans.Product;
 import Connection.DBConnection;
 import com.google.gson.Gson;
 import java.sql.ResultSet;
@@ -31,7 +31,7 @@ public class ProductoController implements IProductoController {
             st.executeUpdate(sql);
 
 //          Se crea objeto y se vuelve json.
-            Producto producto = new Producto(nombre, valorProducto);
+            Product producto = new Product(nombre, valorProducto);
             st.close();
             System.out.println("Se realizó la consulta de actualización en: " + producto);
             //Regregar el objeto de Json
@@ -65,7 +65,7 @@ public class ProductoController implements IProductoController {
                 String nombre = rs.getString("nombre");
                 double valorProducto = rs.getDouble("valorProducto");
 //                Se crea objeto y se vuelve json.
-                Producto productoC = new Producto(idProducto, nombre, valorProducto);
+                Product productoC = new Product(idProducto, nombre, valorProducto);
 
                 //Para agregarle
                 listaProductos.add(gson.toJson(productoC));

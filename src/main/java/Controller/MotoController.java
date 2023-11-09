@@ -1,6 +1,6 @@
 package Controller;
 
-import Beans.Moto;
+import Beans.Motorcycle;
 import Connection.DBConnection;
 import com.google.gson.Gson;
 import java.sql.ResultSet;
@@ -38,7 +38,7 @@ public class MotoController implements IMotoController {
                 String nombreCliente = rs.getString("Cliente");
 
 //                Se crea objeto y se vuelve json.
-                Moto moto = new Moto(placa, idMotor, idChasis, marca, modelo, añoRegistro, idCliente, nombreCliente);
+                Motorcycle moto = new Motorcycle(placa, idMotor, idChasis, marca, modelo, añoRegistro, idCliente, nombreCliente);
 
                 //Para agregarle
                 listaMotos.add(gson.toJson(moto));
@@ -65,7 +65,7 @@ public class MotoController implements IMotoController {
             Statement st = conn.conectar().createStatement();
             st.executeUpdate(sql);
 
-            Moto moto = new Moto(placa, idMotor, idChasis, marca, modelo, añoRegistro, idCliente);
+            Motorcycle moto = new Motorcycle(placa, idMotor, idChasis, marca, modelo, añoRegistro, idCliente);
 
             st.close();
             System.out.println("Se realizó el registro de la moto.");
@@ -99,7 +99,7 @@ public class MotoController implements IMotoController {
             String añoRegistro = rs.getString("añoRegistro");
             int idCliente = rs.getInt("Clientes_idCliente");
 
-            Moto moto = new Moto(placa, idMotor, idChasis, marca, modelo, añoRegistro, idCliente);
+            Motorcycle moto = new Motorcycle(placa, idMotor, idChasis, marca, modelo, añoRegistro, idCliente);
 
             st.close();
             System.out.println("Se realizó la consulta de la moto.");

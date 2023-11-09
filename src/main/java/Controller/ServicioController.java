@@ -1,6 +1,6 @@
 package Controller;
 
-import Beans.Servicio;
+import Beans.Service;
 import Connection.DBConnection;
 import com.google.gson.Gson;
 import java.sql.ResultSet;
@@ -34,7 +34,7 @@ public class ServicioController implements IServicioController {
                 String detalleServicio = rs.getString("detalleProceso");
                 double valorServicio = rs.getDouble("valorProceso");
 //                Se crea objeto y se vuelve json.
-                Servicio servicioC = new Servicio(idServicio, nombreServicio, detalleServicio, valorServicio);
+                Service servicioC = new Service(idServicio, nombreServicio, detalleServicio, valorServicio);
 
                 //Para agregarle
                 listaServicios.add(gson.toJson(servicioC));
@@ -84,7 +84,7 @@ public class ServicioController implements IServicioController {
             st.executeUpdate(sql);
 
 //          Se crea objeto y se vuelve json.
-            Servicio servicio = new Servicio(nombreServicio, detalleServicio, valorServicio);
+            Service servicio = new Service(nombreServicio, detalleServicio, valorServicio);
             st.close();
             System.out.println("Se realizó la consulta de actualización en: " + servicio);
             //Regregar el objeto de Json

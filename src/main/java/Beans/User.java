@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 
 
 @Entity
+@Table(name = "user")
 public class User extends Person {
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
