@@ -1,8 +1,11 @@
 package com.motorclinic.controller;
 
 import com.motorclinic.entity.Customer;
+import com.motorclinic.entity.DTO.CustomerDTO;
 import com.motorclinic.services.interfaces.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,19 +21,29 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
+    //Check
     @PostMapping
     public Customer createCustomer(@RequestBody Customer customer) {
         return customerService.createCustomer(customer);
     }
 
+    //Check
     @GetMapping
     public List<Customer> getAllCustomers() {
         return customerService.getAllCustomers();
     }
 
+
     @GetMapping("/{id}")
-    public Customer getCustomerById(@PathVariable Integer id) {
-        return customerService.getCustomerById(id);
+    public ResponseEntity<CustomerDTO> getCustomerById(@PathVariable Integer id) {
+        Customer customer = customerService.getCustomerById(id);
+
+        if (customer != null) {
+            CustomerDTO customerDTO = convertToDTO(customer);
+            return new ResponseEntity<>(customerDTO, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("/byEmail/{email}")
@@ -49,4 +62,22 @@ public class CustomerController {
     public void deleteCustomer(@PathVariable Integer id) {
         customerService.deleteCustomer(id);
     }
+
+    private CustomerDTO convertToDTO(Customer customer) {
+        CustomerDTO customerDTO = new CustomerDTO();
+        customerDTO.setId(customer.getId());
+        customerDTO.setFirstName(customer.getFirstName());
+        customerDTO.setLastName(customer.getLastName());
+        customerDTO.setId(customer.getId());
+        customerDTO.setFirstName(customer.getFirstName());
+        customerDTO.setLastName(customer.getLastName());
+        customerDTO.setEmail(customer.getEmail());
+        customerDTO.setContactNumber(customer.getContactNumber());
+        customerDTO.setTypeId(customer.getTypeId());
+
+        return customerDTO;
+    }
+
 }
+
+
