@@ -31,7 +31,7 @@
 
   /**
    * --------------------------------------------------------------------------
-   * Bootstrap (v5.2.2): util/index.js
+   * Bootstrap (v5.2.2): com.motorclinic.util/index.js
    * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
    * --------------------------------------------------------------------------
    */
@@ -737,7 +737,7 @@
 
   /**
    * --------------------------------------------------------------------------
-   * Bootstrap (v5.2.2): util/config.js
+   * Bootstrap (v5.2.2): com.motorclinic.util/config.js
    * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
    * --------------------------------------------------------------------------
    */
@@ -877,7 +877,7 @@
 
   /**
    * --------------------------------------------------------------------------
-   * Bootstrap (v5.2.2): util/component-functions.js
+   * Bootstrap (v5.2.2): com.motorclinic.util/component-functions.js
    * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
    * --------------------------------------------------------------------------
    */
@@ -1116,7 +1116,7 @@
 
   /**
    * --------------------------------------------------------------------------
-   * Bootstrap (v5.2.2): util/swipe.js
+   * Bootstrap (v5.2.2): com.motorclinic.util/swipe.js
    * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
    * --------------------------------------------------------------------------
    */
@@ -2422,7 +2422,7 @@
 
   /**
    * --------------------------------------------------------------------------
-   * Bootstrap (v5.2.2): util/scrollBar.js
+   * Bootstrap (v5.2.2): com.motorclinic.util/scrollBar.js
    * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
    * --------------------------------------------------------------------------
    */
@@ -2541,7 +2541,7 @@
 
   /**
    * --------------------------------------------------------------------------
-   * Bootstrap (v5.2.2): util/backdrop.js
+   * Bootstrap (v5.2.2): com.motorclinic.util/backdrop.js
    * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
    * --------------------------------------------------------------------------
    */
@@ -2687,7 +2687,7 @@
 
   /**
    * --------------------------------------------------------------------------
-   * Bootstrap (v5.2.2): util/focustrap.js
+   * Bootstrap (v5.2.2): com.motorclinic.util/focustrap.js
    * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
    * --------------------------------------------------------------------------
    */
@@ -3446,7 +3446,7 @@
 
   /**
    * --------------------------------------------------------------------------
-   * Bootstrap (v5.2.2): util/sanitizer.js
+   * Bootstrap (v5.2.2): com.motorclinic.util/sanitizer.js
    * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
    * --------------------------------------------------------------------------
    */
@@ -3551,7 +3551,7 @@
 
   /**
    * --------------------------------------------------------------------------
-   * Bootstrap (v5.2.2): util/template-factory.js
+   * Bootstrap (v5.2.2): com.motorclinic.util/template-factory.js
    * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
    * --------------------------------------------------------------------------
    */
