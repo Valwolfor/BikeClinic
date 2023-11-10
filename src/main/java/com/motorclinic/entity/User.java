@@ -55,8 +55,9 @@ public class User extends Person {
         return roles;
     }
 
-    public void setRole(UserRole role) {
-        this.roles.add(role);
+
+    public void setRoles(List<UserRole> roles) {
+        this.roles = roles;
     }
 
     @Override

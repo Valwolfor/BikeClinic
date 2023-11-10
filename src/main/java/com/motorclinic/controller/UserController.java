@@ -37,24 +37,39 @@ public class UserController {
                 new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    //Check
     @PostMapping
     public ResponseEntity<User> createUser(@RequestBody User user) {
         User createdUser = userService.createUser(user);
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 
+    //TODO: DTO devuelve todo. contra y esas vainas se debe arreglar.
+    //Checked
     @PutMapping("/{id}")
     public ResponseEntity<User> updateUser(@PathVariable Integer id, @RequestBody User user) {
-        user.setId(id);
-        User updatedUser = userService.updateUser(user);
-        return (updatedUser != null) ?
-                new ResponseEntity<>(updatedUser, HttpStatus.OK) :
-                new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        // Verificar si el usuario existe
+        User existingUser = userService.getUserById(id);
+
+        if (existingUser != null) {
+            // Actualizar los campos relevantes del usuario existente
+            existingUser.setFirstName(user.getFirstName());
+            existingUser.setLastName(user.getLastName());
+            existingUser.setEmail(user.getEmail());
+            existingUser.setContactNumber(user.getContactNumber());
+            // Guardar los cambios
+            User updatedUser = userService.updateUser(existingUser);
+
+            return new ResponseEntity<>(updatedUser, HttpStatus.OK);
+        } else {
+            // El usuario no existe, devolver un código 404
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     /**
      * Solo en caso de borrado definitivo
-     *
+     *Checked.
      * @param id
      * @return
      */
@@ -64,8 +79,7 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    // Otros métodos de punto final según sea necesario
-
+    //Check
     @PutMapping("/{id}/change-password")
     public ResponseEntity<User> changeUserPassword(@PathVariable Integer id, @RequestBody User user) {
         user.setId(id);
@@ -76,7 +90,7 @@ public class UserController {
     }
 
     /**
-     * Método por defecto para borrar
+     * Método por defecto para borrar. Checked
      * @param id
      * @param user
      * @return
@@ -90,6 +104,7 @@ public class UserController {
                 new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    //Checked
     @PostMapping("/{id}/add-role")
     public ResponseEntity<User> addUserRole(@PathVariable Integer id, @RequestParam UserRole role) {
         User user = userService.getUserById(id);
@@ -100,7 +115,7 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-
+    //Checked
     @DeleteMapping("/{id}/delete-role")
     public ResponseEntity<User> deleteUserRole(@PathVariable Integer id, @RequestParam UserRole role) {
         User user = userService.getUserById(id);
@@ -112,12 +127,14 @@ public class UserController {
         }
     }
 
+    //Checked
     @GetMapping("/by-role")
     public ResponseEntity<List<User>> getUsersByRole(@RequestParam UserRole role) {
         List<User> users = userService.getUsersByRole(role);
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
+    //Checked
     @GetMapping("/by-status")
     public ResponseEntity<List<User>> getUsersByStatus(@RequestParam UserStatus status) {
         List<User> users = userService.getUsersByStatus(status);

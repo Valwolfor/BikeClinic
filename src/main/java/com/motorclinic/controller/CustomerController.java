@@ -33,7 +33,7 @@ public class CustomerController {
         return customerService.getAllCustomers();
     }
 
-
+    //Check
     @GetMapping("/{id}")
     public ResponseEntity<CustomerDTO> getCustomerById(@PathVariable Integer id) {
         Customer customer = customerService.getCustomerById(id);
@@ -45,12 +45,13 @@ public class CustomerController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-
+    //Check
     @GetMapping("/byEmail/{email}")
     public Customer getCustomerByEmail(@PathVariable String email) {
         return customerService.getByEmail(email);
     }
 
+    //Check
     @PutMapping("/{id}")
     public Customer updateCustomer(@PathVariable Integer id, @RequestBody Customer customer) {
         // Aquí puedes validar que el ID en el path coincida con el ID en el cuerpo
@@ -58,6 +59,7 @@ public class CustomerController {
         return customerService.updateCustomer(customer);
     }
 
+    //Check
     @DeleteMapping("/{id}")
     public void deleteCustomer(@PathVariable Integer id) {
         customerService.deleteCustomer(id);

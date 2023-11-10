@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -118,7 +119,9 @@ public class UserServiceImpl implements UserService {
         User oldUser = repository.findById(user.getId()).orElse(null);
         if (oldUser != null) {
             if (!oldUser.getRoles().contains(role)) {
-                oldUser.setRole(role);
+                List<UserRole> roles = oldUser.getRoles();
+                roles.add(role);
+                oldUser.setRoles(roles);
             }
 
         }
@@ -139,8 +142,10 @@ public class UserServiceImpl implements UserService {
 
         User oldUser = repository.findById(user.getId()).orElse(null);
         if (oldUser != null && oldUser.getRoles().contains(role)) {
+            List<UserRole> roles = oldUser.getRoles();
+            roles.remove(role);
+            oldUser.setRoles(roles);
 
-            oldUser.getRoles().remove(role);
         } else {
             throw new EntityNotFoundException("Usuario no encontrado con ID: " + user.getId() + " o el rolo no está asignado en este usuario");
         }
@@ -165,9 +170,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getUsersByRole(UserRole role) {
-        return repository.findAllByRole(role);
+        return repository.findAllByRoles(Collections.singletonList(role));
     }
-
     @Override
     public List<User> getUsersByStatus(UserStatus status) {
         return repository.findAllByStatus(status);

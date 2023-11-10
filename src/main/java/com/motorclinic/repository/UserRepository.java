@@ -12,7 +12,7 @@ import java.util.List;
 public interface UserRepository extends JpaRepository<User, Integer> {
     User findByEmail(String email);
     @Query("SELECT u FROM User u WHERE u.roles = :role")
-    List<User> findAllByRole(@Param("role") UserRole role);
+    List<User> findAllByRoles(@Param("role") List<UserRole> roles);
 
 
     void deleteById(Integer id);
