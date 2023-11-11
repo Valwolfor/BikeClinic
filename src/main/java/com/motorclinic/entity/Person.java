@@ -5,24 +5,29 @@ package com.motorclinic.entity;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "person")
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name="person")
-public abstract class Person {
-    @Id()
-    @Column(name="id")
+public class Person {
+
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    @Column(name="first_name")
-    private String firstName;
-    @Column(name="last_name")
-    private String lastName;
-    private String email;
-    @Column(name="contact_number")
+    private Long id;
+
+    @Column(name = "contact_number", nullable = false)
     private String contactNumber;
+
+    @Column(name = "email", nullable = false, unique = true)
+    private String email;
+
+    @Column(name = "first_name", nullable = false)
+    private String firstName;
+
+    @Column(name = "last_name", nullable = false)
+    private String lastName;
 
     public Person() {}
 
-    public Person(int id, String firstName, String lastName, String email, String contactNumber) {
+    public Person(Long id, String firstName, String lastName, String email, String contactNumber) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -30,11 +35,11 @@ public abstract class Person {
         this.contactNumber = contactNumber;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

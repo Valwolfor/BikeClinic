@@ -1,55 +1,52 @@
 package com.motorclinic.entity;
 
 import jakarta.persistence.*;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import java.util.Date;
-import java.util.List;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "service_order")
 public class ServiceOrder {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "order_id")
-    private int orderId;
-
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date date;
-
-    @Column(name = "customer_id")
-    private Integer customerId;
-
-    @Column(name = "mechanic_id")
-    private Integer mechanicId;
-
-    @Column(name = "motorcycle_plate")
-    private String motorcyclePlate;
-
-    private String reason;
-
-    @Column(name = "diagnostic_desc")
-    private String diagnosticDescription;
-
-    private String documents;
-
+    @Column(name = "advance", nullable = false)
     private String advance;
 
     @Column(name = "advance_value")
-    private double advanceValue;
+    private BigDecimal advanceValue;
 
-    @Column(name = "route_auth")
-    private String routeAuthorization;
+    @Column(name = "date", nullable = false)
+    private LocalDateTime date;
 
-    @OneToOne(mappedBy = "serviceOrder")
+    @Column(name = "diagnostic_desc")
+    private String diagnosticDesc;
+
+    @Column(name = "documents", nullable = false)
+    private String documents;
+
+    @Column(name = "motorcycle_plate", nullable = false)
+    private String motorcyclePlate;
+
+    @Column(name = "reason", nullable = false)
+    private String reason;
+
+    @Column(name = "route_auth", nullable = false)
+    private boolean routeAuth;
+
+    @ManyToOne
+    @JoinColumn(name = "motorcycle_id", nullable = false)
+    private Motorcycle motorcycle;
+
+    @ManyToOne
+    @JoinColumn(name = "status_id", nullable = false)
     private Status status;
 
-    @OneToMany(mappedBy = "serviceOrder", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<RecordServiceProduct> recordServiceProducts;
-    public ServiceOrder() {
-    }
+    @ManyToOne
+    @JoinColumn(name = "user_id_mech", nullable = false)
+    private User mechanic;
 
     public Long getId() {
         return id;
@@ -59,36 +56,44 @@ public class ServiceOrder {
         this.id = id;
     }
 
-    public int getOrderId() {
-        return orderId;
+    public String getAdvance() {
+        return advance;
     }
 
-    public void setOrderId(int orderId) {
-        this.orderId = orderId;
+    public void setAdvance(String advance) {
+        this.advance = advance;
     }
 
-    public Date getDate() {
+    public BigDecimal getAdvanceValue() {
+        return advanceValue;
+    }
+
+    public void setAdvanceValue(BigDecimal advanceValue) {
+        this.advanceValue = advanceValue;
+    }
+
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 
-    public Integer getCustomerId() {
-        return customerId;
+    public String getDiagnosticDesc() {
+        return diagnosticDesc;
     }
 
-    public void setCustomerId(Integer customerName) {
-        this.customerId = customerName;
+    public void setDiagnosticDesc(String diagnosticDesc) {
+        this.diagnosticDesc = diagnosticDesc;
     }
 
-    public Integer getMechanicId() {
-        return mechanicId;
+    public String getDocuments() {
+        return documents;
     }
 
-    public void setMechanicId(Integer mechanicName) {
-        this.mechanicId = mechanicName;
+    public void setDocuments(String documents) {
+        this.documents = documents;
     }
 
     public String getMotorcyclePlate() {
@@ -107,44 +112,20 @@ public class ServiceOrder {
         this.reason = reason;
     }
 
-    public String getDiagnosticDescription() {
-        return diagnosticDescription;
+    public boolean isRouteAuth() {
+        return routeAuth;
     }
 
-    public void setDiagnosticDescription(String diagnosticDescription) {
-        this.diagnosticDescription = diagnosticDescription;
+    public void setRouteAuth(boolean routeAuth) {
+        this.routeAuth = routeAuth;
     }
 
-    public String getDocuments() {
-        return documents;
+    public Motorcycle getMotorcycle() {
+        return motorcycle;
     }
 
-    public void setDocuments(String documents) {
-        this.documents = documents;
-    }
-
-    public String getAdvance() {
-        return advance;
-    }
-
-    public void setAdvance(String advance) {
-        this.advance = advance;
-    }
-
-    public double getAdvanceValue() {
-        return advanceValue;
-    }
-
-    public void setAdvanceValue(double advanceValue) {
-        this.advanceValue = advanceValue;
-    }
-
-    public String getRouteAuthorization() {
-        return routeAuthorization;
-    }
-
-    public void setRouteAuthorization(String routeAuthorization) {
-        this.routeAuthorization = routeAuthorization;
+    public void setMotorcycle(Motorcycle motorcycle) {
+        this.motorcycle = motorcycle;
     }
 
     public Status getStatus() {
@@ -155,32 +136,29 @@ public class ServiceOrder {
         this.status = status;
     }
 
-    public List<RecordServiceProduct> getRecordServiceProducts() {
-        return recordServiceProducts;
+    public User getMechanic() {
+        return mechanic;
     }
 
-    public void setRecordServiceProducts(List<RecordServiceProduct> recordServiceProducts) {
-        this.recordServiceProducts = recordServiceProducts;
+    public void setMechanic(User mechanic) {
+        this.mechanic = mechanic;
     }
 
     @Override
     public String toString() {
         return "ServiceOrder{" +
                 "id=" + id +
-                ", orderId=" + orderId +
-                ", date=" + date +
-                ", customerName='" + customerId + '\'' +
-                ", mechanicName='" + mechanicId + '\'' +
-                ", motorcyclePlate='" + motorcyclePlate + '\'' +
-                ", reason='" + reason + '\'' +
-                ", diagnosticDescription='" + diagnosticDescription + '\'' +
-                ", documents='" + documents + '\'' +
                 ", advance='" + advance + '\'' +
                 ", advanceValue=" + advanceValue +
-                ", routeAuthorization='" + routeAuthorization + '\'' +
-                ", status=" + status.getId() +
-                ", services and products=" + getRecordServiceProducts().toString() +
+                ", date=" + date +
+                ", diagnosticDesc='" + diagnosticDesc + '\'' +
+                ", documents='" + documents + '\'' +
+                ", motorcyclePlate='" + motorcyclePlate + '\'' +
+                ", reason='" + reason + '\'' +
+                ", routeAuth=" + routeAuth +
+                ", motorcycle=" + motorcycle +
+                ", status=" + status +
+                ", mechanic=" + mechanic +
                 '}';
     }
-
 }

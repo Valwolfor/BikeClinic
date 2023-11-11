@@ -5,47 +5,30 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "motorcycle")
 public class Motorcycle {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String plate;
-
-    @Column(name = "engine_id")
-    private String engineId;
-
-    @Column(name = "chassis_id")
-    private String chassisId;
-
     @Column(name = "brand")
     private String brand;
 
+    @Column(name = "chassis_id", nullable = false, unique = true)
+    private String chassisId;
+
+    @Column(name = "engine_id", nullable = false, unique = true)
+    private String engineId;
     @Column(name = "model")
     private String model;
 
+    @Column(name = "plate", unique = true, nullable = false)
+    private String plate;
     @Column(name = "registration_year")
     private String registrationYear;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id")
+    @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getPlate() {
-        return plate;
-    }
-
-    public void setPlate(String plate) {
-        this.plate = plate;
-    }
 
     public String getEngineId() {
         return engineId;
@@ -53,22 +36,6 @@ public class Motorcycle {
 
     public void setEngineId(String engineId) {
         this.engineId = engineId;
-    }
-
-    public String getChassisId() {
-        return chassisId;
-    }
-
-    public void setChassisId(String chassisId) {
-        this.chassisId = chassisId;
-    }
-
-    public String getBrand() {
-        return brand;
-    }
-
-    public void setBrand(String brand) {
-        this.brand = brand;
     }
 
     public String getModel() {
@@ -79,12 +46,44 @@ public class Motorcycle {
         this.model = model;
     }
 
+    public String getPlate() {
+        return plate;
+    }
+
+    public void setPlate(String plate) {
+        this.plate = plate;
+    }
+
     public String getRegistrationYear() {
         return registrationYear;
     }
 
     public void setRegistrationYear(String registrationYear) {
         this.registrationYear = registrationYear;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public String getChassisId() {
+        return chassisId;
+    }
+
+    public void setChassisId(String chassisId) {
+        this.chassisId = chassisId;
     }
 
     public Customer getCustomer() {
@@ -97,15 +96,11 @@ public class Motorcycle {
 
     @Override
     public String toString() {
-        return "MotorCycle{" +
+        return "Motorcycle{" +
                 "id=" + id +
-                ", plate='" + plate + '\'' +
-                ", engineId='" + engineId + '\'' +
-                ", chassisId='" + chassisId + '\'' +
                 ", brand='" + brand + '\'' +
-                ", model='" + model + '\'' +
-                ", registrationYear='" + registrationYear + '\'' +
-                ", customer=" + customer.getFirstName() + ' '+ customer.getLastName() + //
+                ", chassisId='" + chassisId + '\'' +
+                ", customer=" + customer +
                 '}';
     }
 }

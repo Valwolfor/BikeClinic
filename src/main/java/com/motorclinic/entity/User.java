@@ -2,6 +2,7 @@
 package com.motorclinic.entity;
 
 import com.motorclinic.entity.util.UserRole;
+import com.motorclinic.entity.util.UserRoleConverter;
 import com.motorclinic.entity.util.UserStatus;
 import jakarta.persistence.*;
 
@@ -9,38 +10,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+
 @Entity
 @Table(name = "user")
 public class User extends Person {
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status")
-    private UserStatus status;
 
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     private String password;
 
+    @Column(name = "roles", nullable = false)
     @Enumerated(EnumType.STRING)
-    @Column(name = "roles")
-    private List<UserRole> roles;
+    @Convert(converter = UserRoleConverter.class)
+    private UserRole roles;
 
+    @Column(name = "status", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private UserStatus status;
     public User() {
         // Empty constructor
-    }
-
-    public User(UserStatus status, String password, UserRole role, int id, String firstName, String lastName, String email, String contactNumber) {
-        super(id, firstName, lastName, email, contactNumber);
-        this.status = status;
-        this.password = password;
-        this.roles = new ArrayList<>();
-        this.roles.add(role);
-    }
-
-    public UserStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(UserStatus status) {
-        this.status = status;
     }
 
     public String getPassword() {
@@ -51,26 +38,28 @@ public class User extends Person {
         this.password = password;
     }
 
-    public List<UserRole> getRoles() {
+    public UserRole getRoles() {
         return roles;
     }
 
-
-    public void setRoles(List<UserRole> roles) {
+    public void setRoles(UserRole roles) {
         this.roles = roles;
+    }
+
+    public UserStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(UserStatus status) {
+        this.status = status;
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "id=" + getId() +
-                ", firstName='" + getFirstName() + '\'' +
-                ", lastName='" + getLastName() + '\'' +
-                ", email='" + getEmail() + '\'' +
-                ", contactNumber='" + getContactNumber() + '\'' +
-                ", status='" + status + '\'' +
-                ", password='" + password + '\'' +
-                ", role='" + roles + '\'' +
+                "password='" + password + '\'' +
+                ", roles=" + roles +
+                ", status=" + status +
                 '}';
     }
 }

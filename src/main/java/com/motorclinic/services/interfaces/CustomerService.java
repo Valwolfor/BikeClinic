@@ -9,9 +9,9 @@ public interface CustomerService {
 
     Customer updateCustomer(Customer customer);
 
-    void deleteCustomer(Integer id);
+    void deleteCustomer(Long id);
 
-    Customer getCustomerById(Integer id);
+    Customer getCustomerById(Long id);
 
     Customer getByEmail(String email);
 

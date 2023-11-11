@@ -2,6 +2,8 @@ package com.motorclinic.entity;
 
 import jakarta.persistence.*;
 
+import java.util.Objects;
+
 @Entity
 @Table(name = "customer")
 public class Customer extends Person {
@@ -28,4 +30,5 @@ public class Customer extends Person {
                 ", typeId='" + typeId + '\'' +
                 '}';
     }
+
 }

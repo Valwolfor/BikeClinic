@@ -1,62 +1,85 @@
 package com.motorclinic.entity;
 
 import jakarta.persistence.*;
-
 @Entity
+@Table(name = "status")
 public class Status {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "motorcycle_id")
-    private Long motorcycleId;
-    @OneToOne
-    @JoinColumn(name = "service_order_id")
-    private ServiceOrder serviceOrder;
-    private String indicators;
-    @Column(name = "indicators_desc")
-    private String indicatorsDescription;
-    private String oil;
-
-    public ServiceOrder getServiceOrder() {
-        return serviceOrder;
-    }
-
-    public void setServiceOrder(ServiceOrder serviceOrder) {
-        this.serviceOrder = serviceOrder;
-    }
-
-    @Column(name = "oil_level")
-    private String oilLevel;
-    @Column(name = "brake_fluid")
+    @Column(name = "brake_fluid", nullable = false)
     private String brakeFluid;
-    @Column(name = "clutch_fluid")
-    private String clutchFluid;
-    private String coolant;
-    @Column(name = "lights_good")
-    private String lightsGood;
-    private String mirrors;
-    private String horn;
-    private String tank;
-    @Column(name = "front_tire")
-    private String frontTire;
-    @Column(name = "rear_tire")
-    private String rearTire;
-    private String engine;
-    private String chassis;
-    private String throttle;
-    private String exhaust;
-    private String transmission;
-    private String clutch;
+
+    @Column(name = "brakes", nullable = false)
     private String brakes;
+
+    @Column(name = "chain", nullable = false)
     private String chain;
-    @Column(name = "foot_pegs")
+
+    @Column(name = "chassis", nullable = false)
+    private String chassis;
+
+    @Column(name = "clutch", nullable = false)
+    private String clutch;
+
+    @Column(name = "clutch_fluid", nullable = false)
+    private String clutchFluid;
+
+    @Column(name = "coolant", nullable = false)
+    private String coolant;
+
+    @Column(name = "engine", nullable = false)
+    private String engine;
+
+    @Column(name = "exhaust", nullable = false)
+    private String exhaust;
+
+    @Column(name = "foot_pegs", nullable = false)
     private String footPegs;
-    private String mileage;
+
+    @Column(name = "front_tire", nullable = false)
+    private String frontTire;
+
+    @Column(name = "fuel", nullable = false)
     private String fuel;
 
-    public Status() {
-    }
+    @Column(name = "horn", nullable = false)
+    private String horn;
+
+    @Column(name = "indicators", nullable = false)
+    private String indicators;
+
+    @Column(name = "indicators_desc", nullable = false)
+    private String indicatorsDesc;
+
+    @Column(name = "lights_good", nullable = false)
+    private String lightsGood;
+
+    @Column(name = "mileage", nullable = false)
+    private String mileage;
+
+    @Column(name = "mirrors", nullable = false)
+    private String mirrors;
+
+    @Column(name = "oil", nullable = false)
+    private String oil;
+
+    @Column(name = "oil_level", nullable = false)
+    private String oilLevel;
+
+    @Column(name = "rear_tire", nullable = false)
+    private String rearTire;
+
+    @Column(name = "tank", nullable = false)
+    private String tank;
+
+    @Column(name = "throttle", nullable = false)
+    private String throttle;
+
+    @Column(name = "transmission", nullable = false)
+    private String transmission;
 
     public Long getId() {
         return id;
@@ -66,164 +89,12 @@ public class Status {
         this.id = id;
     }
 
-    public Long getMotorcycleId() {
-        return motorcycleId;
-    }
-
-    public void setMotorcycleId(Long motorcycleId) {
-        this.motorcycleId = motorcycleId;
-    }
-
-    public String getIndicators() {
-        return indicators;
-    }
-
-    public void setIndicators(String indicators) {
-        this.indicators = indicators;
-    }
-
-    public String getIndicatorsDescription() {
-        return indicatorsDescription;
-    }
-
-    public void setIndicatorsDescription(String indicatorsDescription) {
-        this.indicatorsDescription = indicatorsDescription;
-    }
-
-    public String getOil() {
-        return oil;
-    }
-
-    public void setOil(String oil) {
-        this.oil = oil;
-    }
-
-    public String getOilLevel() {
-        return oilLevel;
-    }
-
-    public void setOilLevel(String oilLevel) {
-        this.oilLevel = oilLevel;
-    }
-
     public String getBrakeFluid() {
         return brakeFluid;
     }
 
     public void setBrakeFluid(String brakeFluid) {
         this.brakeFluid = brakeFluid;
-    }
-
-    public String getClutchFluid() {
-        return clutchFluid;
-    }
-
-    public void setClutchFluid(String clutchFluid) {
-        this.clutchFluid = clutchFluid;
-    }
-
-    public String getCoolant() {
-        return coolant;
-    }
-
-    public void setCoolant(String coolant) {
-        this.coolant = coolant;
-    }
-
-    public String getLightsGood() {
-        return lightsGood;
-    }
-
-    public void setLightsGood(String lightsGood) {
-        this.lightsGood = lightsGood;
-    }
-
-    public String getMirrors() {
-        return mirrors;
-    }
-
-    public void setMirrors(String mirrors) {
-        this.mirrors = mirrors;
-    }
-
-    public String getHorn() {
-        return horn;
-    }
-
-    public void setHorn(String horn) {
-        this.horn = horn;
-    }
-
-    public String getTank() {
-        return tank;
-    }
-
-    public void setTank(String tank) {
-        this.tank = tank;
-    }
-
-    public String getFrontTire() {
-        return frontTire;
-    }
-
-    public void setFrontTire(String frontTire) {
-        this.frontTire = frontTire;
-    }
-
-    public String getRearTire() {
-        return rearTire;
-    }
-
-    public void setRearTire(String rearTire) {
-        this.rearTire = rearTire;
-    }
-
-    public String getEngine() {
-        return engine;
-    }
-
-    public void setEngine(String engine) {
-        this.engine = engine;
-    }
-
-    public String getChassis() {
-        return chassis;
-    }
-
-    public void setChassis(String chassis) {
-        this.chassis = chassis;
-    }
-
-    public String getThrottle() {
-        return throttle;
-    }
-
-    public void setThrottle(String throttle) {
-        this.throttle = throttle;
-    }
-
-    public String getExhaust() {
-        return exhaust;
-    }
-
-    public void setExhaust(String exhaust) {
-        this.exhaust = exhaust;
-    }
-
-    public String getTransmission() {
-        return transmission;
-    }
-
-    public void setTransmission(String transmission) {
-        this.transmission = transmission;
-    }
-
-    public String getClutch() {
-        return clutch;
-    }
-
-    public void setClutch(String clutch) {
-        this.clutch = clutch;
     }
 
     public String getBrakes() {
@@ -242,6 +113,54 @@ public class Status {
         this.chain = chain;
     }
 
+    public String getChassis() {
+        return chassis;
+    }
+
+    public void setChassis(String chassis) {
+        this.chassis = chassis;
+    }
+
+    public String getClutch() {
+        return clutch;
+    }
+
+    public void setClutch(String clutch) {
+        this.clutch = clutch;
+    }
+
+    public String getClutchFluid() {
+        return clutchFluid;
+    }
+
+    public void setClutchFluid(String clutchFluid) {
+        this.clutchFluid = clutchFluid;
+    }
+
+    public String getCoolant() {
+        return coolant;
+    }
+
+    public void setCoolant(String coolant) {
+        this.coolant = coolant;
+    }
+
+    public String getEngine() {
+        return engine;
+    }
+
+    public void setEngine(String engine) {
+        this.engine = engine;
+    }
+
+    public String getExhaust() {
+        return exhaust;
+    }
+
+    public void setExhaust(String exhaust) {
+        this.exhaust = exhaust;
+    }
+
     public String getFootPegs() {
         return footPegs;
     }
@@ -250,12 +169,12 @@ public class Status {
         this.footPegs = footPegs;
     }
 
-    public String getMileage() {
-        return mileage;
+    public String getFrontTire() {
+        return frontTire;
     }
 
-    public void setMileage(String mileage) {
-        this.mileage = mileage;
+    public void setFrontTire(String frontTire) {
+        this.frontTire = frontTire;
     }
 
     public String getFuel() {
@@ -266,35 +185,130 @@ public class Status {
         this.fuel = fuel;
     }
 
+    public String getHorn() {
+        return horn;
+    }
+
+    public void setHorn(String horn) {
+        this.horn = horn;
+    }
+
+    public String getIndicators() {
+        return indicators;
+    }
+
+    public void setIndicators(String indicators) {
+        this.indicators = indicators;
+    }
+
+    public String getIndicatorsDesc() {
+        return indicatorsDesc;
+    }
+
+    public void setIndicatorsDesc(String indicatorsDesc) {
+        this.indicatorsDesc = indicatorsDesc;
+    }
+
+    public String getLightsGood() {
+        return lightsGood;
+    }
+
+    public void setLightsGood(String lightsGood) {
+        this.lightsGood = lightsGood;
+    }
+
+    public String getMileage() {
+        return mileage;
+    }
+
+    public void setMileage(String mileage) {
+        this.mileage = mileage;
+    }
+
+    public String getMirrors() {
+        return mirrors;
+    }
+
+    public void setMirrors(String mirrors) {
+        this.mirrors = mirrors;
+    }
+
+    public String getOil() {
+        return oil;
+    }
+
+    public void setOil(String oil) {
+        this.oil = oil;
+    }
+
+    public String getOilLevel() {
+        return oilLevel;
+    }
+
+    public void setOilLevel(String oilLevel) {
+        this.oilLevel = oilLevel;
+    }
+
+    public String getRearTire() {
+        return rearTire;
+    }
+
+    public void setRearTire(String rearTire) {
+        this.rearTire = rearTire;
+    }
+
+    public String getTank() {
+        return tank;
+    }
+
+    public void setTank(String tank) {
+        this.tank = tank;
+    }
+
+    public String getThrottle() {
+        return throttle;
+    }
+
+    public void setThrottle(String throttle) {
+        this.throttle = throttle;
+    }
+
+    public String getTransmission() {
+        return transmission;
+    }
+
+    public void setTransmission(String transmission) {
+        this.transmission = transmission;
+    }
+
     @Override
     public String toString() {
         return "Status{" +
                 "id=" + id +
-                ", motorcycleId=" + motorcycleId +
-                ", indicators='" + indicators + '\'' +
-                ", indicatorsDescription='" + indicatorsDescription + '\'' +
-                ", oil='" + oil + '\'' +
-                ", oilLevel='" + oilLevel + '\'' +
                 ", brakeFluid='" + brakeFluid + '\'' +
-                ", clutchFluid='" + clutchFluid + '\'' +
-                ", coolant='" + coolant + '\'' +
-                ", lightsGood='" + lightsGood + '\'' +
-                ", mirrors='" + mirrors + '\'' +
-                ", horn='" + horn + '\'' +
-                ", tank='" + tank + '\'' +
-                ", frontTire='" + frontTire + '\'' +
-                ", rearTire='" + rearTire + '\'' +
-                ", engine='" + engine + '\'' +
-                ", chassis='" + chassis + '\'' +
-                ", throttle='" + throttle + '\'' +
-                ", exhaust='" + exhaust + '\'' +
-                ", transmission='" + transmission + '\'' +
-                ", clutch='" + clutch + '\'' +
                 ", brakes='" + brakes + '\'' +
                 ", chain='" + chain + '\'' +
+                ", chassis='" + chassis + '\'' +
+                ", clutch='" + clutch + '\'' +
+                ", clutchFluid='" + clutchFluid + '\'' +
+                ", coolant='" + coolant + '\'' +
+                ", engine='" + engine + '\'' +
+                ", exhaust='" + exhaust + '\'' +
                 ", footPegs='" + footPegs + '\'' +
-                ", mileage='" + mileage + '\'' +
+                ", frontTire='" + frontTire + '\'' +
                 ", fuel='" + fuel + '\'' +
+                ", horn='" + horn + '\'' +
+                ", indicators='" + indicators + '\'' +
+                ", indicatorsDesc='" + indicatorsDesc + '\'' +
+                ", lightsGood='" + lightsGood + '\'' +
+                ", mileage='" + mileage + '\'' +
+                ", mirrors='" + mirrors + '\'' +
+                ", oil='" + oil + '\'' +
+                ", oilLevel='" + oilLevel + '\'' +
+                ", rearTire='" + rearTire + '\'' +
+                ", tank='" + tank + '\'' +
+                ", throttle='" + throttle + '\'' +
+                ", transmission='" + transmission + '\'' +
                 '}';
     }
 }

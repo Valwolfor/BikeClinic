@@ -44,12 +44,12 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void deleteCustomer(Integer id) {
+    public void deleteCustomer(Long id) {
         repository.deleteById(id);
     }
 
     @Override
-    public Customer getCustomerById(Integer id) {
+    public Customer getCustomerById(Long id) {
         return repository.getReferenceById(id);
     }
 
