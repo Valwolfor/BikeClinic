@@ -20,12 +20,14 @@ public class ProductController {
         this.productService = productService;
     }
 
+    //Checked
     @GetMapping
     public ResponseEntity<List<Product>> getAllProducts() {
         List<Product> products = productService.getAllProducts();
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
 
+    //Checked
     @GetMapping("/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable Integer id) {
         Product product = productService.getProductById(id);
@@ -34,6 +36,7 @@ public class ProductController {
                 new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    //Checked
     @PostMapping
     public ResponseEntity<Product> createProduct(@RequestBody Product product) {
         Product createdProduct = productService.createProduct(product);

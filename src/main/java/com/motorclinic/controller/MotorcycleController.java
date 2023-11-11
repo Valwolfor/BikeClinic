@@ -43,6 +43,7 @@ public class MotorcycleController {
         return new ResponseEntity<>(createdMotorcycle, HttpStatus.CREATED);
     }
 
+    //Checked
     @PutMapping("/{id}")
     public ResponseEntity<Motorcycle> updateMotorcycle(@PathVariable Long id, @RequestBody Motorcycle motorcycle) {
         motorcycle.setId(id);
