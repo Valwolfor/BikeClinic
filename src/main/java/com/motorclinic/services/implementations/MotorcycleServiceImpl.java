@@ -52,7 +52,7 @@ public class MotorcycleServiceImpl implements MotorcycleService {
 
     @Override
     public Motorcycle getMotorcycleById(Long id) {
-        return repository.getReferenceById(id);
+        return repository.getMotorcycleById(id);
     }
 
     @Override

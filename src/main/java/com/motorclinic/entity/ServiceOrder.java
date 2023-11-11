@@ -19,10 +19,10 @@ public class ServiceOrder {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date date;
 
-    @Column(name = "customer_name")
+    @Column(name = "customer_id")
     private Integer customerId;
 
-    @Column(name = "mechanic_name")
+    @Column(name = "mechanic_id")
     private Integer mechanicId;
 
     @Column(name = "motorcycle_plate")

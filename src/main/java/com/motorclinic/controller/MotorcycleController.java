@@ -20,12 +20,14 @@ public class MotorcycleController {
         this.motorcycleService = motorcycleService;
     }
 
+    //Checked
     @GetMapping
     public ResponseEntity<List<Motorcycle>> getAllMotorcycles() {
         List<Motorcycle> motorcycles = motorcycleService.getAllMotorcycle();
         return new ResponseEntity<>(motorcycles, HttpStatus.OK);
     }
 
+    //Checked
     @GetMapping("/{id}")
     public ResponseEntity<Motorcycle> getMotorcycleById(@PathVariable Long id) {
         Motorcycle motorcycle = motorcycleService.getMotorcycleById(id);
@@ -34,6 +36,7 @@ public class MotorcycleController {
                 new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    //Checked
     @PostMapping
     public ResponseEntity<Motorcycle> createMotorcycle(@RequestBody Motorcycle motorcycle) {
         Motorcycle createdMotorcycle = motorcycleService.createMotorcycle(motorcycle);
@@ -48,7 +51,7 @@ public class MotorcycleController {
                 new ResponseEntity<>(updatedMotorcycle, HttpStatus.OK) :
                 new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-
+    //Checked
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteMotorcycle(@PathVariable Long id) {
         motorcycleService.deleteUMotorcycle(id);
