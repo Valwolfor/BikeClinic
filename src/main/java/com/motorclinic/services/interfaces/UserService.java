@@ -13,8 +13,8 @@ public interface UserService {
     User changeUserStatus(User user);
     User addUserRole(User user, UserRole role);
     User deleteUserRole(User user, UserRole role);
-    void deleteUser(Integer id);
-    User getUserById(Integer id);
+    void deleteUser(Long id);
+    User getUserById(Long id);
     User getUserByEmail(String email);
     List<User> getUsersByRole(UserRole role);
     List<User> getUsersByStatus(UserStatus status);
