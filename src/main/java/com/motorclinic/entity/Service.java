@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 public class Service {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idService;
+    private Long idService;
 
     @Column(name = "service_name", nullable = false)
     private String serviceName;
@@ -21,11 +21,11 @@ public class Service {
     @Column(name = "service_value", nullable = false)
     private BigDecimal serviceValue;
 
-    public Integer getIdService() {
+    public Long getIdService() {
         return idService;
     }
 
-    public void setIdService(Integer idService) {
+    public void setIdService(Long idService) {
         this.idService = idService;
     }
 

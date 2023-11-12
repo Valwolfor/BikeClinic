@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 public interface ServiceRepository extends JpaRepository<Service, Integer> {
 
     @Query("SELECT s FROM Service s WHERE s.idService = :id")
-    Service findServiceById(@Param("id") Integer id);
+    Service findServiceById(@Param("id") Long id);
     @Query("SELECT s FROM Service s WHERE s.serviceName = :name")
     Service findSeviceByName (@Param("name") String name);
 }
