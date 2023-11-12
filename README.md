@@ -24,3 +24,7 @@ Motorcycle.id=101
 Motorcycle.chassisId=C345
 Motorcycle.engineId=E345
 Motorcycle.plate=MNO346
+
+Product.id=23
+
+Service.id=14

@@ -7,8 +7,8 @@ import java.util.List;
 public interface ServiceService {
     Service createService(Service service);
     Service updateService(Service service);
-    void deleteService(Integer id);
-    Service getServiceById(Integer id);
+    void deleteService(Long id);
+    Service getServiceById(Long id);
 
     Service getServiceByName(String name);
     List<Service> getAllServices();
