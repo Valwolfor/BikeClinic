@@ -1,6 +1,7 @@
 package com.motorclinic.services.interfaces;
 
 import com.motorclinic.entity.*;
+import com.motorclinic.entity.DTO.RecordServiceProductDTO;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ public interface RecordService {
 
     void deleteRecord(Long id);
 
-    RecordServiceProduct getRecordById(Long id);
+    public RecordServiceProductDTO getRecordById(Long id);
 
     List<RecordServiceProduct> getRecordsByOrder(ServiceOrder order);
 
