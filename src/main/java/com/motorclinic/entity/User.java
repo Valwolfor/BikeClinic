@@ -2,13 +2,10 @@
 package com.motorclinic.entity;
 
 import com.motorclinic.entity.util.UserRole;
-import com.motorclinic.entity.util.UserRoleConverter;
 import com.motorclinic.entity.util.UserStatus;
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
 import java.util.List;
-
 
 
 @Entity
@@ -18,10 +15,12 @@ public class User extends Person {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "roles", nullable = false)
+    @ElementCollection(targetClass = UserRole.class)
+    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "role", columnDefinition = "VARCHAR(255)")
     @Enumerated(EnumType.STRING)
-    @Convert(converter = UserRoleConverter.class)
-    private UserRole roles;
+    private List<UserRole> roles;
+
 
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
@@ -38,11 +37,11 @@ public class User extends Person {
         this.password = password;
     }
 
-    public UserRole getRoles() {
+    public List<UserRole> getRoles() {
         return roles;
     }
 
-    public void setRoles(UserRole roles) {
+    public void setRoles(List<UserRole> roles) {
         this.roles = roles;
     }
 
