@@ -1,5 +1,6 @@
 package com.motorclinic.repository;
 
+import com.motorclinic.entity.Customer;
 import com.motorclinic.entity.ServiceOrder;
 import com.motorclinic.entity.Status;
 import com.motorclinic.entity.User;
@@ -22,4 +23,10 @@ public interface ServiceOrderRepository extends JpaRepository<ServiceOrder, Long
 
     // Encuentra todas las órdenes de servicio por estado y fecha
     List<ServiceOrder> findByStatusAndDate(Status status, LocalDateTime date);
+
+    // Encuentra todas las órdenes de servicio por cliente
+    List<ServiceOrder> findByMotorcycle_Customer(Customer motorcycle_customer);
+
+    // Encuentra todas las órdenes de servicio por mecánico
+    List<ServiceOrder> findByMechanic(User mechanic);
 }
