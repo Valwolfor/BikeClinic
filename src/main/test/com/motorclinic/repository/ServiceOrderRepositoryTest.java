@@ -24,10 +24,23 @@ public class ServiceOrderRepositoryTest {
     @Autowired
     private ServiceOrderRepository serviceOrderRepository;
 
+    @Autowired
+    private UserRepository mechanicRepository;
+
+    @Autowired
+    private CustomerRepository customerRepository;
+
+    @Autowired
+    private MotorcycleRepository motorcycleRepository;
+
+    @Autowired
+    private StatusRepository statusRepository;
+
+
     @Test
     public void testFindByMotorcyclePlate() {
         // Arrange
-        ServiceOrder serviceOrder1 = createServiceOrder("ABC123");
+        ServiceOrder serviceOrder1 = createServiceOrder("ABC123", "john.doe@example.com", "user@email.com", "password", "WER4532", "IUY3456");
 
         // Act
         serviceOrderRepository.save(serviceOrder1);
@@ -45,8 +58,8 @@ public class ServiceOrderRepositoryTest {
 
         // Assert Motorcycle details
         Motorcycle motorcycle = foundOrders.get(0).getMotorcycle();
-        assertEquals("Brand", motorcycle.getBrand());
-        assertEquals("Model", motorcycle.getModel());
+        assertEquals("Honda", motorcycle.getBrand());
+        assertEquals("CBR500R", motorcycle.getModel());
         assertEquals("2022", motorcycle.getRegistrationYear());
         assertEquals("ABC123", motorcycle.getPlate());
 
@@ -60,7 +73,7 @@ public class ServiceOrderRepositoryTest {
         User mechanic = foundOrders.get(0).getMechanic();
         assertEquals("John", mechanic.getFirstName());
         assertEquals("Doe", mechanic.getLastName());
-        assertEquals("john.doe@example.com", mechanic.getEmail());
+        assertEquals("user@email.com", mechanic.getEmail());
         assertEquals("1234567890", mechanic.getContactNumber());
         assertEquals("password", mechanic.getPassword());
         assertEquals(UserStatus.ACTIVE, mechanic.getStatus());
@@ -71,8 +84,8 @@ public class ServiceOrderRepositoryTest {
     public void testFindByDate() {
         // Arrange
         LocalDateTime targetDate = LocalDateTime.now();
-        ServiceOrder serviceOrder1 = createServiceOrderWithDate(targetDate, "ABC123");
-        ServiceOrder serviceOrder2 = createServiceOrderWithDate(targetDate, "ABC456");
+        ServiceOrder serviceOrder1 = createServiceOrderWithDate(targetDate, "ABC123", "john.doe@example.com", "user@email.com", "password","DFEWE345", "GRE4532");
+        ServiceOrder serviceOrder2 = createServiceOrderWithDate(targetDate, "ABC456", "john.doe@example2.com", "user@email2.com", "password2","DFEWE564", "GRE45672");
 
         // Act
         serviceOrderRepository.save(serviceOrder1);
@@ -81,7 +94,7 @@ public class ServiceOrderRepositoryTest {
         List<ServiceOrder> foundOrders = serviceOrderRepository.findByDate(targetDate);
 
         // Assert
-        assertEquals(1, foundOrders.size());
+        assertEquals(2, foundOrders.size());
         assertEquals(targetDate, foundOrders.get(0).getDate());
     }
 
@@ -90,8 +103,8 @@ public class ServiceOrderRepositoryTest {
         // Arrange
         LocalDateTime startDate = LocalDateTime.now();
         LocalDateTime endDate = startDate.plusDays(5);
-        ServiceOrder serviceOrder1 = createServiceOrderWithDate(startDate.plusDays(2), "FSE456");
-        ServiceOrder serviceOrder2 = createServiceOrderWithDate(endDate.plusDays(1), "ASD436");
+        ServiceOrder serviceOrder1 = createServiceOrderWithDate(startDate.plusDays(2), "FSE456", "john.doe@example.com", "user@email.com", "password", "DFEWE345", "GRE4532");
+        ServiceOrder serviceOrder2 = createServiceOrderWithDate(endDate.plusDays(1), "ASD436", "john.doe@example2.com", "user@email2.com", "password2", "DFEWE564", "GRE45672");
 
         // Act
         serviceOrderRepository.save(serviceOrder1);
@@ -100,7 +113,7 @@ public class ServiceOrderRepositoryTest {
         List<ServiceOrder> foundOrders = serviceOrderRepository.findByDateBetween(startDate, endDate);
 
         // Assert
-        assertEquals(2, foundOrders.size());
+        assertEquals(1, foundOrders.size());
     }
 
     private Status createStatus() {
@@ -132,36 +145,14 @@ public class ServiceOrderRepositoryTest {
         return status;
     }
 
-    private Motorcycle createMotorcycle() {
-        Motorcycle motorcycle = new Motorcycle();
-        motorcycle.setBrand("Honda");
-        motorcycle.setChassisId("CH123456");
-        motorcycle.setEngineId("EN789012");
-        motorcycle.setModel("CBR500R");
-        motorcycle.setPlate("ABC123");
-        motorcycle.setRegistrationYear("2022");
 
-        Customer customer = createCustomer();
-        motorcycle.setCustomer(customer);
-
-        return motorcycle;
-    }
-
-    private Customer createCustomer() {
-        Customer customer = new Customer();
-        customer.setFirstName("John");
-        customer.setLastName("Doe");
-        customer.setEmail("john.doe@example.com");
-        customer.setContactNumber("1234567890");
-        return customer;
-    }
-
-    private ServiceOrder createServiceOrderWithDate(LocalDateTime date, String plate){
-        ServiceOrder newService = createServiceOrder(plate);
+    private ServiceOrder createServiceOrderWithDate(LocalDateTime date, String plate, String email, String emailUser, String password, String engine, String chassis){
+        ServiceOrder newService = createServiceOrder(plate, email, emailUser, password, engine, chassis);
         newService.setDate(date);
         return newService;
     }
-    private ServiceOrder createServiceOrder(String motorcyclePlate) {
+
+    private ServiceOrder createServiceOrder(String motorcyclePlate, String email, String emailUser, String password, String engine, String chassis) {
         ServiceOrder serviceOrder = new ServiceOrder();
         serviceOrder.setAdvance("AdvanceDesc");
         serviceOrder.setAdvanceValue(BigDecimal.valueOf(100.0));
@@ -172,20 +163,39 @@ public class ServiceOrderRepositoryTest {
         serviceOrder.setReason("ReasonDesc");
         serviceOrder.setRouteAuth(true);
 
-        Motorcycle motorcycle = createMotorcycle();
+        Customer customer = new Customer();
+        customer.setFirstName("John");
+        customer.setLastName("Doe");
+        customer.setEmail(email);
+        customer.setContactNumber("1234567890");
+        customerRepository.save(customer);
+
+        Motorcycle motorcycle = new Motorcycle();
+        motorcycle.setBrand("Honda");
+        motorcycle.setChassisId(chassis);
+        motorcycle.setEngineId(engine);
+        motorcycle.setModel("CBR500R");
+        motorcycle.setPlate(motorcyclePlate);
+        motorcycle.setRegistrationYear("2022");
+        motorcycle.setCustomer(customer);
+
+        motorcycleRepository.save(motorcycle);
         serviceOrder.setMotorcycle(motorcycle);
 
         Status status = createStatus();
+        statusRepository.save(status);
         serviceOrder.setStatus(status);
 
         User mechanic = new User();
         mechanic.setFirstName("John");
         mechanic.setLastName("Doe");
-        mechanic.setEmail("john.doe@example.com");
+        mechanic.setEmail(emailUser);
         mechanic.setContactNumber("1234567890");
-        mechanic.setPassword("password");
+        mechanic.setPassword(password);
         mechanic.setStatus(UserStatus.ACTIVE);
         mechanic.setRoles(Collections.singletonList(UserRole.MECHANIC));
+
+        mechanicRepository.save(mechanic);
 
         serviceOrder.setMechanic(mechanic);
 

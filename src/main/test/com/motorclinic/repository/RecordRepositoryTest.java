@@ -5,10 +5,7 @@ import com.motorclinic.entity.util.UserStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.motorclinic.entity.*;
-import com.motorclinic.repository.*;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.transaction.annotation.Transactional;
@@ -141,11 +138,6 @@ public class RecordRepositoryTest {
         return status;
     }
 
-    private ServiceOrder createServiceOrderWithDate(LocalDateTime date, String plate){
-        ServiceOrder newService = createServiceOrder(plate);
-        newService.setDate(date);
-        return newService;
-    }
     private ServiceOrder createServiceOrder(String motorcyclePlate) {
         ServiceOrder serviceOrder = new ServiceOrder();
         serviceOrder.setAdvance("AdvanceDesc");
@@ -189,9 +181,9 @@ public class RecordRepositoryTest {
         mechanic.setStatus(UserStatus.ACTIVE);
         mechanic.setRoles(Collections.singletonList(UserRole.MECHANIC));
 
-        User createdMechanic = mechanicRepository.save(mechanic);
+        mechanicRepository.save(mechanic);
 
-        serviceOrder.setMechanic(createdMechanic);
+        serviceOrder.setMechanic(mechanic);
 
         return serviceOrder;
     }
