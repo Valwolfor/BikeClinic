@@ -1,5 +1,6 @@
 package com.motorclinic.controller;
 
+import com.motorclinic.entity.DTO.ServiceOrderDTO;
 import com.motorclinic.entity.ServiceOrder;
 import com.motorclinic.services.interfaces.ServiceOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +29,8 @@ public class ServiceOrderController {
 
     //Check
     @GetMapping("/{id}")
-    public ResponseEntity<ServiceOrder> getServiceOrderById(@PathVariable Long id) {
-        ServiceOrder serviceOrder = serviceOrderService.getServiceOrderById(id);
+    public ResponseEntity<ServiceOrderDTO> getServiceOrderById(@PathVariable Long id) {
+        ServiceOrderDTO serviceOrder = serviceOrderService.getServiceOrderById(id);
         return (serviceOrder != null) ?
                 new ResponseEntity<>(serviceOrder, HttpStatus.OK) :
                 new ResponseEntity<>(HttpStatus.NOT_FOUND);

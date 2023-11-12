@@ -1,6 +1,7 @@
 package com.motorclinic.services.interfaces;
 
 import com.motorclinic.entity.Customer;
+import com.motorclinic.entity.DTO.ServiceOrderDTO;
 import com.motorclinic.entity.ServiceOrder;
 import com.motorclinic.entity.User;
 
@@ -16,7 +17,7 @@ public interface ServiceOrderService {
 
     void deleteServiceOrder(Long id);
 
-    ServiceOrder getServiceOrderById(Long id);
+    ServiceOrderDTO getServiceOrderById(Long serviceOrderId);
 
     List<ServiceOrder> getServiceOrderByDate(LocalDateTime date);
 
