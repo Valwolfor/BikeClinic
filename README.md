@@ -28,3 +28,7 @@ Motorcycle.plate=MNO346
 Product.id=23
 
 Service.id=14
+
+Status.id=66
+
+

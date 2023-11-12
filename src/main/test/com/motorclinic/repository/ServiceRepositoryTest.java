@@ -105,7 +105,7 @@ public class ServiceRepositoryTest {
         serviceRepository.delete(savedService);
 
         // Assert
-        Assertions.assertFalse(serviceRepository.existsById(Math.toIntExact(savedService.getIdService())));
+        Assertions.assertFalse(serviceRepository.existsById(savedService.getIdService()));
     }
 
 }
