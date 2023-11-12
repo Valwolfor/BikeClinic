@@ -3,6 +3,8 @@ package com.motorclinic.entity;
 
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "service")
 public class Service {
@@ -10,14 +12,14 @@ public class Service {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idService;
 
-    @Column(name = "service_name")
+    @Column(name = "service_name", nullable = false)
     private String serviceName;
 
     @Column(name = "service_detail")
     private String serviceDetail;
 
-    @Column(name = "service_value")
-    private double serviceValue;
+    @Column(name = "service_value", nullable = false)
+    private BigDecimal serviceValue;
 
     public Integer getIdService() {
         return idService;
@@ -43,11 +45,11 @@ public class Service {
         this.serviceDetail = serviceDetail;
     }
 
-    public double getServiceValue() {
+    public BigDecimal getServiceValue() {
         return serviceValue;
     }
 
-    public void setServiceValue(double serviceValue) {
+    public void setServiceValue(BigDecimal serviceValue) {
         this.serviceValue = serviceValue;
     }
 

@@ -149,6 +149,23 @@ class UserRepositoryTest {
 
 //        User updatedUser = userRepository.save(savedUser);
 
+
+        //pa revisar con lo del rollback
+
+//        void testCreateAndPartialUpdateUser() {
+//            // ... código de creación de usuario ...
+//
+//            // Desactivar temporalmente el rollback para realizar actualizaciones
+//            TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
+//            try {
+//                // ... código de actualización de usuario ...
+//                transactionManager.commit(status);
+//            } catch (Exception ex) {
+//                transactionManager.rollback(status);
+//                throw ex;
+//            }
+//        }
+
         // Assert
 //        assertEquals(savedUser.getId(), updatedUser.getId());
 //        assertEquals("UpdatedMark", updatedUser.getFirstName());
