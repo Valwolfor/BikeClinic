@@ -19,16 +19,15 @@ public class UserDTO {
     // Constructor, getters, setters
 
     public UserDTO(User user) {
-        UserDTO userDTO = new UserDTO();
-        userDTO.setId(user.getId());
-        userDTO.setContactNumber(user.getContactNumber());
-        userDTO.setEmail(user.getEmail());
-        userDTO.setFirstName(user.getFirstName());
-        userDTO.setLastName(user.getLastName());
-        userDTO.setPassword(user.getPassword());
-        userDTO.setRoles(user.getRoles().stream().map(Enum::name).collect(Collectors.toList()));
-        userDTO.setStatus(user.getStatus().name());
-        return userDTO;
+        setId(user.getId());
+        setContactNumber(user.getContactNumber());
+        setEmail(user.getEmail());
+        setFirstName(user.getFirstName());
+        setLastName(user.getLastName());
+        setPassword(user.getPassword());
+        setRoles(user.getRoles().stream().map(Enum::name).collect(Collectors.toList()));
+        setStatus(user.getStatus().name());
+
     }
 
     public Long getId() {
