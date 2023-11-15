@@ -1,5 +1,6 @@
 package com.motorclinic.controller;
 
+import com.motorclinic.entity.DTO.UserDTO;
 import com.motorclinic.entity.User;
 import com.motorclinic.entity.util.UserRole;
 import com.motorclinic.entity.util.UserStatus;
@@ -30,11 +31,15 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable Long id) {
+    public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
         User user = userService.getUserById(id);
-        return (user != null) ?
-                new ResponseEntity<>(user, HttpStatus.OK) :
-                new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        if (user != null) {
+            UserDTO userDTO = new UserDTO(user);
+            return new ResponseEntity<>(userDTO, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     //Check
