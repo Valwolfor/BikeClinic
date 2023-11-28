@@ -9,13 +9,13 @@ body {
     background: linear-gradient(to right, #7c7c07, #fbf30d);
 }
 .logo{
-    background-image: url(../img/moto.jpg);
+    background-image: url(moto.jpg);
     background-position: center center;
     border-radius: 60px;
     box-shadow: 5px 4px 5px black
 }
 .bg {
-    background-image: url(../img/fondo.jpg);
+    background-image: url(fondo.jpg);
     background-position: center center;
 
     border-radius: 50px;

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:63342")
 @RequestMapping("/api/users")
 public class UserController {
 
@@ -33,7 +34,6 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    @CrossOrigin(origins = "http://localhost:63342")
     public ResponseEntity<?> loginUser(@RequestBody User user) {
         System.out.println("Paso login");
         User existingUser = userService.getUserByEmail(user.getEmail());
