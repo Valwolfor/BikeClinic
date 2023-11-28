@@ -518,7 +518,7 @@ function pasarPestañaEstado() {
 }
  
  
- EsTOY AQUIIIIIII!!!
+ // EsTOY AQUIIIIIII!!!
 //ZONA ORDEN de servicio
 //MOTIVO 
 function registrarMotivo() {

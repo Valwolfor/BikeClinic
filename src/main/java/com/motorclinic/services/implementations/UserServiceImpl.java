@@ -7,7 +7,7 @@ import com.motorclinic.repository.UserRepository;
 import com.motorclinic.services.interfaces.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,19 +20,19 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository repository;
-    private final BCryptPasswordEncoder passwordEncoder;
+//    private final BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository repository, BCryptPasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository repository/*, BCryptPasswordEncoder passwordEncoder*/) {
         this.repository = repository;
-        this.passwordEncoder = passwordEncoder;
+//        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public User createUser(User user) {
 
-        String hashedPassword = passwordEncoder.encode(user.getPassword());
-        user.setPassword(hashedPassword);
+//        String hashedPassword = passwordEncoder.encode(user.getPassword());
+//        user.setPassword(hashedPassword);
 
         return repository.save(user);
     }
@@ -84,8 +84,8 @@ public class UserServiceImpl implements UserService {
 
         User oldUser = repository.findById(user.getId()).orElse(null);
         if (oldUser != null) {
-            String newPassword = passwordEncoder.encode(user.getPassword());
-            oldUser.setPassword(newPassword);
+//            String newPassword = passwordEncoder.encode(user.getPassword());
+            oldUser.setPassword(user.getPassword());
         }
 
         if (oldUser == null) {

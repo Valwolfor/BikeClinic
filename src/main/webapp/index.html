@@ -1,223 +1,206 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Home</title>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!--        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>-->
-        <!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">-->
-        <!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>-->
-        
-        <script src="./JS/jquery-3.6.1.min.js"></script>
-        <link href="./CSS/bootstrap.css" rel="stylesheet" type="text/css"/>
-        <link href="./CSS/footnav.css" rel="stylesheet" type="text/css"/>
-        <script src="./JS/bootstrap.bundle.js"></script>
-        <script src="./JS/popper.min.js"></script>
-        
+<head>
+    <title>Home</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <link rel="icon" href="./img/casco.png">
-    </head>
-    <body>
-        <!--Navigation-->
-        <header class="mb-5">
-            <nav class="navbar navbar-expand-md navbar-lg bg-light fixed-top mb-5">
-                <div class="container">
+    <script src="./JS/jquery-3.6.1.min.js"></script>
+    <link href="./CSS/bootstrap.css" rel="stylesheet" type="text/css"/>
+    <link href="./CSS/footnav.css" rel="stylesheet" type="text/css"/>
+    <script src="./JS/bootstrap.bundle.js"></script>
+    <script src="./JS/popper.min.js"></script>
 
-                    <a href="#" class="navbar-brand h4 nav-item">
-                        <img class="logo mr-3"  src="./img/moto.jpg" width="60" alt="logo muestra">
-                        Bike Clinic App
-                    </a>
 
-                    <ul class="navbar-nav ml-auto">
-                        <!--<li id="user-name" class="nav-item d-flex-left mx-1 nav-link">Username</li> Aquí se puede dejar para desconectarse. -->
-                        <li class="nav-item d-flex-left"><a href="login.html" class="nav-link"  >Ingresar</a></li>
-                        <li class="nav-item d-flex-left mx-1"><a href="#contactLogin" class="nav-link" data-bs-toggle="offcanvas">Contacto</a></li>
+    <link rel="icon" href="./img/casco.png">
+</head>
+<body>
+<!--Navigation-->
+<header class="mb-5">
+    <nav class="navbar navbar-expand-md navbar-lg bg-light fixed-top mb-5">
+        <div class="container">
 
-                    </ul>
+            <a href="#" class="navbar-brand h4 nav-item">
+                <img class="logo mr-3" src="./img/moto.jpg" width="60" alt="logo muestra">
+                Bike Clinic App
+            </a>
+
+            <ul class="navbar-nav ml-auto">
+                <!--<li id="user-name" class="nav-item d-flex-left mx-1 nav-link">Username</li> Aquí se puede dejar para desconectarse. -->
+                <li class="nav-item d-flex-left"><a href="login.html" class="nav-link">Ingresar</a></li>
+                <li class="nav-item d-flex-left mx-1"><a href="#contactLogin" class="nav-link"
+                                                         data-bs-toggle="offcanvas">Contacto</a></li>
+
+            </ul>
+        </div>
+    </nav>
+</header>
+<main>
+    <div id="aplicacion">
+        <div class="container p-2 bg-dark text-white rounded">
+            <div class="row pt-3">
+                <div class="resumen col px-3 bg-gradient">
+                    <h3 class="text-center m-auto mt-5 mb-4 h1 "><cite title="Título fuente">Bike Clinic</cite></h3>
+                    <p class="text-left  h6 text-light px-3"> Bike Clinic es una aplicacion desarrollada para los
+                        talleres de motos con el objetivo de facilitar y automatizar los procesos
+                        de registro de hoja de vida para cada automotor, así como llevar un registro histórico de los
+                        ingresos y los servicios. También podrá llevar registro de su inventario, notificiación
+                        a los cliente, validación de servicios por parte del cliente y un sistema muy comodo y moderno
+                        con el que sus clientes se sentiran atendidos con servicio de calidad.
+                    </p>
+                    <p class="text-center h6 text-light m-auto"> Contamos con más de treinta talleres asociados a traves
+                        de todo el territorio nacional !Unete a nosotros! </p>
                 </div>
-            </nav>
-        </header>
-        <main>
-            <div id="aplicacion">
-                <div class="container p-2 bg-dark text-white rounded">
-                    <div class="row pt-3">
-                        <div class="resumen col px-3 bg-gradient">
-                            <h3 class="text-center m-auto mt-5 mb-4 h1 "> <cite title="Título fuente">Bike Clinic</cite></h3>
-                            <p class="text-left  h6 text-light px-3"> Bike Clinic es una aplicacion desarrollada para los talleres de motos con el objetivo de facilitar y automatizar los procesos
-                                de registro de hoja de vida para cada automotor, así como llevar un registro histórico de los ingresos y los servicios. También podrá llevar registro de su inventario, notificiación
-                                a los cliente, validación de servicios por parte del cliente y un sistema muy comodo y moderno con el que sus clientes se sentiran atendidos con servicio de calidad.
-                            </p>
-                            <p class="text-center h6 text-light m-auto"> Contamos con más de treinta talleres asociados a traves de todo el territorio nacional !Unete a nosotros! </p>
+                <div class="col">
+                    <div class="carousel slide carousel-fade" id="mainSlider" data-bs-ride="carousel">
+                        <div class="carousel-indicators">
+                            <button type="button" data-bs-target="#mainSlider" data-bs-slide-to="0" class="active"
+                                    aria-current="true" aria-label="Slide 1"></button>
+                            <button type="button" data-bs-target="#mainSlider" data-bs-slide-to="1"
+                                    aria-label="Slide 2"></button>
+                            <button type="button" data-bs-target="#mainSlider" data-bs-slide-to="2"
+                                    aria-label="Slide 3"></button>
+                            <button type="button" data-bs-target="#mainSlider" data-bs-slide-to="3"
+                                    aria-label="Slide 4"></button>
+
                         </div>
-                        <div class="col">
-                            <div class="carousel slide carousel-fade" id="mainSlider" data-bs-ride="carousel">
-                                <div class="carousel-indicators">
-                                    <button type="button" data-bs-target="#mainSlider" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                                    <button type="button" data-bs-target="#mainSlider" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                                    <button type="button" data-bs-target="#mainSlider" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                                    <button type="button" data-bs-target="#mainSlider" data-bs-slide-to="3" aria-label="Slide 4"></button>
-
-                                </div>
-                                <div class="carousel-inner">
-                                    <div class="carousel-item active" data-bs-interval="2500">
-                                        <img src="./img/img2.jpg" alt="Tuercas" class="rounded mx-auto d-block "/>
-                                    </div>  
-                                    <div class="carousel-item" data-bs-interval="4000">
-                                        <img src="./img/img1.jpg" alt="Herrramientas" class="rounded mx-auto d-block "/>
-                                    </div>
-
-                                    <div class="carousel-item" data-bs-interval="4000">
-                                        <img src="./img/img3.jpg" alt="Motos" class="rounded mx-auto d-block"/>
-                                    </div>
-                                    <div class="carousel-item" data-bs-interval="4000">
-                                        <img src="./img/img4.jpg" alt="Aplicacion" class="rounded mx-auto d-block "/>
-                                    </div>
-                                </div>
-                                <button class="carousel-control-prev" type="button" data-bs-target="#mainSlider" data-bs-slide="prev">
-                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Previous</span>
-                                </button>
-                                <button class="carousel-control-next" type="button" data-bs-target="#mainSlider" data-bs-slide="next">
-                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                    <span class="visually-hidden">Next</span>
-                                </button>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active" data-bs-interval="2500">
+                                <img src="./img/img2.jpg" alt="Tuercas" class="rounded mx-auto d-block "/>
                             </div>
-                            <div id="ribbon" class="container-fluid p-1 mt-4 bg-light  text-dark rounded">
-                                <div id="clientes" class="container w-50 p-1">
-                                    <div class="row aling-items-center">
-                                        <div class="col rounded" >
-                                            <img src="./img/clientes.png" alt=""  class="mx-auto d-block "/>
-                                        </div >
-                                        <div class ="col text-center mt-3">
-                                            <h4>Nuestros clientes</h4>
-                                        </div>
+                            <div class="carousel-item" data-bs-interval="4000">
+                                <img src="./img/img1.jpg" alt="Herrramientas" class="rounded mx-auto d-block "/>
+                            </div>
 
-                                    </div> 
-                                </div>
+                            <div class="carousel-item" data-bs-interval="4000">
+                                <img src="./img/img3.jpg" alt="Motos" class="rounded mx-auto d-block"/>
+                            </div>
+                            <div class="carousel-item" data-bs-interval="4000">
+                                <img src="./img/img4.jpg" alt="Aplicacion" class="rounded mx-auto d-block "/>
                             </div>
                         </div>
-
+                        <button class="carousel-control-prev" type="button" data-bs-target="#mainSlider"
+                                data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#mainSlider"
+                                data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
                     </div>
+                    <div id="ribbon" class="container-fluid p-1 mt-4 bg-light  text-dark rounded">
+                        <div id="clientes" class="container w-50 p-1">
+                            <div class="row aling-items-center">
+                                <div class="col rounded">
+                                    <img src="./img/clientes.png" alt="" class="mx-auto d-block "/>
+                                </div>
+                                <div class="col text-center mt-3">
+                                    <h4>Nuestros clientes</h4>
+                                </div>
 
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
             </div>
-            <div id="aplicacions" class=" my-5">
-                <div class="container p-3 bg-dark bg-opacity-10">
 
-                    <div class="row">
-                        <h3 class="text-center my-4 h1 text-dark">Equipo de Desarrolo</h3>
-                        <div class="col">
+        </div>
 
-                            <div class="card  card-border mb-3">
-                                <img src="./img/fem.png" class="card-img-top m-1" alt=""/>
-                                <div class="card-body bg-dark text-white rounded">
-                                    <h5 class="text-center my-3 h7 " >Paola Estefanía Valero Triana  </h5>
-                                    <p class="text-center "> Tester</p>
-                                    <p class="text-center "> Bogotana trabajadora</p>
+    </div>
+    <div id="aplicacions" class=" my-5">
+        <div class="container p-3 bg-dark bg-opacity-10">
 
-                                </div>
-                            </div>
+            <div class="row">
+                <h3 class="text-center my-4 h1 text-dark">Equipo de Desarrolo</h3>
+                <div class="col">
+
+                    <div class="card  card-border mb-3">
+                        <img src="./img/fem.png" class="card-img-top m-1" alt=""/>
+                        <div class="card-body bg-dark text-white rounded">
+                            <h5 class="text-center my-3 h7 ">Erica </h5>
+                            <p class="text-center "> Tester</p>
+                            <p class="text-center "> Aquí algo</p>
+
                         </div>
-                        <div class="col">
-
-                            <div class="card w-auto card-border mb-3">
-                                <img src="./img/fem.png" class="card-img-top m-1" alt=""/>
-                                <div class="card-body bg-dark text-white rounded">
-                                    <h5 class="text-center my-3 h7">Dayana Lopez Santos </h5>
-                                    <p class="text-center "> Front-End</p>
-                                    <p class="text-center "> Caribeña investigadora</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-
-                            <div class="card  card-border mb-3">
-                                <img src="./img/mas.png" class="card-img-top m-1" alt=""/>
-                                <div class="card-body bg-dark text-white rounded">
-                                    <h5 class="text-center my-3 h7">Diego Felipe Gallo García </h5>
-                                    <p class="text-center"> Gestor del proyecto </p>
-                                    <p class="text-center "> Mechudo carretero</p>
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-
-                            <div class="card  card-border mb-3">
-                                <img src="./img/mas.png" class="card-img-top m-1" alt=""/>
-                                <div class="card-body bg-dark text-white rounded">
-                                    <h5 class="text-center my-3 h7">Mateo Mateus Forero </h5>
-                                    <p class="text-center"> Gestor base de datos</p>
-                                    <p class="text-center "> Ingeniero de ambiente</p>
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-
-                            <div class="card  card-border mb-3">
-                                <img src="./img/mas.png" class="card-img-top m-1" alt=""/>
-                                <div class="card-body bg-dark text-white rounded">
-                                    <h5 class="text-center my-3 h7">Sergio Felipe Valenzuela</h5>
-                                    <p class="text-center">Dev. Back-End</p>
-                                    <p class="text-center "> Músico dark</p>
-
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
-
                 </div>
-            </div>
+                <div class="col">
 
-            <!-- Contacto -->
-
-            <div class="offcanvas offcanvas-start " tabindex="-1" id="contactLogin"
-                 aria-labelledby="offcanvasExampleLabel">
-                <div class="offcanvas-header">
-                    <h5 class="offcanvas-title" id="offcanvasExampleLabel">Contacto.</h5>
-                    <!-- Para cerrar -->
-                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
-                            aria-label="Close"></button>
-                </div>
-                <div class="offcanvas-body">
-                    <div>
-                        Por favor registre los datos solicitados para poder resolver su incoveniente de la
-                        manera más pronta. <br> Gracias.
+                    <div class="card w-auto card-border mb-3">
+                        <img src="./img/fem.png" class="card-img-top m-1" alt=""/>
+                        <div class="card-body bg-dark text-white rounded">
+                            <h5 class="text-center my-3 h7">Esteba</h5>
+                            <p class="text-center "> Front-End</p>
+                            <p class="text-center "> Algo</p>
+                        </div>
                     </div>
-                    <div class="container m-1">
-                        <form action="#btnContact" method="post">
-                            <label for="nameContact" class="form-label mt-3 mb-2">Ingrese su nombre</label>
-                            <input type="text" class=" form-control mb-2" name="nameContact"
-                                   id="nameContact" placeholder="Su nombre completo" required>
-                            <label for="idContact" class="form-label mb-2">Ingrese su número de
-                                identificación</label>
-                            <input type="number" class=" form-control mb-2" name="idContact" id="idContact"
-                                   placeholder="Sin puntos o espacios" required>
-                            <label for="textContact">Describa el motivo</label>
+                </div>
+                <div class="col">
 
-                            <textarea type="textarea" class=" form-control mb-2" name="textContact"
-                                      id="nameContact" required></textarea>
-                            <div class="d-grid">
-                                <button type="submit" class="btn btn-primary btn-lg btn-block mt-2"
-                                        id="btnContact">Enviar</button>
-                            </div>
+                    <div class="card  card-border mb-3">
+                        <img src="./img/mas.png" class="card-img-top m-1" alt=""/>
+                        <div class="card-body bg-dark text-white rounded">
+                            <h5 class="text-center my-3 h7">Diego Felipe Gallo García </h5>
+                            <p class="text-center"> Back-End </p>
+                            <p class="text-center "> Javalover </p>
 
-                        </form>
-
+                        </div>
                     </div>
                 </div>
             </div>
-        </main>
-        <footer class="footer bg-light  fixed-bottom">
-            <div >
-                <a href="#" class="btn btn-light">&copy;Bike Clinic App</a>
-            </div>
-        </footer>
 
-    </body>
+        </div>
+    </div>
+
+    <!-- Contacto -->
+
+    <div class="offcanvas offcanvas-start " tabindex="-1" id="contactLogin"
+         aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Contacto.</h5>
+            <!-- Para cerrar -->
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+                    aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div>
+                Por favor registre los datos solicitados para poder resolver su incoveniente de la
+                manera más pronta. <br> Gracias. Esto aun no está disponible. <!--TODO: remove -->
+            </div>
+            <div class="container m-1">
+                <form action="#btnContact" method="post">
+                    <label for="nameContactOff" class="form-label mt-3 mb-2">Ingrese su nombre</label>
+                    <input type="text" class=" form-control mb-2" name="nameContact"
+                           id="nameContactOff" placeholder="Su nombre completo" required>
+                    <label for="idContact" class="form-label mb-2">Ingrese su número de
+                        identificación</label>
+                    <input type="number" class=" form-control mb-2" name="idContact" id="idContact"
+                           placeholder="Sin puntos o espacios" required>
+                    <label for="textContact">Describa el motivo</label>
+
+                    <textarea type="textarea" class=" form-control mb-2" name="textContact"
+                              id="textContact" required></textarea>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg btn-block mt-2"
+                                id="btnContact">Enviar
+                        </button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</main>
+<footer class="footer bg-light  fixed-bottom">
+    <div>
+        <a href="#" class="btn btn-light">&copy;Bike Clinic App</a>
+    </div>
+</footer>
+
+</body>
 </html>

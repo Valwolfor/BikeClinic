@@ -13,7 +13,7 @@ function obtenerListaEstados() {
     $.ajax({
         type: "GET",
         dataType: "html",
-        url: "./ServletEstadoListar",
+        url: "./ServletEstadoListar", //localhost:8090/api/status
         success: function (result) {
             let parsedResultEstados = JSON.parse(result);
             if (parsedResultEstados !== false) {

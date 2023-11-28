@@ -20,6 +20,8 @@ public class UserController {
 
     @Autowired
     public UserController(UserService userService) {
+
+        System.out.println("Paso por constructor");
         this.userService = userService;
     }
 
@@ -28,6 +30,23 @@ public class UserController {
     public ResponseEntity<List<User>> getAllUsers() {
         List<User> users = userService.getAllUsers();
         return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+
+    @PostMapping("/login")
+    @CrossOrigin(origins = "http://localhost:63342")
+    public ResponseEntity<?> loginUser(@RequestBody User user) {
+        System.out.println("Paso login");
+        User existingUser = userService.getUserByEmail(user.getEmail());
+
+        if (existingUser == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Usuario no encontrado");
+        }
+
+        if (!existingUser.getPassword().equals(user.getPassword())) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales incorrectas");
+        }
+
+        return ResponseEntity.ok(existingUser);
     }
 
     @GetMapping("/{id}")
