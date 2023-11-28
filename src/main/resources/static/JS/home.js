@@ -1,28 +1,28 @@
 //Para llamar métodos. 
 $(document).ready(function () {
 
-    obtenerListaMoto();
-    obtenerListaOrdenes();
+    // obtenerListaMoto();
+    // obtenerListaOrdenes();
     obtenerListaMecanicos();
-    obtenerServicios();
-    obtenerProductos();
-    cambiarEstadoMecanico();
+    // obtenerServicios();
+    // obtenerProductos();
+    // cambiarEstadoMecanico();
     datosToServicio();
     datosToProducto();
 
 
 //Registrar servicio offcanvas
-    $("#form-servicio").submit(function (event) {
-        event.preventDefault();
-        registrarServicio();
-
-    });
-//Registrar producto offcanvas
-    $("#form-producto").submit(function (event) {
-        event.preventDefault();
-        registrarProducto();
-
-    });
+//     $("#form-servicio").submit(function (event) {
+//         event.preventDefault();
+//         registrarServicio();
+//
+//     });
+// //Registrar producto offcanvas
+//     $("#form-producto").submit(function (event) {
+//         event.preventDefault();
+//         registrarProducto();
+//
+//     });
 
 
 });
@@ -99,66 +99,62 @@ function datosToProducto() {
 
 //Mecáncos
 function obtenerListaMecanicos() {
-
     $.ajax({
         type: "GET",
-        dataType: "html",
-        url: "./ServletMecanicosListar",
+        dataType: "json",
+        url: "http://localhost:8090/motorclinic/api/users/by-role?role=MECHANIC",
         success: function (result) {
-            let parsedResult = JSON.parse(result);
-            if (parsedResult !== false) {
-                mostrarMecanicos(parsedResult);
-
+            if (result !== false) {
+                mostrarMecanicos(result);
             } else {
                 console.log("Hubo un problema al llamar los datos de lista mecánicos");
             }
+        },
+        error: function (xhr, status, error) {
+            console.log("Error al obtener los datos de lista mecánicos:", error);
         }
     });
 }
 
+
 function mostrarMecanicos(listaMecanicos) {
-
     let tabla = "";
-    $.each(listaMecanicos, function (index, mecanico) {
-
-        mecanico = JSON.parse(mecanico);
-        tabla += '<tr>' +
-                '<td>' + mecanico.id + '</td>' +
-                '<td>' + mecanico.nombre + ' ' + mecanico.primerApellido + ' ' + mecanico.segundoApellido + '</td>' +
-                '<td>' + mecanico.correo + '</td>' +
-                '<td>' + mecanico.numeroContacto + '</td>' +
-                '<td>' + /* Aquí se chequea y se agrega el valor de check */
-                '<div d-inline class="form-check form-switch">' +
-                '<input class="form-check-input" type="checkbox" role="switch" id="estado-mecanico"';
-        tabla += (mecanico.estado === "Activo" ? 'checked>' : '>');
-        tabla += '<label class="form-check-label" for="estado-mecanico">' + mecanico.estado + '</label>' +
-                '</div>' +
-                '</td>' +
-                '</tr>';
+    listaMecanicos.forEach(mecanico => {
+        tabla += `<tr>
+            <td>${mecanico.id}</td>
+            <td>${mecanico.firstName} ${mecanico.lastName}</td>
+            <td>${mecanico.email}</td>
+            <td>${mecanico.contactNumber}</td>
+            <td>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="estado-mecanico" ${mecanico.status === "ACTIVE" ? 'checked' : ''}>
+                    <label class="form-check-label" for="estado-mecanico">${mecanico.status}</label>
+                </div>
+            </td>
+        </tr>`;
     });
 
     $('#tbody').html(tabla);
-
 }
 
 //Motos
-function obtenerListaMoto() {
-
-    $.ajax({
-        type: "GET",
-        dataType: "html",
-        url: "./ServletMotoListar",
-        success: function (result) {
-            let parsedResult = JSON.parse(result);
-            if (parsedResult !== false) {
-                mostrarMotos(parsedResult);
-
-            } else {
-                console.log("Hubo un problema al llamar los datos de lista HVmotos");
-            }
-        }
-    });
-}
+// function obtenerListaMoto() {
+//
+//     $.ajax({
+//         type: "GET",
+//         dataType: "html",
+//         url: "./ServletMotoListar",
+//         success: function (result) {
+//             let parsedResult = JSON.parse(result);
+//             if (parsedResult !== false) {
+//                 mostrarMotos(parsedResult);
+//
+//             } else {
+//                 console.log("Hubo un problema al llamar los datos de lista HVmotos");
+//             }
+//         }
+//     });
+// }
 
 function mostrarMotos(listaMotos) {
 
@@ -193,23 +189,24 @@ function mostrarMotos(listaMotos) {
 }
 
 //Ordenes de servicio
-function obtenerListaOrdenes() {
+// function obtenerListaOrdenes() {
+//
+//     $.ajax({
+//         type: "GET",
+//         dataType: "html",
+//         url: "./ServletOrndeListar",
+//         success: function (result) {
+//             let parsedResult = JSON.parse(result);
+//             if (parsedResult !== false) {
+//                 mostrarOrdenes(parsedResult);
+//
+//             } else {
+//                 console.log("Hubo un problema al llamar los datos de lista Ordenes de servicio");
+//             }
+//         }
+//     });
+// }
 
-    $.ajax({
-        type: "GET",
-        dataType: "html",
-        url: "./ServletOrndeListar",
-        success: function (result) {
-            let parsedResult = JSON.parse(result);
-            if (parsedResult !== false) {
-                mostrarOrdenes(parsedResult);
-
-            } else {
-                console.log("Hubo un problema al llamar los datos de lista Ordenes de servicio");
-            }
-        }
-    });
-}
 //Entonces socio, haga lo siguiente, dos funciones llamando estado y registros(con servlets y controller
 //Luego llame un par de funciones que va declarar dentro de mostrarOrdenes que setten los datos dentro de accordeons 
 function mostrarOrdenes(listaOrdenes) {
@@ -278,86 +275,86 @@ function mostrarOrdenes(listaOrdenes) {
 }
 
 
-function cambiarEstadoMecanico() {
-
-    //Para cambiar el estado en la interfaz cuando se da clic en el switch button 
-    $(document).on('change', '#estado-mecanico', function (event) {
-        event.preventDefault();
-        let idUsuario = $(this).parent().parent().parent().children().first().text();
-        let estado = $(this).parent().parent().parent().children().last().text();
-        if (estado.trim() === 'Activo') {
-            estado = 'Inactivo';
-        } else {
-            estado = 'Activo';
-        }
-
-        $.ajax({
-            type: "GET",
-            dataType: "html",
-            url: "./ServletMecanicoModificarEstado",
-            data: $.param({
-                idUsuario: idUsuario,
-                estado: estado
-            }),
-            success: function (result) {
-                let parsedResult = JSON.parse(result);
-                if (parsedResult !== false) {
-                    console.log("Funciona success");
-                    obtenerListaMecanicos();
-                } else {
-                    console.log("Hubo un problema al cambiar estado mecánicos JS");
-                }
-            }
-        });
-    });
-}
+// function cambiarEstadoMecanico() {
+//
+//     //Para cambiar el estado en la interfaz cuando se da clic en el switch button
+//     $(document).on('change', '#estado-mecanico', function (event) {
+//         event.preventDefault();
+//         let idUsuario = $(this).parent().parent().parent().children().first().text();
+//         let estado = $(this).parent().parent().parent().children().last().text();
+//         if (estado.trim() === 'Activo') {
+//             estado = 'Inactivo';
+//         } else {
+//             estado = 'Activo';
+//         }
+//
+//         $.ajax({
+//             type: "GET",
+//             dataType: "html",
+//             url: "./ServletMecanicoModificarEstado",
+//             data: $.param({
+//                 idUsuario: idUsuario,
+//                 estado: estado
+//             }),
+//             success: function (result) {
+//                 let parsedResult = JSON.parse(result);
+//                 if (parsedResult !== false) {
+//                     console.log("Funciona success");
+//                     obtenerListaMecanicos();
+//                 } else {
+//                     console.log("Hubo un problema al cambiar estado mecánicos JS");
+//                 }
+//             }
+//         });
+//     });
+// }
 
 //Servicios
-function registrarServicio() {
+// function registrarServicio() {
+//
+//     let nombreServicio = $("#nameServicio").val();
+//     let detalleServicio = $("#desServicio").val();
+//     let valorServicio = $("#valServicio").val();
 
-    let nombreServicio = $("#nameServicio").val();
-    let detalleServicio = $("#desServicio").val();
-    let valorServicio = $("#valServicio").val();
-
-    $.ajax({
-        type: "GET",
-        dataType: "html",
-        url: "./ServletServicioRegistrar",
-        data: $.param({
-            nombreServicio: nombreServicio,
-            detalleServicio: detalleServicio,
-            valorServicio: valorServicio
-        }),
-        success: function (result) {
-            let parsedResult = JSON.parse(result);
-            if (parsedResult !== false) {
-                $("#register-success-ser").removeClass("d-none");
-
-            } else {
-                $("#register-error-ser").removeClass("d-none");
-            }
-        }
-    });
-}
+    // $.ajax({
+    //     type: "GET",
+    //     dataType: "html",
+    //     url: "./ServletServicioRegistrar",
+    //     data: $.param({
+    //         nombreServicio: nombreServicio,
+    //         detalleServicio: detalleServicio,
+    //         valorServicio: valorServicio
+    //     }),
+    //     success: function (result) {
+    //         let parsedResult = JSON.parse(result);
+    //         if (parsedResult !== false) {
+    //             $("#register-success-ser").removeClass("d-none");
+    //
+    //         } else {
+    //             $("#register-error-ser").removeClass("d-none");
+    //         }
+    //     }
+    // });
+// }
 
 
-function obtenerServicios() {
+// function obtenerServicios() {
 
-    $.ajax({
-        type: "GET",
-        dataType: "html",
-        url: "./ServletServiciosListar",
-        success: function (result) {
-            let parsedResult = JSON.parse(result);
-            if (parsedResult !== false) {
-                mostrarServicios(parsedResult);
-
-            } else {
-                console.log("Hubo un problema al llamar los datos de lista servicios");
-            }
-        }
-    });
-}
+    // $.ajax({
+    //     type: "GET",
+    //     dataType: "html",
+    //     url: "./ServletServiciosListar",
+    //     success: function (result) {
+    //         let parsedResult = JSON.parse(result);
+    //         if (parsedResult !== false) {
+    //             mostrarServicios(parsedResult);
+    //
+    //         } else {
+    //             console.log("Hubo un problema al llamar los datos de lista servicios");
+    //         }
+    //     }
+    // });
+// }
 
 
 function mostrarServicios(listaServicios) {
@@ -380,76 +377,76 @@ function mostrarServicios(listaServicios) {
 
 
 //todo tooodoo
-function actualizarServicio(idServicio, nombreServicio, detalleServicio, valorServicio) {
-///revisar este tema del boton
-
-    $.ajax({
-        type: "GET",
-        dataType: "html",
-        url: "./ServletServicioActualizar",
-        data: $.param({
-            idServicio: idServicio,
-            nombreServicio: nombreServicio,
-            detalleServicio: detalleServicio,
-            valorServicio: valorServicio
-        }),
-        success: function (result) {
-            let parsedResult = JSON.parse(result);
-            if (parsedResult !== false) {
-                $("#register-success-serAc").removeClass("d-none");
-                $('#form-servicio-actualizar').addClass('d-none');
-                console.log("actualización de servicio correcta");
-                obtenerServicios();
-            } else {
-                $("#register-error-serAc").removeClass("d-none");
-                console.log("Hubo un problema al actualizar los datos del servicio: " + idServicio);
-            }
-        }
-    });
-}
+// function actualizarServicio(idServicio, nombreServicio, detalleServicio, valorServicio) {
+// ///revisar este tema del boton
+//
+//     $.ajax({
+    //     type: "GET",
+    //     dataType: "html",
+    //     url: "./ServletServicioActualizar",
+    //     data: $.param({
+    //         idServicio: idServicio,
+    //         nombreServicio: nombreServicio,
+    //         detalleServicio: detalleServicio,
+    //         valorServicio: valorServicio
+    //     }),
+    //     success: function (result) {
+    //         let parsedResult = JSON.parse(result);
+    //         if (parsedResult !== false) {
+    //             $("#register-success-serAc").removeClass("d-none");
+    //             $('#form-servicio-actualizar').addClass('d-none');
+    //             console.log("actualización de servicio correcta");
+    //             obtenerServicios();
+    //         } else {
+    //             $("#register-error-serAc").removeClass("d-none");
+    //             console.log("Hubo un problema al actualizar los datos del servicio: " + idServicio);
+    //         }
+    //     }
+    // });
+// }
 
 //Productos
-function registrarProducto() {
+// function registrarProducto() {
+//
+//     let nombre = $("#nameProducto").val();
+    // let valorProducto = $("#valProducto").val();
+    // $.ajax({
+    //     type: "GET",
+    //     dataType: "html",
+    //     url: "./ServletProductoRegistrar",
+    //     data: $.param({
+    //         nombre: nombre,
+    //         valorProducto: valorProducto
+    //     }),
+    //     success: function (result) {
+    //         let parsedResult = JSON.parse(result);
+    //         if (parsedResult !== false) {
+    //             $("#register-success-pro").removeClass("d-none");
+    //         } else {
+    //             $("#register-error-pro").removeClass("d-none");
+    //         }
+    //     }
+    // });
+// }
 
-    let nombre = $("#nameProducto").val();
-    let valorProducto = $("#valProducto").val();
-    $.ajax({
-        type: "GET",
-        dataType: "html",
-        url: "./ServletProductoRegistrar",
-        data: $.param({
-            nombre: nombre,
-            valorProducto: valorProducto
-        }),
-        success: function (result) {
-            let parsedResult = JSON.parse(result);
-            if (parsedResult !== false) {
-                $("#register-success-pro").removeClass("d-none");
-            } else {
-                $("#register-error-pro").removeClass("d-none");
-            }
-        }
-    });
-}
 
+// function obtenerProductos() {
 
-function obtenerProductos() {
-
-    $.ajax({
-        type: "GET",
-        dataType: "html",
-        url: "./ServletProductosListar",
-        success: function (result) {
-            let parsedResult = JSON.parse(result);
-            if (parsedResult !== false) {
-                mostrarProductos(parsedResult);
-
-            } else {
-                console.log("Hubo un problema al llamar los datos de lista productos");
-            }
-        }
-    });
-}
+    // $.ajax({
+    //     type: "GET",
+    //     dataType: "html",
+    //     url: "./ServletProductosListar",
+    //     success: function (result) {
+    //         let parsedResult = JSON.parse(result);
+    //         if (parsedResult !== false) {
+    //             mostrarProductos(parsedResult);
+    //
+    //         } else {
+    //             console.log("Hubo un problema al llamar los datos de lista productos");
+    //         }
+    //     }
+    // });
+// }
 
 
 function mostrarProductos(listaProductos) {
@@ -470,28 +467,28 @@ function mostrarProductos(listaProductos) {
 }
 
 //todoooo todooo
-function actualizarProducto(idProducto, nombre,  valorProducto) {
+// function actualizarProducto(idProducto, nombre,  valorProducto) {
 
-$.ajax({
-        type: "GET",
-        dataType: "html",
-        url: "./ServletProductoActualizar",
-        data: $.param({
-            idProducto: idProducto,
-            nombre: nombre,
-            valorProducto: valorProducto
-        }),
-        success: function (result) {
-            let parsedResult = JSON.parse(result);
-            if (parsedResult !== false) {
-                $("#register-success-proAc").removeClass("d-none");
-                $('#form-producto-actualizar').addClass('d-none');
-                console.log("actualización de producto correcta");
-                obtenerProductos();
-            } else {
-                $("#register-error-proAc").removeClass("d-none");
-                console.log("Hubo un problema al actualizar los datos del producto: " + idServicio);
-            }
-        }
-    });
-}
+// $.ajax({
+//         type: "GET",
+//         dataType: "html",
+//         url: "./ServletProductoActualizar",
+//         data: $.param({
+//             idProducto: idProducto,
+//             nombre: nombre,
+//             valorProducto: valorProducto
+//         }),
+//         success: function (result) {
+//             let parsedResult = JSON.parse(result);
+//             if (parsedResult !== false) {
+//                 $("#register-success-proAc").removeClass("d-none");
+//                 $('#form-producto-actualizar').addClass('d-none');
+//                 console.log("actualización de producto correcta");
+//                 obtenerProductos();
+//             } else {
+//                 $("#register-error-proAc").removeClass("d-none");
+//                 console.log("Hubo un problema al actualizar los datos del producto: " + idServicio);
+//             }
+//         }
+//     });
+// }
