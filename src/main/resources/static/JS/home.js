@@ -1,7 +1,7 @@
 //Para llamar métodos. 
 $(document).ready(function () {
 
-    // obtenerListaMoto();
+    obtenerListaMoto();
     // obtenerListaOrdenes();
     obtenerListaMecanicos();
     // obtenerServicios();
@@ -137,56 +137,55 @@ function mostrarMecanicos(listaMecanicos) {
     $('#tbody').html(tabla);
 }
 
-//Motos
-// function obtenerListaMoto() {
-//
-//     $.ajax({
-//         type: "GET",
-//         dataType: "html",
-//         url: "./ServletMotoListar",
-//         success: function (result) {
-//             let parsedResult = JSON.parse(result);
-//             if (parsedResult !== false) {
-//                 mostrarMotos(parsedResult);
-//
-//             } else {
-//                 console.log("Hubo un problema al llamar los datos de lista HVmotos");
-//             }
-//         }
-//     });
-// }
+// Motos
+function obtenerListaMoto() {
+    $.ajax({
+        type: "GET",
+        dataType: "json",
+        url: "http://localhost:8090/motorclinic/api/motorcycles",
+        success: function (result) {
+            if (result !== false) {
+                mostrarMotos(result);
+            } else {
+                console.log("Hubo un problema al llamar los datos de lista HVmotos");
+            }
+        },
+        error: function(xhr, status, error) {
+            console.log("Error al obtener la lista de motos:", error);
+        }
+    });
+}
 
 function mostrarMotos(listaMotos) {
-
     let tarjeta = "";
 
     $.each(listaMotos, function (index, moto) {
-        let motoParsed = JSON.parse(moto);
-
         tarjeta += '<article class="m-2 ">' +
-                '<div class="container col-4 ">' +
-                '<div class="card" style="width: 17rem;">' +
-                '<img src="./img/moto.jpg" class="card-img-top" alt="logo-moto">' +
-                '<div class="card-body bg-dark rounded">' +
-                '<h5 class="card-title text-white">' + motoParsed.placa + '</h5>' +
-                '<p class="card-text text-white">' + motoParsed.marca + ' ' + motoParsed.modelo + '</p>' +
-                '</div>' +
-                '<ul class="list-group list-group-flush">' +
-                '<li class="list-group-item">' + '<strong>ID Cliente:</strong> ' + motoParsed.idCliente + '</li>' +
-                '<li class="list-group-item">' + '<strong>Nombre:</strong> ' + motoParsed.nombreCliente + '</li>' +
-                '<li class="list-group-item">' + '<strong>Año modelo:</strong> ' + motoParsed.añoRegistro + '</li>' +
-                '</ul>' +
-                '<div class="card-body text-center">' +
-                '<button type="button" class="activar-modal btn btn-dark" data-bs-toggle="modal" data-bs-target="#' + motoParsed.placa + '">' +
-                'Ver ordenes de servicio' +
-                '</button>' +
-                '</div>' +
-                '</div>' +
-                '</div>' +
-                '</article>';
+            '<div class="container col-4 ">' +
+            '<div class="card" style="width: 17rem;">' +
+            '<img src="./img/moto.jpg" class="card-img-top" alt="logo-moto">' +
+            '<div class="card-body bg-dark rounded">' +
+            '<h5 class="card-title text-white">' + moto.plate + '</h5>' +
+            '<p class="card-text text-white">' + moto.brand + ' ' + moto.model + '</p>' +
+            '</div>' +
+            '<ul class="list-group list-group-flush">' +
+            '<li class="list-group-item">' + '<strong>ID Cliente:</strong> ' + moto.customer.id + '</li>' +
+            '<li class="list-group-item">' + '<strong>Nombre:</strong> ' + moto.customer.firstName + ' ' + moto.customer.lastName + '</li>' +
+            '<li class="list-group-item">' + '<strong>Año modelo:</strong> ' + moto.registrationYear + '</li>' +
+            '</ul>' +
+            '<div class="card-body text-center">' +
+            '<button type="button" class="activar-modal btn btn-dark" data-bs-toggle="modal" data-bs-target="#' + moto.plate + '">' +
+            'Ver ordenes de servicio' +
+            '</button>' +
+            '</div>' +
+            '</div>' +
+            '</div>' +
+            '</article>';
     });
+
     $('.tarjetero').html(tarjeta);
 }
+
 
 //Ordenes de servicio
 // function obtenerListaOrdenes() {
