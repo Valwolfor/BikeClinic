@@ -11,18 +11,19 @@ $(document).ready(function () {
     datosToProducto();
 
 
-//Registrar servicio offcanvas
-//     $("#form-servicio").submit(function (event) {
-//         event.preventDefault();
-//         registrarServicio();
-//
-//     });
+// Registrar servicio offcanvas
+    $("#form-servicio").submit(function (event) {
+        event.preventDefault();
+        registrarServicio();
+        obtenerServicios();
+    });
 // //Registrar producto offcanvas
-//     $("#form-producto").submit(function (event) {
-//         event.preventDefault();
-//         registrarProducto();
-//
-//     });
+    $("#form-producto").submit(function (event) {
+        event.preventDefault();
+        // registrarProducto();
+        obtenerProductos();
+
+    });
 
 
 });
@@ -319,33 +320,38 @@ function cambiarEstadoMecanico() {
     });
 }
 
-//Servicios
-// function registrarServicio() {
-//
-//     let nombreServicio = $("#nameServicio").val();
-//     let detalleServicio = $("#desServicio").val();
-//     let valorServicio = $("#valServicio").val();
+// Servicios
+function registrarServicio() {
+    let nombreServicio = $("#nameServicio").val();
+    let detalleServicio = $("#desServicio").val();
+    let valorServicio = $("#valServicio").val();
 
-// $.ajax({
-//     type: "GET",
-//     dataType: "html",
-//     url: "./ServletServicioRegistrar",
-//     data: $.param({
-//         nombreServicio: nombreServicio,
-//         detalleServicio: detalleServicio,
-//         valorServicio: valorServicio
-//     }),
-//     success: function (result) {
-//         let parsedResult = JSON.parse(result);
-//         if (parsedResult !== false) {
-//             $("#register-success-ser").removeClass("d-none");
-//
-//         } else {
-//             $("#register-error-ser").removeClass("d-none");
-//         }
-//     }
-// });
-// }
+    fetch('http://localhost:8090/motorclinic/api/services', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            serviceName: nombreServicio,
+            serviceDetail: detalleServicio,
+            serviceValue: valorServicio
+        })
+    })
+        .then(response => response.json())
+        .then(parsedResult => {
+            if (parsedResult !== false) {
+                $("#register-success-ser").removeClass("d-none");
+            } else {
+                $("#register-error-ser").removeClass("d-none");
+            }
+        })
+        .catch(error => {
+            console.error('Error al registrar el servicio:', error);
+            // Manejar el error aquí si es necesario
+        });
+}
+
+
 
 
 function obtenerServicios() {
