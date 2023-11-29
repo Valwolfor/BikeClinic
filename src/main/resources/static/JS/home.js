@@ -2,7 +2,7 @@
 $(document).ready(function () {
 
     obtenerListaMoto();
-    // obtenerListaOrdenes();
+    obtenerListaOrdenes();
     obtenerListaMecanicos();
     obtenerServicios();
     obtenerProductos();
@@ -189,92 +189,101 @@ function mostrarMotos(listaMotos) {
 
 
 //Ordenes de servicio
-// function obtenerListaOrdenes() {
-//
-//     $.ajax({
-//         type: "GET",
-//         dataType: "html",
-//         url: "./ServletOrndeListar",
-//         success: function (result) {
-//             let parsedResult = JSON.parse(result);
-//             if (parsedResult !== false) {
-//                 mostrarOrdenes(parsedResult);
-//
-//             } else {
-//                 console.log("Hubo un problema al llamar los datos de lista Ordenes de servicio");
-//             }
-//         }
-//     });
-// }
+function obtenerListaOrdenes() {
+    fetch('http://localhost:8090/motorclinic/api/service-orders', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Hubo un problema al llamar los datos de lista Ordenes de servicio');
+            }
+            return response.json();
+        })
+        .then(parsedResult => {
+            if (parsedResult !== false) {
+                mostrarOrdenes(parsedResult);
+                console.log(parsedResult)
+            } else {
+                console.log('No se recibieron datos válidos de la lista de órdenes de servicio');
+            }
+        })
+        .catch(error => {
+            console.error('Error al obtener la lista de órdenes de servicio:', error);
+        });
+}
 
-//Entonces socio, haga lo siguiente, dos funciones llamando estado y registros(con servlets y controller
-//Luego llame un par de funciones que va declarar dentro de mostrarOrdenes que setten los datos dentro de accordeons 
-// function mostrarOrdenes(listaOrdenes) {
-//     let modal = "";
-//     $.each(listaOrdenes, function (index, orden) {
-//         let ordenParsed = JSON.parse(orden);
-//         modal += '<article>' +
-//             '<!-- Scrollable modal -->' +
-//             '<!-- Vertically centered scrollable modal -->' +
-//             '<div class="cajitas modal-dialog modal-dialog-centered modal-dialog-scrollable ">' +
-//             '<div class="modal fade" id="' + ordenParsed.placaMoto + '" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">' +
-//             '<div class="modal-dialog">' +
-//             '<div class="modal-content">' +
-//             '<div class="modal-header bg-dark border-top border-start border-end border-3 ">' +
-//             '<h5 class="modal-title text-white" id="staticBackdropLabel"><strong>Registro de moto: </strong>' + ordenParsed.placaMoto + '</h5>' +
-//             '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>' +
-//             '</div>' +
-//             '<div id="ordenes" class="ordenes modal-body border border border-3 border-dark" style="--bs-border-opacity: .8;">';
-//         verOrdenesPorMoto();
-//
-//         function verOrdenesPorMoto() {
-//
-//             $.each(listaOrdenes, function (index, ordenPorM) {
-//                 let ordenMotoParsed = JSON.parse(ordenPorM);
-//                 //solo poner las ordenes de está moto.
-//                 if (ordenMotoParsed.placaMoto === ordenParsed.placaMoto) {
-//
-//                     //Cambié de lugar el h2 y el button
-//                     modal += '<!--AQUÍ inician los accordeon-->' +
-//                         '<div class="accordion accordion-flush" id="accordionFlushOrdenes">' +
-//                         '<div class="accordion-item">' +
-//                         '<h2 class="accordion-header" id="flush-heading-' + ordenMotoParsed.idOrden + '">' +
-//                         '<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse-' + ordenMotoParsed.idOrden + '" aria-expanded="false" aria-controls="flush-collapse-' + ordenMotoParsed.idOrden + '">' +
-//                         '<strong>Ordén de Servicio:  #</strong>' + ordenMotoParsed.idOrden +
-//                         '</button>' +
-//                         '</h2>' +
-//                         '<div id="flush-collapse-' + ordenMotoParsed.idOrden + '" class="accordion-collapse collapse" aria-labelledby="flush-heading-' + ordenMotoParsed.idOrden + '" data-bs-parent="#accordionFlushOrdenes">' +
-//                         '<div class="accordion-body">' +
-//                         '<ul class="list-group list-group-flush">' +
-//                         '<li class="list-group-item"><strong>Fecha de ingreso:  </strong>' + ordenMotoParsed.date + '</li>' +
-//                         '<li class="list-group-item"><strong>Motivo de ingreso:  </strong>' + ordenMotoParsed.motivo + '</li>' +
-//                         '<li class="list-group-item"><strong>Diagnóstico:  </strong>' + ordenMotoParsed.descripcionDiagnostico + '</li>' +
-//                         '<li class="list-group-item"><strong>Documentos en resguardo:  </strong>' + ordenMotoParsed.documentos + '</li>' +
-//                         '<li class="list-group-item"><strong>Realiza anticipo:  </strong>' + ordenMotoParsed.anticipo + '</li>' +
-//                         '<li class="list-group-item"><strong>Valor anticipo:  </strong>$' + ordenMotoParsed.valorAnticipo + '</li>' +
-//                         '<li id="orden-' + ordenMotoParsed.idOrden + '"class="orden-' + ordenMotoParsed.idOrden + ' list-group-item"><strong>Autorización prueba de ruta:  </strong>' + ordenMotoParsed.autorizacionRuta + '</li>' +
-//                         '<li id="orden-registro-' + ordenMotoParsed.idOrden + '"class="orden-registro-' + ordenMotoParsed.idOrden + ' list-group-item"><strong>Servicios y productos por Orden</strong></li>' +
-//                         '<!--Cierra inicio de modal-->' +
-//                         '</ul>' +
-//                         '</div>' +
-//                         '</div>' +
-//                         '</div>' +
-//                         '</div>';
-//                 } //termina if ordenes
-//             });
-//         }
-//
-//         //termina el acordeon y el modal.
-//         modal += '<div class="modal-footer mb-3">' +
-//             '</div>' +
-//             '</div>' +
-//             '</div>' +
-//             '</div>' +
-//             '</div>' +
-//             '</article>';
-//     });
-//     $('.modale').html(modal);
-// }
+
+// Entonces socio, haga lo siguiente, dos funciones llamando estado y registros(con servlets y controller
+// Luego llame un par de funciones que va declarar dentro de mostrarOrdenes que setten los datos dentro de accordeons
+function mostrarOrdenes(listaOrdenes) {
+    let modal = "";
+    $.each(listaOrdenes, function (index, orden) {
+
+        modal += '<article>' +
+            '<!-- Scrollable modal -->' +
+            '<!-- Vertically centered scrollable modal -->' +
+            '<div class="cajitas modal-dialog modal-dialog-centered modal-dialog-scrollable ">' +
+            '<div class="modal fade" id="' + orden.motorcycle.plate + '" data-bs-backdrop="static" data-bs-keyboard="false" ' +
+            'tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">' +
+            '<div class="modal-dialog">' +
+            '<div class="modal-content">' +
+            '<div class="modal-header bg-dark border-top border-start border-end border-3 ">' +
+            '<h5 class="modal-title text-white" id="staticBackdropLabel"><strong>Registro de moto: </strong>' +
+            orden.motorcycle.plate + '</h5>' +
+            '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>' +
+            '</div>' +
+            '<div id="ordenes" class="ordenes modal-body border border border-3 border-dark" style="--bs-border-opacity: .8;">';
+        verOrdenesPorMoto();
+
+        function verOrdenesPorMoto() {
+            $.each(listaOrdenes, function (index, ordenPorM) {
+
+                if (ordenPorM.motorcycle.plate === orden.motorcycle.plate) {
+                    modal += '<!--AQUÍ inician los accordeon-->' +
+                        '<div class="accordion accordion-flush" id="accordionFlushOrdenes">' +
+                        '<div class="accordion-item">' +
+                        '<h2 class="accordion-header" id="flush-heading-' + ordenPorM.id + '">' +
+                        '<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse-' +
+                        ordenPorM.id + '" aria-expanded="false" aria-controls="flush-collapse-' + ordenPorM.id + '">' +
+                        '<strong>Ordén de Servicio:  #</strong>' + ordenPorM.id +
+                        '</button>' +
+                        '</h2>' +
+                        '<div id="flush-collapse-' + ordenPorM.id + '" class="accordion-collapse collapse" aria-labelledby="flush-heading-' +
+                        ordenPorM.id + '" data-bs-parent="#accordionFlushOrdenes">' +
+                        '<div class="accordion-body">' +
+                        '<ul class="list-group list-group-flush">' +
+                        '<li class="list-group-item"><strong>Fecha de ingreso:  </strong>' + ordenPorM.date + '</li>' +
+                        '<li class="list-group-item"><strong>Motivo de ingreso:  </strong>' + ordenPorM.reason + '</li>' +
+                        '<li class="list-group-item"><strong>Diagnóstico:  </strong>' + ordenPorM.diagnosticDesc + '</li>' +
+                        '<li class="list-group-item"><strong>Documentos en resguardo:  </strong>' + ordenPorM.documents + '</li>' +
+                        '<li class="list-group-item"><strong>Realiza anticipo:  </strong>' + ordenPorM.advance + '</li>' +
+                        '<li class="list-group-item"><strong>Valor anticipo:  </strong>$' + ordenPorM.advanceValue + '</li>' +
+                        '<li id="orden-' + ordenPorM.id + '"class="orden-' + ordenPorM.id + ' list-group-item">' +
+                        '<strong>Autorización prueba de ruta:  </strong>' + ordenPorM.routeAuth + '</li>' +
+                        '<li id="orden-registro-' + ordenPorM.id + '"class="orden-registro-' + ordenPorM.id +
+                        ' list-group-item"><strong>Servicios y productos por Orden</strong></li>' +
+                        '</ul>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>';
+                }
+            });
+        }
+
+        modal += '<div class="modal-footer mb-3">' +
+            '</div>' +
+            '</div>' +
+            '</div>' +
+            '</div>' +
+            '</div>' +
+            '</article>';
+    });
+    $('.modale').html(modal);
+}
 
 
 function cambiarEstadoMecanico() {
