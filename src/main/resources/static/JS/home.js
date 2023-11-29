@@ -6,7 +6,7 @@ $(document).ready(function () {
     obtenerListaMecanicos();
     obtenerServicios();
     obtenerProductos();
-    // cambiarEstadoMecanico();
+    cambiarEstadoMecanico();
     datosToServicio();
     datosToProducto();
 
@@ -277,40 +277,47 @@ function mostrarMotos(listaMotos) {
 //     $('.modale').html(modal);
 // }
 
+function cambiarEstadoMecanico() {
+    // Para cambiar el estado en la interfaz cuando se da clic en el switch button
+    $(document).on('change', '#estado-mecanico', function (event) {
+        event.preventDefault();
+        let idUsuario = $(this).parent().parent().parent().children().first().text();
+        let estado = $(this).parent().parent().parent().children().last().text();
+        if (estado.trim() === 'ACTIVE') {
+            estado = 'INACTIVE';
+        } else {
+            estado = 'ACTIVE';
+        }
 
-// function cambiarEstadoMecanico() {
-//
-//     //Para cambiar el estado en la interfaz cuando se da clic en el switch button
-//     $(document).on('change', '#estado-mecanico', function (event) {
-//         event.preventDefault();
-//         let idUsuario = $(this).parent().parent().parent().children().first().text();
-//         let estado = $(this).parent().parent().parent().children().last().text();
-//         if (estado.trim() === 'Activo') {
-//             estado = 'Inactivo';
-//         } else {
-//             estado = 'Activo';
-//         }
-//
-//         $.ajax({
-//             type: "GET",
-//             dataType: "html",
-//             url: "./ServletMecanicoModificarEstado",
-//             data: $.param({
-//                 idUsuario: idUsuario,
-//                 estado: estado
-//             }),
-//             success: function (result) {
-//                 let parsedResult = JSON.parse(result);
-//                 if (parsedResult !== false) {
-//                     console.log("Funciona success");
-//                     obtenerListaMecanicos();
-//                 } else {
-//                     console.log("Hubo un problema al cambiar estado mecánicos JS");
-//                 }
-//             }
-//         });
-//     });
-// }
+        fetch(`http://localhost:8090/motorclinic/api/users/${idUsuario}/change-status`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                status: estado
+            })
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Error al cambiar el estado del mecánico');
+                }
+            })
+            .then(result => {
+                if (result !== false) {
+                    console.log("Funciona success");
+                    obtenerListaMecanicos();
+                } else {
+                    console.log("Hubo un problema al cambiar estado mecánicos JS");
+                }
+            })
+            .catch(error => {
+                console.error('Error en la solicitud fetch:', error);
+            });
+    });
+}
 
 //Servicios
 // function registrarServicio() {

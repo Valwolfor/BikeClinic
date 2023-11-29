@@ -30,7 +30,6 @@ function autenticarUsuario() {
         .then(result => {
             $("#login-error").addClass("d-none");
             let correo = result['email'];
-            let rolAdmin = "ADMIN";
 
             if ($("#rol").prop("checked")) {
                 //TODO cooregir sobre sesion
