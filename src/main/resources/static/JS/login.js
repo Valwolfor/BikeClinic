@@ -21,18 +21,19 @@ function autenticarUsuario() {
     })
         .then(response => {
             if (response.ok) {
+                //TODO: gestión sesión
                 return response.json();
             } else {
                 throw new Error('Error en la solicitud');
             }
         })
         .then(result => {
-            console.log(result);
             $("#login-error").addClass("d-none");
             let correo = result['email'];
             let rolAdmin = "ADMIN";
-            console.log(rolAdmin);
+
             if ($("#rol").prop("checked")) {
+                //TODO cooregir sobre sesion
                 document.location.href = "home.html?correo=" + correo;
             } else {
                 document.location.href = "mecanico.html?correo=" + correo;

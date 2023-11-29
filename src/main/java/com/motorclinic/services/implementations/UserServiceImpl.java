@@ -170,6 +170,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getUsersByRole(UserRole role) {
+        //TODO: validar activos dos métodos
         return repository.findByRolesIn(Collections.singletonList(role));
     }
     @Override

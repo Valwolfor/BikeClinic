@@ -29,6 +29,8 @@ public class ProductServiceImpl implements ProductService {
         if (oldProduct != null) {
             oldProduct.setProductName(product.getProductName());
             oldProduct.setProductValue(product.getProductValue());
+            Integer quantity = oldProduct.getQuantity() + product.getQuantity();
+            oldProduct.setQuantity(quantity);
         }
 
         if (oldProduct == null) {

@@ -4,8 +4,8 @@ $(document).ready(function () {
     obtenerListaMoto();
     // obtenerListaOrdenes();
     obtenerListaMecanicos();
-    // obtenerServicios();
-    // obtenerProductos();
+    obtenerServicios();
+    obtenerProductos();
     // cambiarEstadoMecanico();
     datosToServicio();
     datosToProducto();
@@ -55,7 +55,7 @@ function datosToServicio() {
             nombreServicio = document.getElementById("nameServicioAc").value;
             detalleServicio = document.getElementById("desServicioAc").value;
             valorServicio = document.getElementById("valServicioAc").value;
-            
+
             actualizarServicio(idServicio, nombreServicio, detalleServicio, valorServicio);
             $('#form-servicio-actualizar').addClass('d-none');
 
@@ -68,7 +68,7 @@ function datosToServicio() {
 function datosToProducto() {
     let idProducto;
     let nombre;
-    let valorProducto;
+    let valorProducto, canProducto;
 
     $(document).on('click', '.btn-edit-producto', function (event) {
         event.preventDefault();
@@ -89,7 +89,8 @@ function datosToProducto() {
             idProducto = document.getElementById("idLblProductoAc").value;
             nombre = document.getElementById("nameProductoAc").value;
             valorProducto = document.getElementById("valProductoAc").value;
-            actualizarProducto(idProducto, nombre, valorProducto);
+            canProducto = document.getElementById("canProductoAc").value;
+            actualizarProducto(idProducto, nombre, valorProducto, canProducto);
             $('#form-producto-actualizar').addClass('d-none');
 
             console.log($(this).parent().parent().children().first().text());
@@ -150,12 +151,13 @@ function obtenerListaMoto() {
                 console.log("Hubo un problema al llamar los datos de lista HVmotos");
             }
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
             console.log("Error al obtener la lista de motos:", error);
         }
     });
 }
 
+// TODO: limitar ancho a cierta altura, luego scroll
 function mostrarMotos(listaMotos) {
     let tarjeta = "";
 
@@ -208,70 +210,72 @@ function mostrarMotos(listaMotos) {
 
 //Entonces socio, haga lo siguiente, dos funciones llamando estado y registros(con servlets y controller
 //Luego llame un par de funciones que va declarar dentro de mostrarOrdenes que setten los datos dentro de accordeons 
-function mostrarOrdenes(listaOrdenes) {
-    let modal = "";
-    $.each(listaOrdenes, function (index, orden) {
-        let ordenParsed = JSON.parse(orden);
-        modal += '<article>' +
-                '<!-- Scrollable modal -->' +
-                '<!-- Vertically centered scrollable modal -->' +
-                '<div class="cajitas modal-dialog modal-dialog-centered modal-dialog-scrollable ">' +
-                '<div class="modal fade" id="' + ordenParsed.placaMoto + '" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">' +
-                '<div class="modal-dialog">' +
-                '<div class="modal-content">' +
-                '<div class="modal-header bg-dark border-top border-start border-end border-3 ">' +
-                '<h5 class="modal-title text-white" id="staticBackdropLabel"><strong>Registro de moto: </strong>' + ordenParsed.placaMoto + '</h5>' +
-                '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>' +
-                '</div>' +
-                '<div id="ordenes" class="ordenes modal-body border border border-3 border-dark" style="--bs-border-opacity: .8;">';
-        verOrdenesPorMoto();
-        function verOrdenesPorMoto() {
-
-            $.each(listaOrdenes, function (index, ordenPorM) {
-                let ordenMotoParsed = JSON.parse(ordenPorM);
-                //solo poner las ordenes de está moto.
-                if (ordenMotoParsed.placaMoto === ordenParsed.placaMoto) {
-
-                    //Cambié de lugar el h2 y el button
-                    modal += '<!--AQUÍ inician los accordeon-->' +
-                            '<div class="accordion accordion-flush" id="accordionFlushOrdenes">' +
-                            '<div class="accordion-item">' +
-                            '<h2 class="accordion-header" id="flush-heading-' + ordenMotoParsed.idOrden + '">' +
-                            '<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse-' + ordenMotoParsed.idOrden + '" aria-expanded="false" aria-controls="flush-collapse-' + ordenMotoParsed.idOrden + '">' +
-                            '<strong>Ordén de Servicio:  #</strong>' + ordenMotoParsed.idOrden +
-                            '</button>' +
-                            '</h2>' +
-                            '<div id="flush-collapse-' + ordenMotoParsed.idOrden + '" class="accordion-collapse collapse" aria-labelledby="flush-heading-' + ordenMotoParsed.idOrden + '" data-bs-parent="#accordionFlushOrdenes">' +
-                            '<div class="accordion-body">' +
-                            '<ul class="list-group list-group-flush">' +
-                            '<li class="list-group-item"><strong>Fecha de ingreso:  </strong>' + ordenMotoParsed.date + '</li>' +
-                            '<li class="list-group-item"><strong>Motivo de ingreso:  </strong>' + ordenMotoParsed.motivo + '</li>' +
-                            '<li class="list-group-item"><strong>Diagnóstico:  </strong>' + ordenMotoParsed.descripcionDiagnostico + '</li>' +
-                            '<li class="list-group-item"><strong>Documentos en resguardo:  </strong>' + ordenMotoParsed.documentos + '</li>' +
-                            '<li class="list-group-item"><strong>Realiza anticipo:  </strong>' + ordenMotoParsed.anticipo + '</li>' +
-                            '<li class="list-group-item"><strong>Valor anticipo:  </strong>$' + ordenMotoParsed.valorAnticipo + '</li>' +
-                            '<li id="orden-' + ordenMotoParsed.idOrden + '"class="orden-' + ordenMotoParsed.idOrden + ' list-group-item"><strong>Autorización prueba de ruta:  </strong>' + ordenMotoParsed.autorizacionRuta + '</li>' +
-                            '<li id="orden-registro-' + ordenMotoParsed.idOrden + '"class="orden-registro-' + ordenMotoParsed.idOrden + ' list-group-item"><strong>Servicios y productos por Orden</strong></li>' +
-                            '<!--Cierra inicio de modal-->' +
-                            '</ul>' +
-                            '</div>' +
-                            '</div>' +
-                            '</div>' +
-                            '</div>';
-                } //termina if ordenes
-            });
-        }
-        //termina el acordeon y el modal.
-        modal += '<div class="modal-footer mb-3">' +
-                '</div>' +
-                '</div>' +
-                '</div>' +
-                '</div>' +
-                '</div>' +
-                '</article>';
-    });
-    $('.modale').html(modal);
-}
+// function mostrarOrdenes(listaOrdenes) {
+//     let modal = "";
+//     $.each(listaOrdenes, function (index, orden) {
+//         let ordenParsed = JSON.parse(orden);
+//         modal += '<article>' +
+//             '<!-- Scrollable modal -->' +
+//             '<!-- Vertically centered scrollable modal -->' +
+//             '<div class="cajitas modal-dialog modal-dialog-centered modal-dialog-scrollable ">' +
+//             '<div class="modal fade" id="' + ordenParsed.placaMoto + '" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">' +
+//             '<div class="modal-dialog">' +
+//             '<div class="modal-content">' +
+//             '<div class="modal-header bg-dark border-top border-start border-end border-3 ">' +
+//             '<h5 class="modal-title text-white" id="staticBackdropLabel"><strong>Registro de moto: </strong>' + ordenParsed.placaMoto + '</h5>' +
+//             '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>' +
+//             '</div>' +
+//             '<div id="ordenes" class="ordenes modal-body border border border-3 border-dark" style="--bs-border-opacity: .8;">';
+//         verOrdenesPorMoto();
+//
+//         function verOrdenesPorMoto() {
+//
+//             $.each(listaOrdenes, function (index, ordenPorM) {
+//                 let ordenMotoParsed = JSON.parse(ordenPorM);
+//                 //solo poner las ordenes de está moto.
+//                 if (ordenMotoParsed.placaMoto === ordenParsed.placaMoto) {
+//
+//                     //Cambié de lugar el h2 y el button
+//                     modal += '<!--AQUÍ inician los accordeon-->' +
+//                         '<div class="accordion accordion-flush" id="accordionFlushOrdenes">' +
+//                         '<div class="accordion-item">' +
+//                         '<h2 class="accordion-header" id="flush-heading-' + ordenMotoParsed.idOrden + '">' +
+//                         '<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse-' + ordenMotoParsed.idOrden + '" aria-expanded="false" aria-controls="flush-collapse-' + ordenMotoParsed.idOrden + '">' +
+//                         '<strong>Ordén de Servicio:  #</strong>' + ordenMotoParsed.idOrden +
+//                         '</button>' +
+//                         '</h2>' +
+//                         '<div id="flush-collapse-' + ordenMotoParsed.idOrden + '" class="accordion-collapse collapse" aria-labelledby="flush-heading-' + ordenMotoParsed.idOrden + '" data-bs-parent="#accordionFlushOrdenes">' +
+//                         '<div class="accordion-body">' +
+//                         '<ul class="list-group list-group-flush">' +
+//                         '<li class="list-group-item"><strong>Fecha de ingreso:  </strong>' + ordenMotoParsed.date + '</li>' +
+//                         '<li class="list-group-item"><strong>Motivo de ingreso:  </strong>' + ordenMotoParsed.motivo + '</li>' +
+//                         '<li class="list-group-item"><strong>Diagnóstico:  </strong>' + ordenMotoParsed.descripcionDiagnostico + '</li>' +
+//                         '<li class="list-group-item"><strong>Documentos en resguardo:  </strong>' + ordenMotoParsed.documentos + '</li>' +
+//                         '<li class="list-group-item"><strong>Realiza anticipo:  </strong>' + ordenMotoParsed.anticipo + '</li>' +
+//                         '<li class="list-group-item"><strong>Valor anticipo:  </strong>$' + ordenMotoParsed.valorAnticipo + '</li>' +
+//                         '<li id="orden-' + ordenMotoParsed.idOrden + '"class="orden-' + ordenMotoParsed.idOrden + ' list-group-item"><strong>Autorización prueba de ruta:  </strong>' + ordenMotoParsed.autorizacionRuta + '</li>' +
+//                         '<li id="orden-registro-' + ordenMotoParsed.idOrden + '"class="orden-registro-' + ordenMotoParsed.idOrden + ' list-group-item"><strong>Servicios y productos por Orden</strong></li>' +
+//                         '<!--Cierra inicio de modal-->' +
+//                         '</ul>' +
+//                         '</div>' +
+//                         '</div>' +
+//                         '</div>' +
+//                         '</div>';
+//                 } //termina if ordenes
+//             });
+//         }
+//
+//         //termina el acordeon y el modal.
+//         modal += '<div class="modal-footer mb-3">' +
+//             '</div>' +
+//             '</div>' +
+//             '</div>' +
+//             '</div>' +
+//             '</div>' +
+//             '</article>';
+//     });
+//     $('.modale').html(modal);
+// }
 
 
 // function cambiarEstadoMecanico() {
@@ -315,45 +319,44 @@ function mostrarOrdenes(listaOrdenes) {
 //     let detalleServicio = $("#desServicio").val();
 //     let valorServicio = $("#valServicio").val();
 
-    // $.ajax({
-    //     type: "GET",
-    //     dataType: "html",
-    //     url: "./ServletServicioRegistrar",
-    //     data: $.param({
-    //         nombreServicio: nombreServicio,
-    //         detalleServicio: detalleServicio,
-    //         valorServicio: valorServicio
-    //     }),
-    //     success: function (result) {
-    //         let parsedResult = JSON.parse(result);
-    //         if (parsedResult !== false) {
-    //             $("#register-success-ser").removeClass("d-none");
-    //
-    //         } else {
-    //             $("#register-error-ser").removeClass("d-none");
-    //         }
-    //     }
-    // });
+// $.ajax({
+//     type: "GET",
+//     dataType: "html",
+//     url: "./ServletServicioRegistrar",
+//     data: $.param({
+//         nombreServicio: nombreServicio,
+//         detalleServicio: detalleServicio,
+//         valorServicio: valorServicio
+//     }),
+//     success: function (result) {
+//         let parsedResult = JSON.parse(result);
+//         if (parsedResult !== false) {
+//             $("#register-success-ser").removeClass("d-none");
+//
+//         } else {
+//             $("#register-error-ser").removeClass("d-none");
+//         }
+//     }
+// });
 // }
 
 
-// function obtenerServicios() {
+function obtenerServicios() {
 
-    // $.ajax({
-    //     type: "GET",
-    //     dataType: "html",
-    //     url: "./ServletServiciosListar",
-    //     success: function (result) {
-    //         let parsedResult = JSON.parse(result);
-    //         if (parsedResult !== false) {
-    //             mostrarServicios(parsedResult);
-    //
-    //         } else {
-    //             console.log("Hubo un problema al llamar los datos de lista servicios");
-    //         }
-    //     }
-    // });
-// }
+    $.ajax({
+        type: "GET",
+        dataType: "json",
+        url: "http://localhost:8090/motorclinic/api/services",
+        success: function (result) {
+            if (result !== false) {
+                mostrarServicios(result);
+
+            } else {
+                console.log("Hubo un problema al llamar los datos de lista servicios");
+            }
+        }
+    });
+}
 
 
 function mostrarServicios(listaServicios) {
@@ -361,91 +364,98 @@ function mostrarServicios(listaServicios) {
     let tabla = "";
     $.each(listaServicios, function (index, servicio) {
 
-        servicioParsed = JSON.parse(servicio);
         tabla += '<tr>' +
-                '<td>' + servicioParsed.idServicio + '</td>' +
-                '<td>' + servicioParsed.nombreServicio + '</td>' +
-                '<td>' + servicioParsed.detalleServicio + '</td>' +
-                '<td>' + servicioParsed.valorServicio + '</td>' +
-                '<td><button value="actualizar" title="actualizar" class="btn btn-primary btn-edit-servicio" id="btn-edit-servicio">Actualizar</button></td>' +
-                '</tr>';
+            '<td>' + servicio.idService + '</td>' +
+            '<td>' + servicio.serviceName + '</td>' +
+            '<td>' + servicio.serviceDetail + '</td>' +
+            '<td>' + servicio.serviceValue + '</td>' +
+            '<td><button value="actualizar" title="actualizar" class="btn btn-primary btn-edit-servicio" id="btn-edit-servicio">Actualizar</button></td>' +
+            '</tr>';
     });
 
     $('#tbodyServicios').html(tabla);
 }
 
 
-//todo tooodoo
-// function actualizarServicio(idServicio, nombreServicio, detalleServicio, valorServicio) {
-// ///revisar este tema del boton
-//
-//     $.ajax({
-    //     type: "GET",
-    //     dataType: "html",
-    //     url: "./ServletServicioActualizar",
-    //     data: $.param({
-    //         idServicio: idServicio,
-    //         nombreServicio: nombreServicio,
-    //         detalleServicio: detalleServicio,
-    //         valorServicio: valorServicio
-    //     }),
-    //     success: function (result) {
-    //         let parsedResult = JSON.parse(result);
-    //         if (parsedResult !== false) {
-    //             $("#register-success-serAc").removeClass("d-none");
-    //             $('#form-servicio-actualizar').addClass('d-none');
-    //             console.log("actualización de servicio correcta");
-    //             obtenerServicios();
-    //         } else {
-    //             $("#register-error-serAc").removeClass("d-none");
-    //             console.log("Hubo un problema al actualizar los datos del servicio: " + idServicio);
-    //         }
-    //     }
-    // });
-// }
+function actualizarServicio(idServicio, nombreServicio, detalleServicio, valorServicio) {
+    fetch(`http://localhost:8090/motorclinic/api/services/${idServicio}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            idService: idServicio,
+            serviceName: nombreServicio,
+            serviceDetail: detalleServicio,
+            serviceValue: valorServicio
+        })
+    })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('Error al actualizar el servicio');
+            }
+        })
+        .then(result => {
+            if (result !== false) {
+                $("#register-success-serAc").removeClass("d-none");
+                $('#form-servicio-actualizar').addClass('d-none');
+                console.log("actualización de servicio correcta");
+                obtenerServicios();
+            } else {
+                $("#register-error-serAc").removeClass("d-none");
+                console.log("Hubo un problema al actualizar los datos del servicio: " + idServicio);
+            }
+        })
+        .catch(error => {
+            console.error('Error en la solicitud fetch:', error);
+        });
+}
+
 
 //Productos
 // function registrarProducto() {
 //
 //     let nombre = $("#nameProducto").val();
-    // let valorProducto = $("#valProducto").val();
-    // $.ajax({
-    //     type: "GET",
-    //     dataType: "html",
-    //     url: "./ServletProductoRegistrar",
-    //     data: $.param({
-    //         nombre: nombre,
-    //         valorProducto: valorProducto
-    //     }),
-    //     success: function (result) {
-    //         let parsedResult = JSON.parse(result);
-    //         if (parsedResult !== false) {
-    //             $("#register-success-pro").removeClass("d-none");
-    //         } else {
-    //             $("#register-error-pro").removeClass("d-none");
-    //         }
-    //     }
-    // });
+//     let valorProducto = $("#valProducto").val();
+//     $.ajax({
+//         type: "GET",
+//         dataType: "json",
+//         url: "http://localhost:8090/motorclinic/api/products",
+//         data: JSON.stringify({
+//             nombre: nombre,
+//             valorProducto: valorProducto
+//         }),
+//         success: function (result) {
+//             let parsedResult = JSON.parse(result);
+//             if (parsedResult !== false) {
+//                 $("#register-success-pro").removeClass("d-none");
+//             } else {
+//                 $("#register-error-pro").removeClass("d-none");
+//             }
+//         }
+//     });
 // }
 
 
-// function obtenerProductos() {
+function obtenerProductos() {
 
-    // $.ajax({
-    //     type: "GET",
-    //     dataType: "html",
-    //     url: "./ServletProductosListar",
-    //     success: function (result) {
-    //         let parsedResult = JSON.parse(result);
-    //         if (parsedResult !== false) {
-    //             mostrarProductos(parsedResult);
-    //
-    //         } else {
-    //             console.log("Hubo un problema al llamar los datos de lista productos");
-    //         }
-    //     }
-    // });
-// }
+    $.ajax({
+        type: "GET",
+        dataType: "json",
+        url: "http://localhost:8090/motorclinic/api/products",
+        success: function (result) {
+
+            if (result !== false) {
+                mostrarProductos(result);
+
+            } else {
+                console.log("Hubo un problema al llamar los datos de lista productos");
+            }
+        }
+    });
+}
 
 
 function mostrarProductos(listaProductos) {
@@ -453,41 +463,50 @@ function mostrarProductos(listaProductos) {
     let tabla = "";
     $.each(listaProductos, function (index, producto) {
 
-        productoParsed = JSON.parse(producto);
         tabla += '<tr>' +
-                '<td>' + productoParsed.idProducto + '</td>' +
-                '<td>' + productoParsed.nombre + '</td>' +
-                '<td>' + productoParsed.valorProducto + '</td>' +
-                '<td><button value="actualizar" title="actualizar" class="btn btn-primary btn-edit-producto" id="btn-edit-servicio">Actualizar</button></td>' +
-                '</tr>';
+            '<td>' + producto.idProduct + '</td>' +
+            '<td>' + producto.productName + '</td>' +
+            '<td>' + producto.productValue + '</td>' +
+            '<td>' + producto.quantity + '</td>' +
+            '<td><button value="actualizar" title="actualizar" class="btn btn-primary btn-edit-producto" id="btn-edit-servicio">Actualizar</button></td>' +
+            '</tr>';
     });
 
     $('#tbodyProductos').html(tabla);
 }
 
 //todoooo todooo
-// function actualizarProducto(idProducto, nombre,  valorProducto) {
-
-// $.ajax({
-//         type: "GET",
-//         dataType: "html",
-//         url: "./ServletProductoActualizar",
-//         data: $.param({
-//             idProducto: idProducto,
-//             nombre: nombre,
-//             valorProducto: valorProducto
-//         }),
-//         success: function (result) {
-//             let parsedResult = JSON.parse(result);
-//             if (parsedResult !== false) {
-//                 $("#register-success-proAc").removeClass("d-none");
-//                 $('#form-producto-actualizar').addClass('d-none');
-//                 console.log("actualización de producto correcta");
-//                 obtenerProductos();
-//             } else {
-//                 $("#register-error-proAc").removeClass("d-none");
-//                 console.log("Hubo un problema al actualizar los datos del producto: " + idServicio);
-//             }
-//         }
-//     });
-// }
+function actualizarProducto(idProducto, nombre, valorProducto, canProducto) {
+    fetch(`http://localhost:8090/motorclinic/api/products/${idProducto}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            productName: nombre,
+            productValue: valorProducto,
+            quantity: canProducto
+        })
+    })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('Error al actualizar el producto');
+            }
+        })
+        .then(result => {
+            if (result !== false) {
+                $("#register-success-proAc").removeClass("d-none");
+                $('#form-producto-actualizar').addClass('d-none');
+                console.log("actualización de producto correcta");
+                obtenerProductos();
+            } else {
+                $("#register-error-proAc").removeClass("d-none");
+                console.log("Hubo un problema al actualizar los datos del producto: " + idProducto);
+            }
+        })
+        .catch(error => {
+            console.error('Error en la solicitud fetch:', error);
+        });
+}
