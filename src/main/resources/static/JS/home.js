@@ -15,16 +15,14 @@ $(document).ready(function () {
     $("#form-servicio").submit(function (event) {
         event.preventDefault();
         registrarServicio();
-        obtenerServicios();
+
     });
 // //Registrar producto offcanvas
     $("#form-producto").submit(function (event) {
         event.preventDefault();
-        // registrarProducto();
-        obtenerProductos();
+        registrarProducto();
 
     });
-
 
 });
 
@@ -278,6 +276,7 @@ function mostrarMotos(listaMotos) {
 //     $('.modale').html(modal);
 // }
 
+
 function cambiarEstadoMecanico() {
     // Para cambiar el estado en la interfaz cuando se da clic en el switch button
     $(document).on('change', '#estado-mecanico', function (event) {
@@ -341,6 +340,8 @@ function registrarServicio() {
         .then(parsedResult => {
             if (parsedResult !== false) {
                 $("#register-success-ser").removeClass("d-none");
+                obtenerServicios();
+                location.reload();
             } else {
                 $("#register-error-ser").removeClass("d-none");
             }
@@ -350,8 +351,6 @@ function registrarServicio() {
             // Manejar el error aquí si es necesario
         });
 }
-
-
 
 
 function obtenerServicios() {
@@ -370,7 +369,6 @@ function obtenerServicios() {
         }
     });
 }
-
 
 function mostrarServicios(listaServicios) {
 
@@ -428,28 +426,37 @@ function actualizarServicio(idServicio, nombreServicio, detalleServicio, valorSe
 
 
 //Productos
-// function registrarProducto() {
-//
-//     let nombre = $("#nameProducto").val();
-//     let valorProducto = $("#valProducto").val();
-//     $.ajax({
-//         type: "GET",
-//         dataType: "json",
-//         url: "http://localhost:8090/motorclinic/api/products",
-//         data: JSON.stringify({
-//             nombre: nombre,
-//             valorProducto: valorProducto
-//         }),
-//         success: function (result) {
-//             let parsedResult = JSON.parse(result);
-//             if (parsedResult !== false) {
-//                 $("#register-success-pro").removeClass("d-none");
-//             } else {
-//                 $("#register-error-pro").removeClass("d-none");
-//             }
-//         }
-//     });
-// }
+function registrarProducto() {
+    let nombre = $("#nameProducto").val();
+    let valorProducto = $("#valProducto").val();
+    let canProducto = $("#canProducto").val();
+
+    fetch('http://localhost:8090/motorclinic/api/products', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            productName: nombre,
+            productValue: valorProducto,
+            quantity: canProducto
+        })
+    })
+        .then(response => response.json())
+        .then(parsedResult => {
+            if (parsedResult !== false) {
+                $("#register-success-pro").removeClass("d-none");
+                obtenerProductos();
+                location.reload();
+            } else {
+                $("#register-error-pro").removeClass("d-none");
+            }
+        })
+        .catch(error => {
+            console.error('Error al registrar el producto:', error);
+            // Manejar el error aquí si es necesario
+        });
+}
 
 
 function obtenerProductos() {

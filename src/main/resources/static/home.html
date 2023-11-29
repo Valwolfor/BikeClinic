@@ -231,14 +231,14 @@
 
 <!-- Registro -->
 
-<div class="offcanvas offcanvas-end " tabindex="-1" id="registro" aria-labelledby="offcanvasExampleLabel">
+<div class="offcanvas offcanvas-end " tabindex="-1" id="registro" aria-labelledby="offcanvasMechLabel">
     <div class="offcanvas-header bg-light">
         <!--Logo y titulo-->
         <div class="text-center bg-background-size: cover rounded">
             <img class="logo" src="img/moto.jpg" width="100" alt="logo moto">
         </div>
 
-        <h1 class=" h4 offcanvas-title bg-light" id="offcanvasExampleLabel">Registrar mecánico</h1>
+        <h1 class=" h4 offcanvas-title bg-light" id="offcanvasMechLabel">Registrar mecánico</h1>
         <!-- Para cerrar -->
 
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -252,7 +252,7 @@
             <div class="col">
 
                 <!--Registro-->
-                <form action="#btnRegistro" id="form-register">
+                <form action="#btnRegistro" id="form-register-mech">
                     <!--Datos mecánico-->
                     <div class="mb-2">
                         <label for="idMec" class="form-label required mb-2">Ingrese número de identificación</label>
@@ -355,7 +355,7 @@
                 <label for="desServicio" class="form-label mb-2">Realice una corta descripción del servicio</label>
                 <textarea type="textarea" class=" form-control mb-2" name="desServicio" id="desServicio"
                           required></textarea>
-                <label for="valServicio" class="form-label mb-2">Realice una corta descripción del servicio</label>
+                <label for="valServicio" class="form-label mb-2">Registre el valor del servicio</label>
                 <input type="number" class=" form-control mb-2" name="valServicio"
                        id="valServicio" placeholder="Valor sin puntos o comas" required>
                 <div class="d-grid">
@@ -394,6 +394,9 @@
                        id="nameProducto" placeholder="Nombre del producto" required>
                 <label for="valProducto" class="form-label mb-2">Ingrese el valor del producto</label>
                 <input type="number" class=" form-control mb-2" name="valProducto" id="valProducto"
+                       placeholder="Sin puntos o comas" required>
+                <label for="canProducto" class="form-label mb-2">Ingrese la cantidad de producto</label>
+                <input type="number" class=" form-control mb-2" name="canProducto" id="canProducto"
                        placeholder="Sin puntos o comas" required>
 
                 <div class="d-grid">
