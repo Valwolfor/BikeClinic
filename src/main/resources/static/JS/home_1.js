@@ -117,7 +117,6 @@ function mostrarEstado(listaEstados) {
     });
 }
 
-//
 // //Registros
 function obtenerListaRegistros() {
     fetch('http://localhost:8090/motorclinic/api/records', {

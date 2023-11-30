@@ -1,872 +1,977 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Zona trabajo</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+    <title>Zona trabajo</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <script src="JS/jquery-3.6.1.min.js"></script>
-        <script src="JS/popper.min.js"></script>
-        <script src="JS/mecanico.js"></script>
-        <script src="JS/bootstrap.bundle.min.js"></script>
-        <link href="CSS/bootstrap.css" rel="stylesheet" type="text/css"/>
-        <link href="CSS/footnav.css" rel="stylesheet" type="text/css"/>
-        <link rel="icon" href="img/casco.png">
-    </head>
-    <body>
-        <!--Navigation-->
-        <header class="mb-5">
-            <nav class="navbar navbar-expand-md navbar-lg bg-light fixed-top mb-5">
-                <div class="container">
+    <script src="JS/jquery-3.6.1.min.js"></script>
+    <script src="JS/popper.min.js"></script>
+    <script src="JS/mecanico.js"></script>
+    <script src="JS/bootstrap.bundle.min.js"></script>
+    <link href="CSS/bootstrap.css" rel="stylesheet" type="text/css"/>
+    <link href="CSS/footnav.css" rel="stylesheet" type="text/css"/>
+    <link rel="icon" href="img/casco.png">
+</head>
+<body>
+<!--Navigation-->
+<header class="mb-5">
+    <nav class="navbar navbar-expand-md navbar-lg bg-light fixed-top mb-5">
+        <div class="container">
 
-                    <a href="#" class="navbar-brand h4 nav-item">
-                        <img class="logo mr-3" src="img/moto.jpg" width="60" alt="logo muestra">
-                        Bike Clinic App
-                    </a>
+            <a href="#" class="navbar-brand h4 nav-item">
+                <img class="logo mr-3" src="img/moto.jpg" width="60" alt="logo muestra">
+                Bike Clinic App
+            </a>
 
-                    <ul class="navbar-nav ml-auto">
-                        <!--<li id="user-name" class="nav-item d-flex-left mx-1 nav-link">Username</li> Aquí se puede dejar para desconectarse. -->
-                        <li class="nav-item d-flex-left mx-1"><a href="#contactLogin" class="nav-link" data-bs-toggle="offcanvas">Contacto</a></li>
-                        <li id="salir" class="badge badge-light">
-                            <!-- Salir -->
-                            <div class="dropdown">
-                                <button type="button" class="btn btn-light dropdown-toggle nav-link" data-bs-toggle="dropdown" aria-haspopup="true" 
-                                        aria-expanded="false">
-                                    <span id="salir">Salir</span>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="../motorclinic/index.html">Terminar sesión</a></li>
-                                </ul>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-        </header>
-        <main>
-            <!-- Pestañas, tabs -->
-            <section class="container shadow rounded bg-light ">
-                <nav>
-                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                        <button class="nav-link active" id="nav-cliente-tab" data-bs-toggle="tab" data-bs-target="#nav-cliente" type="button" role="tab" aria-controls="nav-cliente" aria-selected="true" >Registro cliente</button>
-                        <button class="nav-link " id="nav-moto-tab" data-bs-toggle="tab" data-bs-target="#nav-moto" type="button" role="tab" aria-controls="nav-moto" aria-selected="false" disabled>Registro moto</button>
-                        <button class="nav-link" id="nav-estado-tab" data-bs-toggle="tab" data-bs-target="#nav-estado" type="button" role="tab" aria-controls="nav-estado" aria-selected="false" disabled>Estado vehículo</button>
-                        <button class="nav-link" id="nav-motivo-tab" data-bs-toggle="tab" data-bs-target="#nav-motivo" type="button" role="tab" aria-controls="nav-motivo" aria-selected="false" disabled>Motivo de ingreso</button>
-                        <button class="nav-link" id="nav-servicio-tab" data-bs-toggle="tab" data-bs-target="#nav-servicio" type="button" role="tab" aria-controls="nav-servicio" aria-selected="false" disabled>Servicios a realizar</button>
+            <ul class="navbar-nav ml-auto">
+                <!--<li id="user-name" class="nav-item d-flex-left mx-1 nav-link">Username</li> Aquí se puede dejar para desconectarse. -->
+                <li class="nav-item d-flex-left mx-1"><a href="#contactLogin" class="nav-link"
+                                                         data-bs-toggle="offcanvas">Contacto</a></li>
+                <li id="salirLi" class="badge badge-light">
+                    <!-- Salir -->
+                    <div class="dropdown">
+                        <button type="button" class="btn btn-light dropdown-toggle nav-link" data-bs-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false">
+                            <span id="salir">Salir</span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="../motorclinic/index.html">Terminar sesión</a></li>
+                        </ul>
                     </div>
-                </nav>
-
-                <!-- Los pane de las tabs -->
-                <!-- CLIENTE -->
-                <div class="tab-content border-dark m-3" id="nav-tabContent">
-                    <div class="tab-pane fade show active" id="nav-cliente" role="tabpanel" aria-labelledby="nav-cliente-tab" tabindex="0">
-                        <article>
-                            <fieldset>
-                                <legend>
-                                    Por favor llene los siguientes campos.
-                                </legend>
-                                <form id="form-cliente" class="" >
-                                    <div class="row">
-                                        <div class="col-4">
-                                            <label for="Documento" class="form-label">
-                                                Tipo de documento:
-                                            </label>
-                                            <select id = "Documento" name = "Documento" class="form-select mb-3">
-                                                <option value="CC">
-                                                    CC
-                                                </option>
-                                                <option value="CE">
-                                                    CE
-                                                </option>
-                                                <option value="TI">
-                                                    TI
-                                                </option>
-                                            </select>
-                                        </div>
-                                        <!-- Hacer validación de busqueda cliente -->
-                                        <div class="col-4">
-                                            <label for="Identificacion" class = "form-label">
-                                                Documento de identificacion:
-                                            </label>
-                                            <input type="number" placeholder="Numero de documento" class="form-control mb-3" id = "Identificacion" name = "Identificacion" required>
-                                        </div>
-
-                                        <div class="col-4">
-                                            <label for="Cliente" class = "form-label">
-                                                Nombre del cliente:
-                                            </label>
-                                            <input type="text" placeholder="Nombre" class="form-control mb-3" id = "Cliente" name = "Cliente" required>
-                                        </div>
-                                        <div class="col-6">
-                                            <label for="Papellido" class = "form-label">
-                                                Primer apellido:
-                                            </label>
-                                            <input type="text" placeholder="Primer apellido" class="form-control mb-3" id = "Papellido" name = "Papellido" required>
-                                        </div>
-                                        <div class="col-6">
-                                            <label for="Sapellido" class = "form-label">
-                                                Segundo apellido:
-                                            </label>
-                                            <input type="text" placeholder="Segundo apellido" class="form-control mb-3" id = "Sapellido" name = "Sapellido">
-                                        </div>
-
-                                        <div class="col-4">
-                                            <label for="Correo" class = "form-label">
-                                                Correo electronico: 
-                                            </label>
-                                            <input type="email" placeholder="@Correo electronico" class="form-control mb-3" id = "Correo" name = "Correo" required>
-                                        </div>
-                                        <div class="col-4">
-                                            <label for="CorreoC" class = "form-label">
-                                                Confirmar correo: <span id='message'></span>
-                                            </label>
-                                            <input type="email" placeholder="@Confirme correo electronico" class="form-control mb-3" id = "CorreoC" name = "CorreoC" required>
-                                        </div>
-                                        <div class="col-4">
-                                            <label for="Telefono" class = "form-label">
-                                                Telefono:
-                                            </label>
-                                            <input type="tel" placeholder="Numero de telefono celular" class="form-control mb-3" id = "Telefono" name = "Telefono" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <button id="btnSubmitUser"  class="btn btn-outline-primary mb-1 text-dark">Registrar cliente</button>
-                                            <button id="btnEditUser"  class="btn btn-outline-warning mb-1 text-dark" disabled>Editar registro</button>
-                                        </div>
-                                        <!-- Alerts -->
-                                        <div id="register-cliente" class=" mt-3 alert alert-warning alert-dismissible fade show d-none" role="alert">
-                                            No se pudo registrar al cliente, verifique los datos vuelva a intentar.
-                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                        </div>
-                                        <div id="actulizar-cliente" class=" mt-3 alert alert-warning alert-dismissible fade show d-none" role="alert">
-                                            No se pudo actulizar al cliente, verifique los datos y vuelva a intentar.
-                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </fieldset>
-                            <!-- La tabla no es necesaria porque se setean los datos en el form -->
-                            <!--                            <h3 class="h5">Tabla de registro.</h3>
-                                                        <table class="table  table-hover  ">
-                                                            <thead class="table-dark">
-                                                                <tr>
-                                                                    <th>Tipo ID</th>
-                                                                    <th>ID del cliente</th>
-                                                                    <th>Nombre</th>
-                                                                    <th>correo</th>
-                                                                    <th>Número de contacto</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody id="tbodyMecCliente" class="align-middle">
-                            
-                                                            </tbody>
-                                                        </table>
-                                                        <br/>-->
-                        </article>
-                    </div>
-                    <div class="tab-pane fade " id="nav-moto" role="tabpanel" aria-labelledby="nav-moto-tab" tabindex="0">
-                        <article>
-                            <fieldset >
-                                <legend>
-                                    Por favor llene los siguientes campos.
-                                </legend>
-                                <form action="#">  
-                                    <div class="row">
-                                        <div class="col-2">
-                                            <label for="Placa" class = "form-label ">
-                                                Placa de la moto:
-                                            </label>
-                                            <input type="text" placeholder="Placa" class = "form-control mb-3" id = "Placa" name="Placa" maxlength="6" required>
-                                        </div>
-                                        <div class="col-4">
-                                            <label for="Motor" class = "form-label ">
-                                                Numero de motor:
-                                            </label>
-                                            <input type="text" placeholder="Número de motor" class = "form-control mb-3" id="Motor" name="Motor" required>
-                                        </div>
-                                        <div class="col-4">
-                                            <label for="Chasis" class = "form-label ">
-                                                Numero de chasis:
-                                            </label>
-                                            <input type="text" placeholder="No de chasis" class = "form-control mb-3" id = "Chasis" name = "Chasis" required>
-                                        </div>
-                                        <div class="col-3">
-                                            <label for="Marca" class = "form-label ">
-                                                Marca:
-                                            </label>
-                                            <input type="text" placeholder="Marca" class = "form-control mb-3" id = "Marca" name = "Marca" required>
-                                        </div>
-                                        <div class="col-3">
-                                            <label for="Modelo" class = "form-label ">
-                                                Modelo:
-                                            </label>
-                                            <input type="text" placeholder="Modelo" class = "form-control mb-3" id = "Modelo" name = "Modelo" required>
-                                        </div>
-                                        <div class="col-2">
-                                            <label for="Anio" class = "form-label ">
-                                                Año de registro:
-                                            </label>
-                                            <input type="number" placeholder="Solo el año" class = "form-control mb-3" id = "Anio" name = "Anio" maxlength="4" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <button id="btnMoto" class = "btn btn-outline-primary">Registrar moto</button>
-                                        </div>
-                                    </div>
-                                </form>
-                                <!-- Alerts -->
-                                <div id="register-moto" class=" mt-3 alert alert-warning alert-dismissible fade show d-none" role="alert">
-                                    No se pudo registrar la moto, verifique los datos vuelva a intentar.
-                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                </div>
-                                <!-- No se puede actualizar moto. -->
-                                <!--                                        <div id="actulizar-cliente" class=" mt-3 alert alert-warning alert-dismissible fade show d-none" role="alert">
-                                                                            No se pudo actulizar al cliente, verifique los datos y vuelva a intentar.
-                                                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                                                        </div>-->
-                            </fieldset>
-                        </article>
-                    </div>
-                    <div class="tab-pane fade" id="nav-motivo" role="tabpanel" aria-labelledby="nav-motivo-tab" tabindex="0">
-                        <article>
-                            <fieldset >
-                                <legend>
-                                    Por favor llene los siguientes campos.
-                                </legend>
-                                <form action="#"> 
-                                    <div class="row">
-                                        <div class="col-3 mb-5">
-                                            <label for = "Motivo" class = "form-label">
-                                                Motivo de ingreso:
-                                            </label>
-                                            <select name = "Motivo" id = "Motivo" class="form-select ">
-                                                <option value="1">
-                                                    Diagnóstico y reparación
-                                                </option>
-                                                <option value="2">
-                                                    Mantenimiento
-                                                </option>
-                                                <option value="3">
-                                                    Reparación
-                                                </option>
-                                                <option value="4">
-                                                    Personalización
-                                                </option>
-                                            </select>
-                                        </div>   
-                                        <div class="col-6">
-                                            <label for="Dmotivo" class = "form-label">
-                                                Descripcion de motivo:
-                                            </label>
-                                            <textarea class = "form-control" id = "Dmotivo" name = "Dmotivo" required></textarea>
-                                        </div>
-                                        
-                                        <div class="col-2 mb-3">
-                                            <div class="form-check form-switch mb-2">
-                                                <label class="form-check-label" for="flexSwitchCheckRuta">Autoriza ruta</label>
-                                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckRuta" value="Sí">
-                                            </div>
-                                            <div class="form-check form-switch">
-                                                <label class="form-check-label" for="flexSwitchCheckAnticipo">Anticipo</label>
-                                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckAnticipo" value="Sí">
-                                            </div>
-                                        </div>
-                                        <!-- Sí anticipo checked, quitar disabled -->
-                                        <div class="col-4 mb-3">
-                                            <label class = "form-label">
-                                                Valor del anticipo:
-                                            </label>
-                                            <input id="valAnticipo" type="number" class="form-control " placeholder="Sin puntos o comas" disabled>
-                                        </div>
-                                        <div class="col-3 mb-5">
-                                            <label for = "Mecanico" class = "form-label">
-                                                Seleccione mecánico:
-                                            </label>
-                                            <select name = "Mecanico" id = "Mecanico" class="form-select ">
-
-                                            </select>
-                                        </div>   
-                                        <!-- Botón -->
-                                        <div>
-                                            <button id="btnReMotivo"  class = "btn btn-outline-primary mb-3">
-                                                Registrar Motivo
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                                <div id="register-motivo" class=" mt-3 alert alert-warning alert-dismissible fade show d-none" role="alert">
-                                    No se pudo registrar el motivo, verifique los datos vuelva a intentar.
-                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                </div>
-                            </fieldset>
-                            <!--                            <h3 class="h5">Tabla de registro.</h3>
-                                                        <table class="table  table-hover  ">
-                                                            <thead class="table-dark">
-                                                                <tr >
-                                                                    <th>Header</th>
-                                                                    <th>Header2</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody id="tbodyMecMotivo" class="align-middle">
-                            
-                                                            </tbody>
-                                                        </table>
-                                                        <br/>-->
-                        </article>
-                    </div>
-                    <div class="tab-pane fade" id="nav-estado" role="tabpanel" aria-labelledby="nav-estado-tab" tabindex="0">
-                        <article>
-                            <fieldset>
-                                <legend>
-                                    Por favor selecciones los siguientes campos.
-                                </legend>
-                                <form action="#" class="row"> 
-                                    <div class="col-3 mb-2">
-                                        <p>Estado indicadores :</p>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioIndicadores" id="flexRadioIndicadoresA" value="Apto">
-                                            <label class="form-check-label" for="flexRadioIndicadoresA">
-                                                Apto
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioIndicadores" id="flexRadioIndicadoresN" value="No apto">
-                                            <label class="form-check-label" for="flexRadioIndicadoresN">
-                                                No apto
-                                            </label>
-
-                                        </div>
-                                        <input type="text" class = "form-label" id = "DescripcionInd" placeholder="Descripcion" disabled>
-                                    </div>   
-                                    <div class="col-2 mb-2">
-                                        <p>Estado aceite :</p>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioAceite" id="flexRadioAceiteB" value="Bueno">
-                                            <label class="form-check-label" for="flexRadioAceiteB">
-                                                Bueno
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioAceite" id="flexRadioAceiteR" value="Regular">
-                                            <label class="form-check-label" for="flexRadioAceiteR">
-                                                Regular
-                                            </label>
-
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioAceite" id="flexRadioAceiteM" value="Malo">
-                                            <label class="form-check-label" for="flexRadioAceiteM">
-                                                Malo
-                                            </label>
-
-                                        </div>
-                                    </div>
-                                    <div class="col-2 mb-2">
-
-                                        <p>Nivel aceite :</p>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioAceiteNivel" id="flexRadioAceiteNivelF" value="Lleno">
-                                            <label class="form-check-label" for="flexRadioAceiteNivelF">
-                                                Lleno
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioAceiteNivel" id="flexRadioAceiteNivelM" value="Medio">
-                                            <label class="form-check-label" for="flexRadioAceiteNivelM">
-                                                Medio
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioAceiteNivel" id="flexRadioAceitNiveleV" value="Malo">
-                                            <label class="form-check-label" for="flexRadioAceitNiveleV">
-                                                Bajo
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-2 mb-2">
-                                        <p>Liquido de frenos :</p>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioLFrenos" id="flexRadioLFrenosA" value="Apto">
-                                            <label class="form-check-label" for="flexRadioLFrenosA">
-                                                Apto
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioLFrenos" id="flexRadioLFrenosN" value="No apto">
-                                            <label class="form-check-label" for="flexRadioLFrenosN">
-                                                No apto
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-2 mb-2">
-                                        <p>Liquido de embrague :</p>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioLEmbrague" id="flexRadioLEmbragueP" value="Presenta">
-                                            <label class="form-check-label" for="flexRadioLEmbragueP">
-                                                Presenta
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioLEmbrague" id="flexRadioLEmbragueN" value="No presenta">
-                                            <label class="form-check-label" for="flexRadioLEmbragueN">
-                                                No presenta
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <hr class="my-2"/>
-                                    <div class="col-2 mb-2">
-                                        <p>Liquido de refrigerante :</p>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioLRefrigerante" id="flexRadioLRefrigeranteP" value="Presenta">
-                                            <label class="form-check-label" for="flexRadioLRefrigeranteP">
-                                                Presenta
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioLRefrigerante" id="flexRadioLRefrigeranteN" value="No presenta">
-                                            <label class="form-check-label" for="flexRadioLRefrigeranteN">
-                                                No presenta
-                                            </label>
-                                        </div>
-
-                                    </div>
-                                    <div class="col-2 mb-2">
-                                        <p>Luces aptas :</p>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="Farola" id="flexCheckFarola">
-                                            <label class="form-check-label" for="flexCheckFarola">
-                                                Farola
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="Stop" id="flexCheckStop" >
-                                            <label class="form-check-label" for="flexCheckStop">
-                                                Stop
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="Direcionales" id="flexCheckDirecionales">
-                                            <label class="form-check-label" for="flexCheckDirecionales">
-                                                Direcionales
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="Auxiliares" id="flexCheckAuxiliares" >
-                                            <label class="form-check-label" for="flexCheckAuxiliares" >
-                                                Auxiliares
-                                            </label>
-                                        </div>
-
-                                    </div>
-                                    <div class="col-2 mb-2">
-                                        <p>Espejos :</p>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioEspejo" id="flexRadioEspejoA" value="Aptos">
-                                            <label class="form-check-label" for="flexRadioEspejoA">
-                                                Aptos
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioEspejo" id="flexRadioEspejoD" value="Deteriorados">
-                                            <label class="form-check-label" for="flexRadioEspejoD">
-                                                Deteriorado
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioEspejo" id="flexRadioEspejoAu" value="Ausentes">
-                                            <label class="form-check-label" for="flexRadioEspejoAu">
-                                                Ausentes
-                                            </label>
-                                        </div>
-
-                                    </div>
-                                    <div class="col-2 mb-2">
-                                        <p>Claxón :</p>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioClaxon" id="flexRadioClaxonA" value="Apto">
-                                            <label class="form-check-label" for="flexRadioClaxonA">
-                                                Apto
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioClaxon" id="flexRadioClaxonD" value="Deteriorado">
-                                            <label class="form-check-label" for="flexRadioClaxonD">
-                                                Deteriorado
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioClaxon" id="flexRadioClaxonAu" value="Ausente">
-                                            <label class="form-check-label" for="flexRadioClaxonAu">
-                                                Ausente
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-2 mb-2">
-                                        <p>Tanque :</p>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioTanque" id="flexRadioTanqueA" value="Apto">
-                                            <label class="form-check-label" for="flexRadioTanqueA">
-                                                Apto
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioTanque" id="flexRadioTanqueD" value="Deteriorado">
-                                            <label class="form-check-label" for="flexRadioTanqueD">
-                                                Deteriorado
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioTanque" id="flexRadioTanqueAu" value="Ausente">
-                                            <label class="form-check-label" for="flexRadioTanqueAu">
-                                                Ausente
-                                            </label>
-                                        </div>
-
-                                    </div >
-                                    <div class="col-2 mb-2">
-                                        <p>Llanta delantera :</p>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioLDelantera" id="flexRadioLDelanteraA" value="Apto">
-                                            <label class="form-check-label" for="flexRadioLDelanteraA">
-                                                Apto
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioLDelantera" id="flexRadioLDelanteraN" value="No apto">
-                                            <label class="form-check-label" for="flexRadioLDelanteraN">
-                                                No apto
-                                            </label>
-                                        </div>
-
-                                    </div >
-                                    <hr/>
-                                    <div class="col-2 mb-2">
-                                        <p>Llanta trasera :</p>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioLTrasera" id="flexRadioLTraseraA" value="Apto">
-                                            <label class="form-check-label" for="flexRadioLTraseraA">
-                                                Apto
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioLTrasera" id="flexRadioLTraseraN" value="No apto">
-                                            <label class="form-check-label" for="flexRadioLTraseraN">
-                                                No apto
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-2 mb-2">
-                                        <p>Motor :</p>
-
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioMotor" id="flexRadioPistonA" value="Apto">
-                                            <label class="form-check-label" for="flexRadioMotorA">
-                                                Apto
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioMotor" id="flexRadioPistonaN" value="No apto">
-                                            <label class="form-check-label" for="flexRadioMotorN">
-                                                No apto
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-2 mb-2">
-                                        <p>Chasis :</p>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioChasis" id="flexRadioChasisA" value="Apto">
-                                            <label class="form-check-label" for="flexRadioChasisA">
-                                                Apto
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioChasis" id="flexRadioChasisN" value="No apto">
-                                            <label class="form-check-label" for="flexRadioChasisN">
-                                                No apto
-                                            </label>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-2 mb-2">
-                                        <p>Acelerador :</p>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioAcelerador" id="flexRadioAceleradorA" value="Apto">
-                                            <label class="form-check-label" for="flexRadioAceleradoreA">
-                                                Apto
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioAcelerador" id="flexRadioAceleradorN" value="No apto">
-                                            <label class="form-check-label" for="flexRadioAceleradorN">
-                                                No apto
-                                            </label>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-2 mb-2">
-                                        <p>Escape :</p>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioEscape" id="flexRadioEscapeA" value="Apto">
-                                            <label class="form-check-label" for="flexRadioEscapeA">
-                                                Apto
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioEscape" id="flexRadioEscapeN" value="No apto">
-                                            <label class="form-check-label" for="flexRadioEscapeN">
-                                                No apto
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-2 mb-2">
-                                        <p>Trasmisión :</p>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioTrasmision" id="flexRadioTrasmisionA" value="Apto">
-                                            <label class="form-check-label" for="flexRadioTrasmisionA">
-                                                Apto
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioTrasmision" id="flexRadioTrasmisionN" value="No apto">
-                                            <label class="form-check-label" for="flexRadioTrasmisionN">
-                                                No apto
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <hr class="my-3"/>
-                                    <div class="col-2 mb-2">
-                                        <p>Embrague :</p>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioEmbrague" id="flexRadioEmbragueA" value="Apto">
-                                            <label class="form-check-label" for="flexRadioEmbragueA">
-                                                Apto
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioEmbrague" id="flexRadioEmbragueN" value="No apto">
-                                            <label class="form-check-label" for="flexRadioEmbragueN">
-                                                No apto
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-2 mb-2">
-                                        <p>Frenos :</p>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioFreno" id="flexRadioFrenoA" value="Aptos">
-                                            <label class="form-check-label" for="flexRadioFrenoDA">
-                                                Apto
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioFreno" id="flexRadioFrenoN" value="No aptos">
-                                            <label class="form-check-label" for="flexRadioFrenoDN">
-                                                No aptos
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-2 mb-3">
-                                        <p>Cadena :</p>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioCadena" id="flexRadioCadenaA" value="Apto">
-                                            <label class="form-check-label" for="flexRadioCadenaA">
-                                                Apta
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioCadena" id="flexRadioCadenaN" value="No apto">
-                                            <label class="form-check-label" for="flexRadioCadenaN">
-                                                No apta
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-2 mb-3">
-                                        <p>Apoya pies :</p>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioApoya" id="flexRadioApoyaA" value="Apto">
-                                            <label class="form-check-label" for="flexRadioApoyaA">
-                                                Apto
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioApoya" id="flexRadioApoyaN" value="No apto">
-                                            <label class="form-check-label" for="flexRadioApoyaN">
-                                                No apto
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <hr class="my-3"/>
-                                    <div class="col-3">
-                                        <label for="Kilometraje" class = "form-label">
-                                            Kilometraje de ingreso:
-                                        </label>
-                                        <input type="number" placeholder="km" class = "form-control" id = "Kilometraje" name = "Kilometraje" required>
-                                    </div>
-                                    <div class="col-6  mb-3">
-                                        <p class="form-label">Nivel de combustible</p>
-                                        <div class="form-check form-check form-check-inline">
-
-                                            <input class="form-check-input" type="radio" name="flexRadioGas" id="flexRadioEmpty1" value="Empty">
-                                            <label class="form-check-label" for="flexRadioEmpty1">
-                                                Empty
-                                            </label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="flexRadioGas" id="flexRadioCuarto2" value="1/4">
-                                            <label class="form-check-label" for="flexRadioCuarto2">
-                                                1/4
-                                            </label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="flexRadioGas" id="flexRadioMedio3" value="1/2">
-                                            <label class="form-check-label" for="flexRadioMedio3">
-                                                1/2
-                                            </label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="flexRadioGas" id="flexRadioTresC4" value="3/4">
-                                            <label class="form-check-label" for="flexRadioTresC4">
-                                                3/4
-                                            </label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="flexRadioGas" id="flexRadioFull5" value="Full">
-                                            <label class="form-check-label" for="flexRadioFull5">
-                                                Full
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class=" mb-3">
-                                        <button id="btnAddEstado"  class="btn btn-outline-primary my-3">
-                                            Registrar estado
-                                        </button>
-                                    </div>
-                                </form>
-                            </fieldset>
-                            <div id="register-estado" class="mb-3 alert alert-warning alert-dismissible fade show d-none" role="alert">
-                                No se pudo registrar el estado, verifique los datos vuelva a intentar.
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div>
-                            <div id="alertDesc-estado" class="mb-3 alert alert-warning alert-dismissible fade show d-none" role="alert">
-                                Registre el detalle.
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div>
-                        </article>  
-                    </div>
-                    <div class="tab-pane fade" id="nav-servicio" role="tabpanel" aria-labelledby="nav-servicio-tab" tabindex="0">
-                        <article>
-                            <fieldset>
-                                <legend>
-                                    Por favor llene los siguientes campos y selecciones los proceso a realizar.
-                                </legend>
-                                <form class="row" action="#"> 
-                                    <div class="col-6 ">
-                                        <label for = "servicio" class = "form-label">
-                                            Servicios
-                                        </label>
-                                        <select class="form-select mb-3" name = "servicio" id="servicios">
-                                            <option id="agregarListaServicios" value="No seleccionado">
-                                                Seleccione servicio
-                                            </option>
-                                            <!-- Aquí se agregan los datos obtenidos de la BD -->
-                                        </select>
-                                        <input id="btnServicioAdd" type="submit" value = "Agregar servicio" class = "btn btn-outline-primary">
-                                    </div>  
-                                    <div class="col-6 mb-4">
-                                        <label for = "producto" class = "form-label ">
-                                            Productos
-                                        </label>
-                                        <select class="form-select mb-3" name = "producto" id="servicios">
-                                            <option id="agregarListaProductos" value="No seleccionado">
-                                                Seleccione producto
-                                            </option>
-                                            <!-- Aquí se agregan los datos obtenidos de la BD -->
-                                        </select>
-                                        <input  id="btnProductoAdd" type="submit" value = "Agregar producto" class = "btn btn-outline-primary">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="dx" class = "form-label">
-                                            Descripcion de diagnóstico:
-                                        </label>
-                                        <textarea class = "form-control" placeholder="Descripcion diagnóstico"  id = "desDx" name = "dx"></textarea>
-                                    </div>
-                                    <hr/>
-                                    <div class="col-4 mb-3 bg-light">
-                                        <p class = "form-label">
-                                            Valor servicios: <span id="totalServicios" class="bg-white  border border-1  border-success px-1 rounded"></span>
-                                        </p>
-                                    </div>
-                                    <div class="col-4 mb-3 bg-light">
-                                        <p  class = "form-label">
-                                            Valor insumos: <span id="totalProductos" class="bg-white  border border-1  border-success px-1 rounded"></span>
-                                        </p>
-                                    </div>
-                                    <div class="col-4 mb-3 ">
-                                        <p class = "form-label ">
-                                            Total: <span id="totalTotal" class="bg-white  border border-1  border-success px-1 rounded"></span>
-                                        </p>
-                                    </div>
-                                    <div>
-                                        <input type="submit" value = "Finalizar registro" class = "btn btn-outline-primary mb-3">
-                                    </div>
-                                </form>
-                            </fieldset>
-
-                            <h3 class="h5">Tabla de registros.</h3>
-                            <table class="table table-hover">
-                                <thead class="table-dark">
-                                    <tr >
-                                        <th>Header</th>
-                                        <th>Header2</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tbodyMecServicios" class="align-middle">
-
-                                </tbody>
-                            </table>
-                            <br/>
-                        </article>
-                    </div>
-                </div>
-            </section>
-        </main>
-        <!--OffCanva para realizar contacto.-->
-
-        <div class="offcanvas offcanvas-start " tabindex="-1" id="contactLogin"
-             aria-labelledby="offcanvasExampleLabel">
-            <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasExampleLabel">Contacto.</h5>
-                <!-- Para cerrar -->
-                <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
-                        aria-label="Close"></button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+<main>
+    <!-- Pestañas, tabs -->
+    <section class="container shadow rounded bg-light ">
+        <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <button class="nav-link active" id="nav-cliente-tab" data-bs-toggle="tab" data-bs-target="#nav-cliente"
+                        type="button" role="tab" aria-controls="nav-cliente" aria-selected="true">Registro cliente
+                </button>
+                <button class="nav-link " id="nav-moto-tab" data-bs-toggle="tab" data-bs-target="#nav-moto"
+                        type="button" role="tab" aria-controls="nav-moto" aria-selected="false" disabled>Registro moto
+                </button>
+                <button class="nav-link" id="nav-estado-tab" data-bs-toggle="tab" data-bs-target="#nav-estado"
+                        type="button" role="tab" aria-controls="nav-estado" aria-selected="false" disabled>Estado vehículo
+                </button>
+                <button class="nav-link" id="nav-motivo-tab" data-bs-toggle="tab" data-bs-target="#nav-motivo"
+                        type="button" role="tab" aria-controls="nav-motivo" aria-selected="false" disabled>Motivo de
+                    ingreso
+                </button>
+                <button class="nav-link" id="nav-servicio-tab" data-bs-toggle="tab" data-bs-target="#nav-servicio"
+                        type="button" role="tab" aria-controls="nav-servicio" aria-selected="false" disabled>Servicios a
+                    realizar
+                </button>
             </div>
-            <div class="offcanvas-body">
-                <div>
-                    Por favor registre los datos solicitados para poder resolver su incoveniente de la
-                    manera más pronta. <br> Gracias.
-                </div>
-                <div class="container m-1">
-                    <form action="#btnContact" method="post">
-                        <label for="nameContact" class="form-label mt-3 mb-2">Ingrese su nombre</label>
-                        <input type="text" class=" form-control mb-2" name="nameContact"
-                               id="nameContact" placeholder="Su nombre completo" required>
-                        <label for="idContact" class="form-label mb-2">Ingrese su número de
-                            identificación</label>
-                        <input type="number" class=" form-control mb-2" name="idContact" id="idContact"
-                               placeholder="Sin puntos o espacios" required>
-                        <label for="textContact">Describa el motivo</label>
+        </nav>
 
-                        <textarea type="textarea" class=" form-control mb-2" name="textContact"
-                                  id="nameContact" required></textarea>
-                        <div class="d-grid">
-                            <button type="submit" class="btn btn-primary btn-lg btn-block mt-2"
-                                    id="btnContact">Enviar</button>
+        <!-- Los pane de las tabs -->
+        <!-- CLIENTE -->
+        <div class="tab-content border-dark m-3" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-cliente" role="tabpanel" aria-labelledby="nav-cliente-tab"
+                 tabindex="0">
+                <article>
+                    <fieldset>
+                        <legend>
+                            Por favor llene los siguientes campos.
+                        </legend>
+                        <form id="form-cliente" class="">
+                            <div class="row">
+                                <div class="col-4">
+                                    <label for="Documento" class="form-label">
+                                        Tipo de documento:
+                                    </label>
+                                    <select id="Documento" name="Documento" class="form-select mb-3">
+                                        <option value="CC">
+                                            CC
+                                        </option>
+                                        <option value="CE">
+                                            CE
+                                        </option>
+                                        <option value="TI">
+                                            TI
+                                        </option>
+                                    </select>
+                                </div>
+                                <!-- Hacer validación de busqueda cliente -->
+                                <div class="col-4">
+                                    <label for="Identificacion" class="form-label">
+                                        Documento de identificacion:
+                                    </label>
+                                    <input type="number" placeholder="Numero de documento" class="form-control mb-3"
+                                           id="Identificacion" name="Identificacion" required>
+                                </div>
+
+                                <div class="col-4">
+                                    <label for="Cliente" class="form-label">
+                                        Nombre del cliente:
+                                    </label>
+                                    <input type="text" placeholder="Nombre" class="form-control mb-3" id="Cliente"
+                                           name="Cliente" required>
+                                </div>
+                                <div class="col-6">
+                                    <label for="Papellido" class="form-label">
+                                        Primer apellido:
+                                    </label>
+                                    <input type="text" placeholder="Primer apellido" class="form-control mb-3"
+                                           id="Papellido" name="Papellido" required>
+                                </div>
+                                <div class="col-6">
+                                    <label for="Sapellido" class="form-label">
+                                        Segundo apellido:
+                                    </label>
+                                    <input type="text" placeholder="Segundo apellido" class="form-control mb-3"
+                                           id="Sapellido" name="Sapellido">
+                                </div>
+
+                                <div class="col-4">
+                                    <label for="Correo" class="form-label">
+                                        Correo electronico:
+                                    </label>
+                                    <input type="email" placeholder="@Correo electronico" class="form-control mb-3"
+                                           id="Correo" name="Correo" required>
+                                </div>
+                                <div class="col-4">
+                                    <label for="CorreoC" class="form-label">
+                                        Confirmar correo: <span id='message'></span>
+                                    </label>
+                                    <input type="email" placeholder="@Confirme correo electronico"
+                                           class="form-control mb-3" id="CorreoC" name="CorreoC" required>
+                                </div>
+                                <div class="col-4">
+                                    <label for="Telefono" class="form-label">
+                                        Telefono:
+                                    </label>
+                                    <input type="tel" placeholder="Numero de telefono celular" class="form-control mb-3"
+                                           id="Telefono" name="Telefono" required>
+                                </div>
+                                <div class="mb-3">
+                                    <button id="btnSubmitUser" class="btn btn-outline-primary mb-1 text-dark">Registrar
+                                        cliente
+                                    </button>
+                                    <button id="btnEditUser" class="btn btn-outline-warning mb-1 text-dark" disabled>
+                                        Editar registro
+                                    </button>
+                                </div>
+                                <!-- Alerts -->
+                                <div id="register-cliente"
+                                     class=" mt-3 alert alert-warning alert-dismissible fade show d-none" role="alert">
+                                    No se pudo registrar al cliente, verifique los datos vuelva a intentar.
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                            aria-label="Close"></button>
+                                </div>
+                                <div id="actulizar-cliente"
+                                     class=" mt-3 alert alert-warning alert-dismissible fade show d-none" role="alert">
+                                    No se pudo actulizar al cliente, verifique los datos y vuelva a intentar.
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                            aria-label="Close"></button>
+                                </div>
+                            </div>
+                        </form>
+                    </fieldset>
+                    <!-- La tabla no es necesaria porque se setean los datos en el form -->
+                    <!--                            <h3 class="h5">Tabla de registro.</h3>
+                                                <table class="table  table-hover  ">
+                                                    <thead class="table-dark">
+                                                        <tr>
+                                                            <th>Tipo ID</th>
+                                                            <th>ID del cliente</th>
+                                                            <th>Nombre</th>
+                                                            <th>correo</th>
+                                                            <th>Número de contacto</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="tbodyMecCliente" class="align-middle">
+
+                                                    </tbody>
+                                                </table>
+                                                <br/>-->
+                </article>
+            </div>
+            <div class="tab-pane fade " id="nav-moto" role="tabpanel" aria-labelledby="nav-moto-tab" tabindex="0">
+                <article>
+                    <fieldset>
+                        <legend>
+                            Por favor llene los siguientes campos.
+                        </legend>
+                        <form action="#">
+                            <div class="row">
+                                <div class="col-2">
+                                    <label for="Placa" class="form-label ">
+                                        Placa de la moto:
+                                    </label>
+                                    <input type="text" placeholder="Placa" class="form-control mb-3" id="Placa"
+                                           name="Placa" maxlength="6" required>
+                                </div>
+                                <div class="col-4">
+                                    <label for="Motor" class="form-label ">
+                                        Numero de motor:
+                                    </label>
+                                    <input type="text" placeholder="Número de motor" class="form-control mb-3"
+                                           id="Motor" name="Motor" required>
+                                </div>
+                                <div class="col-4">
+                                    <label for="Chasis" class="form-label ">
+                                        Numero de chasis:
+                                    </label>
+                                    <input type="text" placeholder="No de chasis" class="form-control mb-3" id="Chasis"
+                                           name="Chasis" required>
+                                </div>
+                                <div class="col-3">
+                                    <label for="Marca" class="form-label ">
+                                        Marca:
+                                    </label>
+                                    <input type="text" placeholder="Marca" class="form-control mb-3" id="Marca"
+                                           name="Marca" required>
+                                </div>
+                                <div class="col-3">
+                                    <label for="Modelo" class="form-label ">
+                                        Modelo:
+                                    </label>
+                                    <input type="text" placeholder="Modelo" class="form-control mb-3" id="Modelo"
+                                           name="Modelo" required>
+                                </div>
+                                <div class="col-2">
+                                    <label for="Anio" class="form-label ">
+                                        Año de registro:
+                                    </label>
+                                    <input type="number" placeholder="Solo el año" class="form-control mb-3" id="Anio"
+                                           name="Anio" maxlength="4" required>
+                                </div>
+                                <div class="mb-3">
+                                    <button id="btnMoto" class="btn btn-outline-primary">Registrar moto</button>
+                                </div>
+                            </div>
+                        </form>
+                        <!-- Alerts -->
+                        <div id="register-moto" class=" mt-3 alert alert-warning alert-dismissible fade show d-none"
+                             role="alert">
+                            No se pudo registrar la moto, verifique los datos vuelva a intentar.
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
-                    </form>
-                </div>
+                        <!-- No se puede actualizar moto. -->
+                        <!--                                        <div id="actulizar-cliente" class=" mt-3 alert alert-warning alert-dismissible fade show d-none" role="alert">
+                                                                    No se pudo actulizar al cliente, verifique los datos y vuelva a intentar.
+                                                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                                </div>-->
+                    </fieldset>
+                </article>
+            </div>
+            <div class="tab-pane fade" id="nav-motivo" role="tabpanel" aria-labelledby="nav-motivo-tab" tabindex="0">
+                <article>
+                    <fieldset>
+                        <legend>
+                            Por favor llene los siguientes campos.
+                        </legend>
+                        <form action="#">
+                            <div class="row">
+                                <div class="col-3 mb-5">
+                                    <label for="Motivo" class="form-label">
+                                        Motivo de ingreso:
+                                    </label>
+                                    <select name="Motivo" id="Motivo" class="form-select ">
+                                        <option value="1">
+                                            Diagnóstico y reparación
+                                        </option>
+                                        <option value="2">
+                                            Mantenimiento
+                                        </option>
+                                        <option value="3">
+                                            Reparación
+                                        </option>
+                                        <option value="4">
+                                            Personalización
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="col-6">
+                                    <label for="Dmotivo" class="form-label">
+                                        Descripcion de motivo:
+                                    </label>
+                                    <textarea class="form-control" id="Dmotivo" name="Dmotivo" required></textarea>
+                                </div>
+
+                                <div class="col-2 mb-3">
+                                    <div class="form-check form-switch mb-2">
+                                        <label class="form-check-label" for="flexSwitchCheckRuta">Autoriza ruta</label>
+                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckRuta"
+                                               value="Sí">
+                                    </div>
+                                    <div class="form-check form-switch">
+                                        <label class="form-check-label" for="flexSwitchCheckAnticipo">Anticipo</label>
+                                        <input class="form-check-input" type="checkbox" id="flexSwitchCheckAnticipo"
+                                               value="Sí">
+                                    </div>
+                                </div>
+                                <!-- Sí anticipo checked, quitar disabled -->
+                                <div class="col-4 mb-3">
+                                    <label class="form-label">
+                                        Valor del anticipo:
+                                    </label>
+                                    <input id="valAnticipo" type="number" class="form-control "
+                                           placeholder="Sin puntos o comas" disabled>
+                                </div>
+                                <div class="col-3 mb-5">
+                                    <label for="Mecanico" class="form-label">
+                                        Seleccione mecánico:
+                                    </label>
+                                    <select name="Mecanico" id="Mecanico" class="form-select ">
+
+                                    </select>
+                                </div>
+                                <!-- Botón -->
+                                <div>
+                                    <button id="btnReMotivo" class="btn btn-outline-primary mb-3">
+                                        Registrar Motivo
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        <div id="register-motivo" class=" mt-3 alert alert-warning alert-dismissible fade show d-none"
+                             role="alert">
+                            No se pudo registrar el motivo, verifique los datos vuelva a intentar.
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </fieldset>
+                    <!--                            <h3 class="h5">Tabla de registro.</h3>
+                                                <table class="table  table-hover  ">
+                                                    <thead class="table-dark">
+                                                        <tr >
+                                                            <th>Header</th>
+                                                            <th>Header2</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="tbodyMecMotivo" class="align-middle">
+
+                                                    </tbody>
+                                                </table>
+                                                <br/>-->
+                </article>
+            </div>
+            <div class="tab-pane fade" id="nav-estado" role="tabpanel" aria-labelledby="nav-estado-tab" tabindex="0">
+                <article>
+                    <fieldset>
+                        <legend>
+                            Por favor selecciones los siguientes campos.
+                        </legend>
+                        <form action="#" class="row">
+                            <div class="col-3 mb-2">
+                                <p>Estado indicadores :</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioIndicadores"
+                                           id="flexRadioIndicadoresA" value="Apto">
+                                    <label class="form-check-label" for="flexRadioIndicadoresA">
+                                        Apto
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioIndicadores"
+                                           id="flexRadioIndicadoresN" value="No apto">
+                                    <label class="form-check-label" for="flexRadioIndicadoresN">
+                                        No apto
+                                    </label>
+
+                                </div>
+                                <input type="text" class="form-label" id="DescripcionInd" placeholder="Descripcion"
+                                       disabled>
+                            </div>
+                            <div class="col-2 mb-2">
+                                <p>Estado aceite :</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioAceite"
+                                           id="flexRadioAceiteB" value="Bueno">
+                                    <label class="form-check-label" for="flexRadioAceiteB">
+                                        Bueno
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioAceite"
+                                           id="flexRadioAceiteR" value="Regular">
+                                    <label class="form-check-label" for="flexRadioAceiteR">
+                                        Regular
+                                    </label>
+
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioAceite"
+                                           id="flexRadioAceiteM" value="Malo">
+                                    <label class="form-check-label" for="flexRadioAceiteM">
+                                        Malo
+                                    </label>
+
+                                </div>
+                            </div>
+                            <div class="col-2 mb-2">
+
+                                <p>Nivel aceite :</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioAceiteNivel"
+                                           id="flexRadioAceiteNivelF" value="Lleno">
+                                    <label class="form-check-label" for="flexRadioAceiteNivelF">
+                                        Lleno
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioAceiteNivel"
+                                           id="flexRadioAceiteNivelM" value="Medio">
+                                    <label class="form-check-label" for="flexRadioAceiteNivelM">
+                                        Medio
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioAceiteNivel"
+                                           id="flexRadioAceitNiveleV" value="Malo">
+                                    <label class="form-check-label" for="flexRadioAceitNiveleV">
+                                        Bajo
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-2 mb-2">
+                                <p>Liquido de frenos :</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioLFrenos"
+                                           id="flexRadioLFrenosA" value="Apto">
+                                    <label class="form-check-label" for="flexRadioLFrenosA">
+                                        Apto
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioLFrenos"
+                                           id="flexRadioLFrenosN" value="No apto">
+                                    <label class="form-check-label" for="flexRadioLFrenosN">
+                                        No apto
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-2 mb-2">
+                                <p>Liquido de embrague :</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioLEmbrague"
+                                           id="flexRadioLEmbragueP" value="Presenta">
+                                    <label class="form-check-label" for="flexRadioLEmbragueP">
+                                        Presenta
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioLEmbrague"
+                                           id="flexRadioLEmbragueN" value="No presenta">
+                                    <label class="form-check-label" for="flexRadioLEmbragueN">
+                                        No presenta
+                                    </label>
+                                </div>
+                            </div>
+                            <hr class="my-2"/>
+                            <div class="col-2 mb-2">
+                                <p>Liquido de refrigerante :</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioLRefrigerante"
+                                           id="flexRadioLRefrigeranteP" value="Presenta">
+                                    <label class="form-check-label" for="flexRadioLRefrigeranteP">
+                                        Presenta
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioLRefrigerante"
+                                           id="flexRadioLRefrigeranteN" value="No presenta">
+                                    <label class="form-check-label" for="flexRadioLRefrigeranteN">
+                                        No presenta
+                                    </label>
+                                </div>
+
+                            </div>
+                            <div class="col-2 mb-2">
+                                <p>Luces aptas :</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="Farola" id="flexCheckFarola">
+                                    <label class="form-check-label" for="flexCheckFarola">
+                                        Farola
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="Stop" id="flexCheckStop">
+                                    <label class="form-check-label" for="flexCheckStop">
+                                        Stop
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="Direcionales"
+                                           id="flexCheckDirecionales">
+                                    <label class="form-check-label" for="flexCheckDirecionales">
+                                        Direcionales
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="Auxiliares"
+                                           id="flexCheckAuxiliares">
+                                    <label class="form-check-label" for="flexCheckAuxiliares">
+                                        Auxiliares
+                                    </label>
+                                </div>
+
+                            </div>
+                            <div class="col-2 mb-2">
+                                <p>Espejos :</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioEspejo"
+                                           id="flexRadioEspejoA" value="Aptos">
+                                    <label class="form-check-label" for="flexRadioEspejoA">
+                                        Aptos
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioEspejo"
+                                           id="flexRadioEspejoD" value="Deteriorados">
+                                    <label class="form-check-label" for="flexRadioEspejoD">
+                                        Deteriorado
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioEspejo"
+                                           id="flexRadioEspejoAu" value="Ausentes">
+                                    <label class="form-check-label" for="flexRadioEspejoAu">
+                                        Ausentes
+                                    </label>
+                                </div>
+
+                            </div>
+                            <div class="col-2 mb-2">
+                                <p>Claxón :</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioClaxon"
+                                           id="flexRadioClaxonA" value="Apto">
+                                    <label class="form-check-label" for="flexRadioClaxonA">
+                                        Apto
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioClaxon"
+                                           id="flexRadioClaxonD" value="Deteriorado">
+                                    <label class="form-check-label" for="flexRadioClaxonD">
+                                        Deteriorado
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioClaxon"
+                                           id="flexRadioClaxonAu" value="Ausente">
+                                    <label class="form-check-label" for="flexRadioClaxonAu">
+                                        Ausente
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-2 mb-2">
+                                <p>Tanque :</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioTanque"
+                                           id="flexRadioTanqueA" value="Apto">
+                                    <label class="form-check-label" for="flexRadioTanqueA">
+                                        Apto
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioTanque"
+                                           id="flexRadioTanqueD" value="Deteriorado">
+                                    <label class="form-check-label" for="flexRadioTanqueD">
+                                        Deteriorado
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioTanque"
+                                           id="flexRadioTanqueAu" value="Ausente">
+                                    <label class="form-check-label" for="flexRadioTanqueAu">
+                                        Ausente
+                                    </label>
+                                </div>
+
+                            </div>
+                            <div class="col-2 mb-2">
+                                <p>Llanta delantera :</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioLDelantera"
+                                           id="flexRadioLDelanteraA" value="Apto">
+                                    <label class="form-check-label" for="flexRadioLDelanteraA">
+                                        Apto
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioLDelantera"
+                                           id="flexRadioLDelanteraN" value="No apto">
+                                    <label class="form-check-label" for="flexRadioLDelanteraN">
+                                        No apto
+                                    </label>
+                                </div>
+
+                            </div>
+                            <hr/>
+                            <div class="col-2 mb-2">
+                                <p>Llanta trasera :</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioLTrasera"
+                                           id="flexRadioLTraseraA" value="Apto">
+                                    <label class="form-check-label" for="flexRadioLTraseraA">
+                                        Apto
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioLTrasera"
+                                           id="flexRadioLTraseraN" value="No apto">
+                                    <label class="form-check-label" for="flexRadioLTraseraN">
+                                        No apto
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-2 mb-2">
+                                <p>Motor :</p>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioMotor"
+                                           id="flexRadioPistonA" value="Apto">
+                                    <label class="form-check-label" for="flexRadioPistonA">
+                                        Apto
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioMotor"
+                                           id="flexRadioPistonaN" value="No apto">
+                                    <label class="form-check-label" for="flexRadioPistonaN">
+                                        No apto
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-2 mb-2">
+                                <p>Chasis :</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioChasis"
+                                           id="flexRadioChasisA" value="Apto">
+                                    <label class="form-check-label" for="flexRadioChasisA">
+                                        Apto
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioChasis"
+                                           id="flexRadioChasisN" value="No apto">
+                                    <label class="form-check-label" for="flexRadioChasisN">
+                                        No apto
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="col-2 mb-2">
+                                <p>Acelerador :</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioAcelerador"
+                                           id="flexRadioAceleradorA" value="Apto">
+                                    <label class="form-check-label" for="flexRadioAceleradorA">
+                                        Apto
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioAcelerador"
+                                           id="flexRadioAceleradorN" value="No apto">
+                                    <label class="form-check-label" for="flexRadioAceleradorN">
+                                        No apto
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="col-2 mb-2">
+                                <p>Escape :</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioEscape"
+                                           id="flexRadioEscapeA" value="Apto">
+                                    <label class="form-check-label" for="flexRadioEscapeA">
+                                        Apto
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioEscape"
+                                           id="flexRadioEscapeN" value="No apto">
+                                    <label class="form-check-label" for="flexRadioEscapeN">
+                                        No apto
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-2 mb-2">
+                                <p>Trasmisión :</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioTrasmision"
+                                           id="flexRadioTrasmisionA" value="Apto">
+                                    <label class="form-check-label" for="flexRadioTrasmisionA">
+                                        Apto
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioTrasmision"
+                                           id="flexRadioTrasmisionN" value="No apto">
+                                    <label class="form-check-label" for="flexRadioTrasmisionN">
+                                        No apto
+                                    </label>
+                                </div>
+                            </div>
+                            <hr class="my-3"/>
+                            <div class="col-2 mb-2">
+                                <p>Embrague :</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioEmbrague"
+                                           id="flexRadioEmbragueA" value="Apto">
+                                    <label class="form-check-label" for="flexRadioEmbragueA">
+                                        Apto
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioEmbrague"
+                                           id="flexRadioEmbragueN" value="No apto">
+                                    <label class="form-check-label" for="flexRadioEmbragueN">
+                                        No apto
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-2 mb-2">
+                                <p>Frenos :</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioFreno"
+                                           id="flexRadioFrenoA" value="Aptos">
+                                    <label class="form-check-label" for="flexRadioFrenoA">
+                                        Apto
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioFreno"
+                                           id="flexRadioFrenoN" value="No aptos">
+                                    <label class="form-check-label" for="flexRadioFrenoN">
+                                        No aptos
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-2 mb-3">
+                                <p>Cadena :</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioCadena"
+                                           id="flexRadioCadenaA" value="Apto">
+                                    <label class="form-check-label" for="flexRadioCadenaA">
+                                        Apta
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioCadena"
+                                           id="flexRadioCadenaN" value="No apto">
+                                    <label class="form-check-label" for="flexRadioCadenaN">
+                                        No apta
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-2 mb-3">
+                                <p>Apoya pies :</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioApoya"
+                                           id="flexRadioApoyaA" value="Apto">
+                                    <label class="form-check-label" for="flexRadioApoyaA">
+                                        Apto
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioApoya"
+                                           id="flexRadioApoyaN" value="No apto">
+                                    <label class="form-check-label" for="flexRadioApoyaN">
+                                        No apto
+                                    </label>
+                                </div>
+                            </div>
+                            <hr class="my-3"/>
+                            <div class="col-3">
+                                <label for="Kilometraje" class="form-label">
+                                    Kilometraje de ingreso:
+                                </label>
+                                <input type="number" placeholder="km" class="form-control" id="Kilometraje"
+                                       name="Kilometraje" required>
+                            </div>
+                            <div class="col-6  mb-3">
+                                <p class="form-label">Nivel de combustible</p>
+                                <div class="form-check form-check form-check-inline">
+
+                                    <input class="form-check-input" type="radio" name="flexRadioGas"
+                                           id="flexRadioEmpty1" value="Empty">
+                                    <label class="form-check-label" for="flexRadioEmpty1">
+                                        Empty
+                                    </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="flexRadioGas"
+                                           id="flexRadioCuarto2" value="1/4">
+                                    <label class="form-check-label" for="flexRadioCuarto2">
+                                        1/4
+                                    </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="flexRadioGas"
+                                           id="flexRadioMedio3" value="1/2">
+                                    <label class="form-check-label" for="flexRadioMedio3">
+                                        1/2
+                                    </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="flexRadioGas"
+                                           id="flexRadioTresC4" value="3/4">
+                                    <label class="form-check-label" for="flexRadioTresC4">
+                                        3/4
+                                    </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="flexRadioGas" id="flexRadioFull5"
+                                           value="Full">
+                                    <label class="form-check-label" for="flexRadioFull5">
+                                        Full
+                                    </label>
+                                </div>
+                            </div>
+                            <div class=" mb-3">
+                                <button id="btnAddEstado" class="btn btn-outline-primary my-3">
+                                    Registrar estado
+                                </button>
+                            </div>
+                        </form>
+                    </fieldset>
+                    <div id="register-estado" class="mb-3 alert alert-warning alert-dismissible fade show d-none"
+                         role="alert">
+                        No se pudo registrar el estado, verifique los datos vuelva a intentar.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    <div id="alertDesc-estado" class="mb-3 alert alert-warning alert-dismissible fade show d-none"
+                         role="alert">
+                        Registre el detalle.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                </article>
+            </div>
+            <div class="tab-pane fade" id="nav-servicio" role="tabpanel" aria-labelledby="nav-servicio-tab"
+                 tabindex="0">
+                <article>
+                    <fieldset>
+                        <legend>
+                            Por favor llene los siguientes campos y selecciones los proceso a realizar.
+                        </legend>
+                        <form class="row" action="#">
+                            <div class="col-6 ">
+                                <label for="servicios" class="form-label">
+                                    Servicios
+                                </label>
+                                <select class="form-select mb-3" name="servicio" id="servicios">
+                                    <option id="agregarListaServicios" value="No seleccionado">
+                                        Seleccione servicio
+                                    </option>
+                                    <!-- Aquí se agregan los datos obtenidos de la BD -->
+                                </select>
+                                <input id="btnServicioAdd" type="submit" value="Agregar servicio"
+                                       class="btn btn-outline-primary">
+                            </div>
+                            <div class="col-6 mb-4">
+                                <label for="productos" class="form-label ">
+                                    Productos
+                                </label>
+                                <select class="form-select mb-3" name="producto" id="productos">
+                                    <option id="agregarListaProductos" value="No seleccionado">
+                                        Seleccione producto
+                                    </option>
+                                    <!-- Aquí se agregan los datos obtenidos de la BD -->
+                                </select>
+                                <input id="btnProductoAdd" type="submit" value="Agregar producto"
+                                       class="btn btn-outline-primary">
+                            </div>
+                            <div class="mb-3">
+                                <label for="desDx" class="form-label">
+                                    Descripcion de diagnóstico:
+                                </label>
+                                <textarea class="form-control" placeholder="Descripcion diagnóstico" id="desDx"
+                                          name="dx"></textarea>
+                            </div>
+                            <hr/>
+                            <div class="col-4 mb-3 bg-light">
+                                <p class="form-label">
+                                    Valor servicios: <span id="totalServicios"
+                                                           class="bg-white  border border-1  border-success px-1 rounded"></span>
+                                </p>
+                            </div>
+                            <div class="col-4 mb-3 bg-light">
+                                <p class="form-label">
+                                    Valor insumos: <span id="totalProductos"
+                                                         class="bg-white  border border-1  border-success px-1 rounded"></span>
+                                </p>
+                            </div>
+                            <div class="col-4 mb-3 ">
+                                <p class="form-label ">
+                                    Total: <span id="totalTotal"
+                                                 class="bg-white  border border-1  border-success px-1 rounded"></span>
+                                </p>
+                            </div>
+                            <div>
+                                <input type="submit" value="Finalizar registro" class="btn btn-outline-primary mb-3">
+                            </div>
+                        </form>
+                    </fieldset>
+
+                    <h3 class="h5">Tabla de registros.</h3>
+                    <table class="table table-hover">
+                        <thead class="table-dark">
+                        <tr>
+                            <th>Header</th>
+                            <th>Header2</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tbodyMecServicios" class="align-middle">
+
+                        </tbody>
+                    </table>
+                    <br/>
+                </article>
             </div>
         </div>
-        <footer class="footer bg-light mt-4 fixed-bottom">
-            <div >
-                <a href="#" class="btn btn-light ">&copy;Bike Clinic App</a>
-            </div>
-        </footer>
-    </body>
+    </section>
+</main>
+<!--OffCanva para realizar contacto.-->
+
+<div class="offcanvas offcanvas-start " tabindex="-1" id="contactLogin"
+     aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasExampleLabel">Contacto.</h5>
+        <!-- Para cerrar -->
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+                aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div>
+            Por favor registre los datos solicitados para poder resolver su incoveniente de la
+            manera más pronta. <br> Gracias.
+        </div>
+        <div class="container m-1">
+            <form action="#btnContact" method="post">
+                <label for="nameContact" class="form-label mt-3 mb-2">Ingrese su nombre</label>
+                <input type="text" class=" form-control mb-2" name="nameContact"
+                       id="nameContact" placeholder="Su nombre completo" required>
+                <label for="idContact" class="form-label mb-2">Ingrese su número de
+                    identificación</label>
+                <input type="number" class=" form-control mb-2" name="idContact" id="idContact"
+                       placeholder="Sin puntos o espacios" required>
+                <label for="textContact">Describa el motivo</label>
+
+                <textarea type="textarea" class=" form-control mb-2" name="textContact"
+                          id="textContact" required></textarea>
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary btn-lg btn-block mt-2"
+                            id="btnContact">Enviar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<footer class="footer bg-light mt-4 fixed-bottom">
+    <div>
+        <a href="#" class="btn btn-light ">&copy;Bike Clinic App</a>
+    </div>
+</footer>
+</body>
 </html>

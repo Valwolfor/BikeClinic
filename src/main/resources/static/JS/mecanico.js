@@ -59,7 +59,7 @@ $(document).ready(function () {
     
 });
 
-//ok js, Validado
+//ok js, Validado, para confirmar correo
 function checkCorreo() {
     $('#Correo, #CorreoC').on('keyup', function () {
         if ($('#Correo').val() === $('#CorreoC').val()) {
@@ -68,6 +68,7 @@ function checkCorreo() {
             $('#message').html(' Los correos no coinciden.').css('color', 'red');
     });
 }
+
 //ZONA de Cliente
 //Funciona Validado,
 function validarCliente() {
@@ -84,7 +85,6 @@ function validarCliente() {
 
 //Funciona, validado.
 function registrarCliente() {
-
     let tipoID = $("#Documento").val();
     let idCliente = $("#Identificacion").val();
     let nombre = $("#Cliente").val();
@@ -92,94 +92,108 @@ function registrarCliente() {
     let segundoApellido = $("#Sapellido").val();
     let correo = $("#Correo").val();
     let numeroContacto = $("#Telefono").val();
-    //asigna en la global, pues es irrelevante para esto el if pues no se puede cambiar el id.
-    //si no existe se ejecutará está cuando se de click en el botón enviar.
     idClienteO = idCliente;
 
-    $.ajax({
-        type: "GET",
-        dataType: "html",
-        url: "./ServletClienteRegistro",
-        data: $.param({
-            tipoId: tipoID,
-            idCliente: idCliente,
-            nombre: nombre,
-            primerApellido: primerApellido,
-            segundoApellido: segundoApellido,
-            correo: correo,
-            numeroContacto: numeroContacto
-        }),
-        success: function (result) {
-            let parsedResult = JSON.parse(result);
+    fetch("https://localhost:8090/motorclinic/api/customers", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            typeId: tipoID,
+            firstName: nombre,
+            lastName: primerApellido+ ' ' + segundoApellido,
+            email: correo,
+            contactNumber: numeroContacto
+        })
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Hubo un problema al registrar el cliente');
+            }
+            return response.json();
+        })
+        .then(parsedResult => {
             if (parsedResult !== false) {
                 pasarPestañaCliente();
                 console.log("Se registró correctamente el cliente");
             } else {
-                //ta listo esto.
                 $("#register-cliente").removeClass("d-none");
             }
-        }
-    });
+        })
+        .catch(error => {
+            console.error('Error al registrar el cliente:', error);
+        });
 }
+
 
 //Funciona, validado
 function actualizarCliente(tipoId, idCliente, nombre, primerApellido, segundoApellido, correo, numeroContacto) {
-    //alert sobre actualizar sino se manda a siguiente pestaña
-    $.ajax({
-        type: "GET",
-        dataType: "html",
-        url: "./ServletClienteActualizar",
-        data: $.param({
-            tipoId: tipoId,
-            idCliente: idCliente,
-            nombre: nombre,
-            primerApellido: primerApellido,
-            segundoApellido: segundoApellido,
-            correo: correo,
-            numeroContacto: numeroContacto
-        }),
-        success: function (result) {
-            let parsedResult = JSON.parse(result);
+    fetch(`https://localhost:8090/motorclinic/api/customers/${idCliente}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            typeId: tipoId,
+            firstName: nombre,
+            lastName: primerApellido,
+            email: correo,
+            contactNumber: numeroContacto
+        })
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Hubo un problema al actualizar los datos del cliente');
+            }
+            return response.json();
+        })
+        .then(parsedResult => {
             if (parsedResult !== false) {
-                alert("Actuazlición exitosa");
+                alert("Actualización exitosa");
                 pasarPestañaCliente();
-                console.log("Se actulizó cliente: " + idCliente);
-                //sí se algo con la tabla aquí se puede construir.
+                console.log(`Se actualizó el cliente: ${idCliente}`);
+                // Si hay algo que hacer con la tabla, se puede construir aquí
             } else {
                 $("#actualizar.cliente").removeClass("d-none");
             }
-        }
-    });
+        })
+        .catch(error => {
+            console.error('Error al actualizar el cliente:', error);
+        });
 }
+
 
 //Funciona validado.
 function buscarCliente(idCliente) {
-//buscará por id returnará booleano, tal vez también los datos. 
-    $.ajax({
-        type: "GET",
-        dataType: "html",
-        url: "./ServletClienteBuscar",
-        data: $.param({
-            idCliente: idCliente
-        }),
-        success: function (result) {
-            let parsedResult = JSON.parse(result);
+    fetch(`http://localhost:8090/motorclinic/api/customers/${idCliente}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Hubo un problema al llamar los datos del cliente');
+            }
+            return response.json();
+        })
+        .then(parsedResult => {
             if (parsedResult !== false) {
-                console.log("El usuario " + idCliente + " ya está registrado");
-                //setear datos del cliente en el formulario
-                //setear recibe datos, si se mete paramentro en val() se pueden setear
-                tipo = document.getElementById('Documento').value;
-                $("#Documento").val(tipo);
+
+                console.log(`El usuario ${idCliente} ya está registrado`);
+                // Setear datos del cliente en el formulario
+                document.getElementById('Documento').value = parsedResult.typeId;
                 $("#Identificacion").val(idCliente);
-                $("#Cliente").val(parsedResult.nombre);
-                $("#Papellido").val(parsedResult.primerApellido);
-                $("#Sapellido").val(parsedResult.segundoApellido);
-                $("#Correo").val(parsedResult.correo);
-                $("#CorreoC").val(parsedResult.correo);
-                $("#Telefono").val(parsedResult.numeroContacto);
-                //bloquea id
+                $("#Cliente").val(parsedResult.firstName);
+                $("#Papellido").val(parsedResult.lastName);
+                $("#Sapellido").val("");
+                $("#Correo").val(parsedResult.email);
+                $("#CorreoC").val(parsedResult.email);
+                $("#Telefono").val(parsedResult.contactNumber);
+                // Bloquea id
                 $("#Identificacion").prop('disabled', true);
-                //asigna en la global, pues es irrelevante para esto el if pues no se puede cambiar el id.
+                // Asigna en la global
                 idClienteO = idCliente;
 
                 if (confirm("El cliente ya está registrado, ¿desea actualizar sus datos?")) {
@@ -187,10 +201,10 @@ function buscarCliente(idCliente) {
                     $("#btnSubmitUser").prop('disabled', true);
                     $("#btnEditUser").prop('disabled', false);
 
-                    //le da espacio a actualizar los nuevos datos
+                    // Da espacio a actualizar los nuevos datos
                     $("#btnEditUser").click(function (event) {
                         event.preventDefault();
-                        //recolecta nuevos datos
+                        // Recolecta nuevos datos
                         let tipoId = $("#Documento").val();
                         let idCliente = $("#Identificacion").val();
                         let nombre = $("#Cliente").val();
@@ -198,21 +212,23 @@ function buscarCliente(idCliente) {
                         let segundoApellido = $("#Sapellido").val();
                         let correo = $("#Correo").val();
                         let numeroContacto = $("#Telefono").val();
-                        //llama función
+                        // Llama función
                         actualizarCliente(tipoId, idCliente, nombre, primerApellido, segundoApellido, correo, numeroContacto);
-
                     });
                 } else {
                     pasarPestañaCliente();
                 }
             } else {
-                console.log("El usuario :" + idCliente + ", no está resgistrado");
+                console.log(`El usuario ${idCliente} no está registrado`);
                 $("#btnEditUser").prop('disabled', true);
-                //podría ir un alert sobre que no está registrado.
+                // Podría ir un alert sobre que no está registrado.
             }
-        }
-    });
+        })
+        .catch(error => {
+            console.error('Error al obtener datos del cliente:', error);
+        });
 }
+
 
 //Funciona validado.
 function pasarPestañaCliente() {
