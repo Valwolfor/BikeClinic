@@ -66,7 +66,7 @@ function mostrarEstado(listaEstados) {
                         '<ul class="list-group list-group">' +
                         '<li class="list-group-item"><strong>Aceite:  </strong>' + estado.status.oil + '</li>' +
                         '<li class="list-group-item"><strong>Nivel aceite:  </strong>' + estado.status.oilLevel + '</li>' +
-                        '<li class="list-group-item"><strong>Nivel de combustible  </strong>$' + estado.status.fuel + '</li>' +
+                        '<li class="list-group-item"><strong>Nivel de combustible  </strong>' + estado.status.fuel + '</li>' +
                         '</ul>' +
                         '<ul class="list-group list-group">' +
                         '<li class="list-group-item"><strong>Liquido de frenos:  </strong>' + estado.status.brakeFluid + '</li>' +
@@ -150,36 +150,39 @@ function mostrarRegistro(listaRegistros) {
     let accordeonR = "";
     //moto es en realidad el id de la orden.
     $.each(listaRegistros, function (index, registro) {
-        let registroParsed = JSON.parse(registro);
-//       1 2 3/ 3
+
         accordeonR += '<div class="cajitas ">' +
-            '<div id="ordenes" class="ordenes modal-body border border border-3 border-dark" style="--bs-border-opacity: .4;"><strong> Registros de la orden</strong>';
+            '<div id="ordenes" class="ordenes modal-body border border border-3 border-dark" style="--bs-border-opacity: .4;">' +
+            '<strong> Registros de la orden</strong>';
 
         verRegistrosPorOrden();
 
         function verRegistrosPorOrden() {
             $.each(listaRegistros, function (index, registroPorO) {
-                let registroOrdenParsed = JSON.parse(registroPorO);
+
                 //solo poner las ordenes de está moto.
-                if (registroOrdenParsed.idOrden === registroParsed.idOrden) {
+                if (registroPorO.order.id === registro.order.id) {
                     accordeonR += '<div class="accordion accordion-flush" id="accordionFlushRegistros">' +
                         '<div class="accordion-item">' +
-                        '<h2 class="accordion-header" id="flush-heading-registros-' + registroOrdenParsed.idRegistro + '">' +
-                        '<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse-registros-' + registroOrdenParsed.idRegistro + '" aria-expanded="false" aria-controls="flush-collapse-registros-' + registroOrdenParsed.idRegistro + '">' +
-                        '<strong>Registro:  #</strong> ' + registroOrdenParsed.idRegistro + ' de la orden: ' + registroOrdenParsed.idOrden +
+                        '<h2 class="accordion-header" id="flush-heading-registros-' + registroPorO.id + '">' +
+                        '<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse-registros-' +
+                        registroPorO.id + '" aria-expanded="false" aria-controls="flush-collapse-registros-' +
+                        registroPorO.id + '">' +
+                        '<strong>Registro:  #</strong> ' + registroPorO.id + ' de la orden: ' + registroPorO.order.id +
                         '</button>' +
                         '</h2>' +
-                        '<div id="flush-collapse-registros-' + registroOrdenParsed.idRegistro + '" class="accordion-collapse collapse" aria-labelledby="flush-heading-registros-' + registroOrdenParsed.idRegistro + '" data-bs-parent="#accordionFlushRegistros">' +
+                        '<div id="flush-collapse-registros-' + registroPorO.id + '" class="accordion-collapse collapse" ' +
+                        'aria-labelledby="flush-heading-registros-' + registroPorO.id + '" data-bs-parent="#accordionFlushRegistros">' +
                         '<div class="accordion-body">' +
                         '<ul class="list-group list-group">' +
-                        '<li class="list-group-item"><strong>Producto:  </strong>' + registroOrdenParsed.nombreProducto + '</li>' +
-                        '<li class="list-group-item"><strong>Valor producto:  </strong>' + registroOrdenParsed.valorProducto + '</li>' +
-                        '<li class="list-group-item"><strong>Detalle Servicio:  </strong>' + registroOrdenParsed.nombreServicio + '</li>' +
+                        '<li class="list-group-item"><strong>Producto:  </strong>' + registroPorO.product.productName + '</li>' +
+                        '<li class="list-group-item"><strong>Valor producto:  </strong>' + registroPorO.product.productValue + '</li>' +
+                        '<li class="list-group-item"><strong>Detalle Servicio:  </strong>' + registroPorO.service.serviceName + '</li>' +
                         '</ul>' +
                         '<ul class="list-group list-group">' +
-                        '<li class="list-group-item"><strong>Detalle servicio:  </strong>' + registroOrdenParsed.detalleServicio + '</li>' +
-                        '<li class="list-group-item"><strong>Valor servicio:  </strong>' + registroOrdenParsed.valorServicio + '</li>' +
-                        '<li class="list-group-item"><strong>Aprobado por cliente.  </strong>$' + registroOrdenParsed.aprobado + '</li>' +
+                        '<li class="list-group-item"><strong>Detalle servicio:  </strong>' + registroPorO.service.serviceDetail + '</li>' +
+                        '<li class="list-group-item"><strong>Valor servicio:  </strong>' + registroPorO.service.serviceValue + '</li>' +
+                        '<li class="list-group-item"><strong>Aprobado por cliente.  </strong>' + registroPorO.approved + '</li>' +
                         '</ul>' +
                         '</div>' +
                         '</div>' +
@@ -192,7 +195,7 @@ function mostrarRegistro(listaRegistros) {
 
         accordeonR += '</div>';
         try {
-            clase = ".orden-registro-" + registroParsed.idOrden;
+            clase = ".orden-registro-" + registro.order.id;
             $(clase).html(accordeonR);
         } catch (e) {
             console.log(e);
