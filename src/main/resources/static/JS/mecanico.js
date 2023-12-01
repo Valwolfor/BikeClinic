@@ -94,7 +94,7 @@ function registrarCliente() {
     let numeroContacto = $("#Telefono").val();
     idClienteO = idCliente;
 
-    fetch("https://localhost:8090/motorclinic/api/customers", {
+    fetch("http://localhost:8090/motorclinic/api/customers", {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -129,7 +129,7 @@ function registrarCliente() {
 
 //Funciona, validado
 function actualizarCliente(tipoId, idCliente, nombre, primerApellido, segundoApellido, correo, numeroContacto) {
-    fetch(`https://localhost:8090/motorclinic/api/customers/${idCliente}`, {
+    fetch(`http://localhost:8090/motorclinic/api/customers/${idCliente}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
