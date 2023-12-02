@@ -34,7 +34,7 @@ $(document).ready(function () {
         event.preventDefault();
         let indicadores = document.querySelector('input[name=flexRadioIndicadores]:checked').value;
         if (indicadores !== 'No apto') {
-            desIndicadores = null;
+            desIndicadores = "";
             $("#alertDesc-estado").addClass("d-none");
             $("#DescripcionInd").prop('disabled', true);
         } else {
@@ -48,7 +48,7 @@ $(document).ready(function () {
         event.preventDefault();
         let indicadores = document.querySelector('input[name=flexRadioIndicadores]:checked').value;
         if (indicadores !== 'No apto') {
-            desIndicadores = null;
+            desIndicadores = "";
             $("#alertDesc-estado").addClass("d-none");
             $("#DescripcionInd").prop('disabled', true);
         } else {
@@ -83,7 +83,7 @@ function validarCliente() {
     //no necesito if, busqueda hace el llamado de actualizar
 }
 
-//Falta
+
 function registrarCliente() {
     let tipoID = $("#Documento").val();
     let idCliente = $("#Identificacion").val();
@@ -92,7 +92,6 @@ function registrarCliente() {
     let segundoApellido = $("#Sapellido").val();
     let correo = $("#Correo").val();
     let numeroContacto = $("#Telefono").val();
-    idClienteO = idCliente;
 
     fetch("http://localhost:8090/motorclinic/api/customers", {
         method: 'POST',
@@ -109,13 +108,14 @@ function registrarCliente() {
     })
         .then(response => {
             if (!response.ok) {
+                idClienteO = response.id;
                 throw new Error('Hubo un problema al registrar el cliente');
             }
             return response.json();
         })
         .then(parsedResult => {
             if (parsedResult !== false) {
-                pasarPestañaCliente();
+                pasarPestannaCliente();
                 console.log("Se registró correctamente el cliente");
             } else {
                 $("#register-cliente").removeClass("d-none");
@@ -150,7 +150,7 @@ function actualizarCliente(tipoId, idCliente, nombre, primerApellido, segundoApe
         .then(parsedResult => {
             if (parsedResult !== false) {
                 alert("Actualización exitosa");
-                pasarPestañaCliente();
+                pasarPestannaCliente();
                 console.log(`Se actualizó el cliente: ${idCliente}`);
                 // Si hay algo que hacer con la tabla, se puede construir aquí
             } else {
@@ -179,6 +179,7 @@ function buscarCliente(idCliente) {
         .then(parsedResult => {
             if (parsedResult !== false) {
 
+                idClienteO = parsedResult.id;
                 console.log(`El usuario ${idCliente} ya está registrado`);
                 // Setear datos del cliente en el formulario
                 document.getElementById('Documento').value = parsedResult.typeId;
@@ -191,8 +192,6 @@ function buscarCliente(idCliente) {
                 $("#Telefono").val(parsedResult.contactNumber);
                 // Bloquea id
                 $("#Identificacion").prop('disabled', true);
-                // Asigna en la global
-                idClienteO = idCliente;
 
                 if (confirm("El cliente ya está registrado, ¿desea actualizar sus datos?")) {
                     alert("Cuando actualice los datos debe dar click en el botón de 'Editar Registro'");
@@ -214,7 +213,7 @@ function buscarCliente(idCliente) {
                         actualizarCliente(tipoId, idCliente, nombre, primerApellido, segundoApellido, correo, numeroContacto);
                     });
                 } else {
-                    pasarPestañaCliente();
+                    pasarPestannaCliente();
                 }
             } else {
                 console.log(`El usuario ${idCliente} no está registrado`);
@@ -228,7 +227,7 @@ function buscarCliente(idCliente) {
 }
 
 
-function pasarPestañaCliente() {
+function pasarPestannaCliente() {
 
     //remueve clases y habilita pestañas
     //nav link.
@@ -269,6 +268,11 @@ async function buscarMoto(placaMoto) {
         }
         const data = await response.json();
         if (data) {
+            if (data.customer.id !== idClienteO) {
+                alert('La moto ya está registrada, pero pertenece a otro cliente');
+
+                throw new Error('La moto pertenece a otro cliente');
+            }
             console.log(`La moto ${placaMoto} ya está registrada`);
             idMOtoO = data.id
             placaMotoO = data.plate;
@@ -453,7 +457,7 @@ function registrarEstado() {
         },
         body: JSON.stringify({
             indicators: indicadores,
-            // indicatorsDesc: desIndicadores, // Descomentar si es necesario manejar la descripción
+            indicatorsDesc: desIndicadores, // Descomentar si es necesario manejar la descripción
             oil: aceite,
             oilLevel: nivelAceite,
             brakeFluid: liquidoFrenos,
