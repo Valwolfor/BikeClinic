@@ -1,6 +1,7 @@
 let idClienteO;
-let placaMotoO;
+let idMOtoO;
 let estadoO;
+let placaMotoO;
 let idOrden;
 
 $(document).ready(function () {
@@ -28,8 +29,8 @@ $(document).ready(function () {
         registrarEstado();
 
     });
-    
-    $("#flexRadioIndicadoresN").change( function (event) {
+
+    $("#flexRadioIndicadoresN").change(function (event) {
         event.preventDefault();
         let indicadores = document.querySelector('input[name=flexRadioIndicadores]:checked').value;
         if (indicadores !== 'No apto') {
@@ -42,8 +43,8 @@ $(document).ready(function () {
             $("#alertDesc-estado").removeClass("d-none");
         }
     });
-    
-    $("#flexRadioIndicadoresA").change( function (event) {
+
+    $("#flexRadioIndicadoresA").change(function (event) {
         event.preventDefault();
         let indicadores = document.querySelector('input[name=flexRadioIndicadores]:checked').value;
         if (indicadores !== 'No apto') {
@@ -56,7 +57,7 @@ $(document).ready(function () {
             $("#alertDesc-estado").removeClass("d-none");
         }
     });
-    
+
 });
 
 
@@ -82,7 +83,7 @@ function validarCliente() {
     //no necesito if, busqueda hace el llamado de actualizar
 }
 
-
+//Falta
 function registrarCliente() {
     let tipoID = $("#Documento").val();
     let idCliente = $("#Identificacion").val();
@@ -101,7 +102,7 @@ function registrarCliente() {
         body: JSON.stringify({
             typeId: tipoID,
             firstName: nombre,
-            lastName: primerApellido+ ' ' + segundoApellido,
+            lastName: primerApellido + ' ' + segundoApellido,
             email: correo,
             contactNumber: numeroContacto
         })
@@ -269,7 +270,10 @@ async function buscarMoto(placaMoto) {
         const data = await response.json();
         if (data) {
             console.log(`La moto ${placaMoto} ya está registrada`);
-            // Asignar datos a los campos del formulario
+            idMOtoO = data.id
+            placaMotoO = data.plate;
+
+            // Asignar datos a los campos del formulario. Creo que ni es necesario. Ademas nisiquiera está bien
             document.getElementById('Placa').value = placaMoto;
             document.getElementById('Motor').value = data.engineId;
             document.getElementById('Chasis').value = data.chassisId;
@@ -293,45 +297,54 @@ async function buscarMoto(placaMoto) {
 }
 
 
-//Funciona validado
-function registrarMoto() {
+//Falta
+async function registrarMoto() {
+    try {
+        let placaMoto = $("#Placa").val();
+        let idMotor = $("#Motor").val();
+        let idChasis = $("#Chasis").val();
+        let marca = $("#Marca").val();
+        let modelo = $("#Modelo").val();
+        let anioRegistro = $("#Anio").val();
+        let Clientes_idCliente = idClienteO;
 
-    let placaMoto = $("#Placa").val();
-    let idMotor = $("#Motor").val();
-    let idChasis = $("#Chasis").val();
-    let marca = $("#Marca").val();
-    let modelo = $("#Modelo").val();
-    let anioRegistro = $("#Anio").val();
-    let Clientes_idCliente = idClienteO;
-    //asigna en la global, pues es irrelevante para esto el if pues no se puede cambiar el id.
-    //si no existe se ejecutará está cuando se de click en el botón enviar.
-    placaMotoO = placaMoto;
-
-    $.ajax({
-        type: "GET",
-        dataType: "html",
-        url: "./ServletMotoRegistro",
-        data: $.param({
-            placaMoto: placaMoto,
-            idMotor: idMotor,
-            idChasis: idChasis,
-            marca: marca,
-            modelo: modelo,
-            anioRegistro: anioRegistro,
-            Clientes_idCliente: Clientes_idCliente
-        }),
-        success: function (result) {
-            let parsedResult = JSON.parse(result);
-            if (parsedResult !== false) {
-                pasarPestannaMoto();
-                console.log("Se registró correctamente la moto");
-            } else {
-                //ta listo esto.
-                $("#register-moto").removeClass("d-none");
+        // Datos a enviar en la solicitud POST
+        const data = {
+            plate: placaMoto,
+            engineId: idMotor,
+            chassisId: idChasis,
+            brand: marca,
+            model: modelo,
+            registrationYear: anioRegistro,
+            customer: {
+                id: Clientes_idCliente
             }
+        };
+
+        const response = await fetch("http://localhost:8090/motorclinic/api/motorcycles", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        });
+
+        if (!response.ok) {
+            throw new Error('No se pudo registrar la motocicleta');
         }
-    });
+
+        const parsedResult = await response.json();
+        if (parsedResult !== false) {
+            pasarPestannaMoto();
+            console.log("Se registró correctamente la moto");
+        } else {
+            $("#register-moto").removeClass("d-none");
+        }
+    } catch (error) {
+        console.error('Error al registrar la motocicleta:', error);
+    }
 }
+
 
 //Funciona validado
 function pasarPestannaMoto() {
@@ -355,18 +368,17 @@ function pasarPestannaMoto() {
 }
 
 //ZONA Mecánico para ponerlo en select 
-//TODO futuro validarlo con los datos de login.
-//Funciona Validado
+//TODO futuro validarlo con los datos de login. Ni idea que era lo que quería :P
+//No aun
 function obtenerListaMecanicos() {
 
     $.ajax({
         type: "GET",
-        dataType: "html",
-        url: "./ServletMecanicosListar",
+        dataType: "json",
+        url: "http://localhost:8090/motorclinic/api/users/by-role?role=MECHANIC",
         success: function (result) {
-            let parsedResult = JSON.parse(result);
-            if (parsedResult !== false) {
-                mostrarMecanicos(parsedResult);
+            if (result !== false) {
+                mostrarMecanicos(result);
 
             } else {
                 console.log("Hubo un problema al llamar los datos de lista mecánicos en la zona de mecánico.");
@@ -381,13 +393,12 @@ function mostrarMecanicos(listaMecanicos) {
     let selects = "";
     $.each(listaMecanicos, function (index, mecanico) {
 
-        mecanico = JSON.parse(mecanico);
-        if (mecanico.estado === "Activo") {
+        if (mecanico.status === "ACTIVE") {
             mecanicoActivo = mecanico;
         }
         selects += '<option value="' + mecanicoActivo.id + '" >' +
-                mecanicoActivo.nombre + ' ' + mecanicoActivo.primerApellido + ' ' + mecanicoActivo.segundoApellido +
-                '</option>';
+            mecanicoActivo.firtsName + ' ' + mecanicoActivo.lastName +
+            '</option>';
     });
     $('#Mecanico').html(selects);
 }
@@ -397,28 +408,26 @@ function mostrarMecanicos(listaMecanicos) {
 //Valida indicadores ok.
 // debería no dejar registrar con el mismo km
 function registrarEstado() {
-
     let indicadores = document.querySelector('input[name=flexRadioIndicadores]:checked').value;
-    desIndicadores;
-
-//    if (indicadores === 'No apto') {
-//        $("#DescripcionInd").prop('disabled', false);
-//        desIndicadores = $("#DescripcionInd").val();
-//        $("#alertDesc-estado").removeClass("d-none");
-//    } else {
-//        desIndicadores = null;
-//    }
+    // Descomentar las siguientes líneas si necesitas manejar la descripción de indicadores
+    // let desIndicadores;
+    // if (indicadores === 'No apto') {
+    //     desIndicadores = $("#DescripcionInd").val();
+    //     $("#alertDesc-estado").removeClass("d-none");
+    // } else {
+    //     desIndicadores = null;
+    // }
 
     let aceite = document.querySelector('input[name=flexRadioAceite]:checked').value;
     let nivelAceite = document.querySelector('input[name=flexRadioAceiteNivel]:checked').value;
     let liquidoFrenos = document.querySelector('input[name=flexRadioLFrenos]:checked').value;
     let liquidoEmbrague = document.querySelector('input[name=flexRadioLEmbrague]:checked').value;
     let liquidoRefrigerante = document.querySelector('input[name=flexRadioLRefrigerante]:checked').value;
-    
-    let lucesAptas = (document.querySelector('input[value=Farola]:checked') ? document.querySelector('input[value=Farola]:checked').value: null);
-    lucesAptas += (document.querySelector('input[value=Stop]:checked') ? ", " + document.querySelector('input[value=Stop]:checked').value: null);
-    lucesAptas += (document.querySelector('input[value=Direcionales]:checked') ? ", " + document.querySelector('input[value=Direcionales]:checked').value: null);
-    lucesAptas += (document.querySelector('input[value=Auxiliares]:checked') ? ", " + document.querySelector('input[value=Auxiliares]:checked').value: null);
+
+    let lucesAptas = [];
+    document.querySelectorAll('input[type=checkbox][name="lucesAptas"]:checked').forEach(function (el) {
+        lucesAptas.push(el.value);
+    });
 
     let espejos = document.querySelector('input[name=flexRadioEspejo]:checked').value;
     let claxon = document.querySelector('input[name=flexRadioClaxon]:checked').value;
@@ -437,74 +446,61 @@ function registrarEstado() {
     let kilometraje = document.getElementById('Kilometraje').value;
     let combustible = document.querySelector('input[name=flexRadioGas]:checked').value;
 
-    $.ajax({
-        type: "GET",
-        dataType: "html",
-        url: "./ServletEstadoRegistro",
-        data: $.param({
-            indicadores: indicadores,
-            desIndicadores: desIndicadores,
-            aceite: aceite,
-            nivelAceite: nivelAceite,
-            liquidoFrenos: liquidoFrenos,
-            liquidoEmbrague: liquidoEmbrague,
-            liquidoRefrigerante: liquidoRefrigerante,
-            lucesAptas: lucesAptas,
-            espejos: espejos,
-            claxon: claxon,
-            tanque: tanque,
-            llantaDelantera: llantaDelantera,
-            llantaTrasera: llantaTrasera,
-            motor: motor,
-            chasis: chasis,
-            acelerador: acelerador,
-            escape: escape,
-            trasmision: trasmision,
-            embrague: embrague,
-            frenos: frenos,
-            cadena: cadena,
-            apoyaPies: apoyaPies,
-            kilometraje: kilometraje,
-            combustible: combustible
-
+    fetch("http://localhost:8090/motorclinic/api/status", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            indicators: indicadores,
+            // indicatorsDesc: desIndicadores, // Descomentar si es necesario manejar la descripción
+            oil: aceite,
+            oilLevel: nivelAceite,
+            brakeFluid: liquidoFrenos,
+            clutchFluid: liquidoEmbrague,
+            coolant: liquidoRefrigerante,
+            lightsGood: lucesAptas.join(", "),
+            mirrors: espejos,
+            horn: claxon,
+            tank: tanque,
+            frontTire: llantaDelantera,
+            rearTire: llantaTrasera,
+            engine: motor,
+            chassis: chasis,
+            throttle: acelerador,
+            exhaust: escape,
+            transmission: trasmision,
+            clutch: embrague,
+            brakes: frenos,
+            chain: cadena,
+            footPegs: apoyaPies,
+            mileage: kilometraje,
+            fuel: combustible,
         }),
-        success: function (result) {
-            let parsedResult = JSON.parse(result);
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error al registrar el estado');
+            }
+            return response.json();
+        })
+        .then(parsedResult => {
             if (parsedResult !== false) {
-                obtenerIdEstado(kilometraje);
-                pasarPestañaEstado();
-
+                estadoO = parsedResult.id
+                pasarPestannaEstado();
                 console.log("Se registró correctamente el estado");
             } else {
-                //ta listo esto.
                 $("#register-estado").removeClass("d-none");
             }
-        }
-    });
-}
-
-//Funciona.
-function obtenerIdEstado(kilometraje) {
-
-    $.ajax({
-        type: "GET",
-        dataType: "html",
-        url: "./ServletEstadoBuscar",
-        data: $.param({
-            kilometraje: kilometraje
-        }),
-        success: function (result) {
-            let parsedResult = JSON.parse(result);
-            if (parsedResult !== false) {
-                console.log("El estado con " + kilometraje + " ya está registrado");
-                estadoO = parsedResult.idEstado;
-            }
-        }
-    });
+        })
+        .catch(error => {
+            console.error('Error al registrar el estado:', error);
+            // Handle the error as needed
+        });
 }
 
 //Funciona
-function pasarPestañaEstado() {
+function pasarPestannaEstado() {
 
     //remueve clases y habilita pestañas
     //nav link.
@@ -523,70 +519,65 @@ function pasarPestañaEstado() {
     $("#nav-motivo").addClass("show");
     $("#nav-motivo").addClass("active");
 }
- 
- 
- // EsTOY AQUIIIIIII!!!
+
+
+// EsTOY AQUIIIIIII!!!
 //ZONA ORDEN de servicio
 //MOTIVO 
 function registrarMotivo() {
-
-    //idOrden autogenera Se debe obtener después
-    fecha = new Date().getUTCFullYear();
-    fecha += "-" + new Date().getUTCMonth();
-    fecha += "-" + new Date().getUTCDate();
-    let cliente = idClienteO;
+    let fecha = new Date().toISOString().slice(0, 10);
     let mecanico = document.getElementById('Mecanico').value;
-    let moto = placaMotoO;
     let motivo = document.getElementById('Motivo').value;
-    let documentos = document.querySelector('input[value=Farola]:checked').value;
-    documentos += ", " + document.querySelector('#inlineCheckbox2');
-    documentos += ", " + document.querySelector('#inlineCheckbox3');
-    let anticipo = document.getElementById("flexSwitchCheckAnticipo").value;
-
-    let valorAnticipo;
-    if (anticipo === 'Sí') {
-        $("#valAnticipo").prop('disabled', false);
-        valorAnticipo = $("#valAnticipo").val();
-    } else {
-        anticipo = "No";
-        valorAnticipo = 0;
-    }
-    ;
-
-    let autorizacionRuta = document.getElementById("flexSwitchCheckRuta").value;
-
-    if (autorizacionRuta === 'Sí') {
-    } else {
-        autorizacionRuta = "No";
-    }
-    ;
-
+    let documentos = Array.from(document.querySelectorAll('input[type=checkbox][name=documentos]:checked'))
+        .map(el => el.value).join(", ");
+    let anticipo = document.getElementById("flexSwitchCheckAnticipo").checked ? "Sí" : "No";
+    let valorAnticipo = anticipo === 'Sí' ? document.getElementById("valAnticipo").value : 0;
+    let autorizacionRuta = document.getElementById("flexSwitchCheckRuta").checked ? "Sí" : "No";
     let descripcionDiagnostico = $("#Dmotivo").val();
-    let estado = estadoO;
 
-    $.ajax({
-        type: "GET",
-        dataType: "html",
-        url: "./ServletMotoRegistro",
-        data: $.param({
-            placaMoto: placaMoto,
-            idMotor: idMotor,
-            idChasis: idChasis,
-            marca: marca,
-            modelo: modelo,
-            anioRegistro: anioRegistro,
-            Clientes_idCliente: Clientes_idCliente
+    fetch("http://localhost:8090/motor/api/service-orders", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            motorcycle: {
+                id: idMOtoO
+            },
+            documents: documentos,
+            motorcyclePlate: placaMotoO,
+            status: {
+                id: estadoO
+            },
+            mechanic: {
+                id: mecanico
+            },
+            date: fecha,
+            diagnosticDesc: descripcionDiagnostico,
+            reason: motivo,
+            routeAuth: autorizacionRuta,
+            advance: anticipo,
+            advanceValue: valorAnticipo,
         }),
-        success: function (result) {
-            let parsedResult = JSON.parse(result);
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error al registrar el motivo');
+            }
+            return response.json();
+        })
+        .then(parsedResult => {
             if (parsedResult !== false) {
                 pasarPestannaMoto();
                 console.log("Se registró correctamente la moto");
             } else {
-                //ta listo esto.
                 $("#register-moto").removeClass("d-none");
             }
-        }
-    });
+        })
+        .catch(error => {
+            console.error('Error al registrar el motivo:', error);
+            // Manejar el error según sea necesario
+        });
 }
+
 
