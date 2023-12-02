@@ -59,7 +59,7 @@ $(document).ready(function () {
     
 });
 
-//ok js, Validado, para confirmar correo
+
 function checkCorreo() {
     $('#Correo, #CorreoC').on('keyup', function () {
         if ($('#Correo').val() === $('#CorreoC').val()) {
@@ -70,7 +70,6 @@ function checkCorreo() {
 }
 
 //ZONA de Cliente
-//Funciona Validado,
 function validarCliente() {
 
     let idCliente;
@@ -83,7 +82,7 @@ function validarCliente() {
     //no necesito if, busqueda hace el llamado de actualizar
 }
 
-//Funciona, validado.
+
 function registrarCliente() {
     let tipoID = $("#Documento").val();
     let idCliente = $("#Identificacion").val();
@@ -127,7 +126,6 @@ function registrarCliente() {
 }
 
 
-//Funciona, validado
 function actualizarCliente(tipoId, idCliente, nombre, primerApellido, segundoApellido, correo, numeroContacto) {
     fetch(`http://localhost:8090/motorclinic/api/customers/${idCliente}`, {
         method: 'PUT',
@@ -137,7 +135,7 @@ function actualizarCliente(tipoId, idCliente, nombre, primerApellido, segundoApe
         body: JSON.stringify({
             typeId: tipoId,
             firstName: nombre,
-            lastName: primerApellido,
+            lastName: primerApellido + ' ' + segundoApellido,
             email: correo,
             contactNumber: numeroContacto
         })
@@ -164,7 +162,6 @@ function actualizarCliente(tipoId, idCliente, nombre, primerApellido, segundoApe
 }
 
 
-//Funciona validado.
 function buscarCliente(idCliente) {
     fetch(`http://localhost:8090/motorclinic/api/customers/${idCliente}`, {
         method: 'GET',
@@ -230,7 +227,6 @@ function buscarCliente(idCliente) {
 }
 
 
-//Funciona validado.
 function pasarPestañaCliente() {
 
     //remueve clases y habilita pestañas
@@ -252,7 +248,6 @@ function pasarPestañaCliente() {
 }
 
 //ZONA de moto
-//Funciona validado
 function validarMoto() {
 
     let placaMoto;
@@ -265,42 +260,38 @@ function validarMoto() {
 }
 
 //Funciona validado
-function buscarMoto(placaMoto) {
-//buscará por id returnará booleano, tal vez también los datos. 
-    $.ajax({
-        type: "GET",
-        dataType: "html",
-        url: "./ServletMotoBuscar",
-        data: $.param({
-            placaMoto: placaMoto
-        }),
-        success: function (result) {
-            let parsedResult = JSON.parse(result);
-            if (parsedResult !== false) {
-                console.log("La moto: " + placaMoto + " ya está registrada");
-                //setear datos del cliente en el formulario
-                //setear recibe datos, si se mete paramentro en val() se pueden setear
-                $("#Placa").val(placaMoto);
-                $("#Motor").val(parsedResult.idMotor);
-                $("#Chasis").val(parsedResult.idChasis);
-                $("#Marca").val(parsedResult.marca);
-                $("#Modelo").val(parsedResult.modelo);
-                $("#Anio").val(parsedResult.anioRegistro);
-                //bloquea id
-                $("#Identificacion").prop('disabled', true);
-                //asigna en la global, pues es irrelevante para esto el if pues no se puede cambiar el id.
-                placaMotoO = placaMoto;
-                idClienteO = parsedResult.Clientes_idCliente;
-                alert("La moto ya está registrada");
-                pasarPestañaMoto();
-                // TODO FUTURO : algo de verificar si id cliente y placa encontrada son de una persona
-
-            } else {
-                console.log("La moto :" + placaMotoO + ", no está resgistrado");
-            }
+async function buscarMoto(placaMoto) {
+    try {
+        const response = await fetch(`http://localhost:8090/motorclinic/api/motorcycles/plate/${placaMoto}`);
+        if (!response.ok) {
+            throw new Error('No se pudo obtener la motocicleta');
         }
-    });
+        const data = await response.json();
+        if (data) {
+            console.log(`La moto ${placaMoto} ya está registrada`);
+            // Asignar datos a los campos del formulario
+            document.getElementById('Placa').value = placaMoto;
+            document.getElementById('Motor').value = data.engineId;
+            document.getElementById('Chasis').value = data.chassisId;
+            document.getElementById('Marca').value = data.brand;
+            document.getElementById('Modelo').value = data.model;
+            document.getElementById('Anio').value = data.registrationYear;
+            // Bloquear el campo de identificación
+            document.getElementById('Identificacion').disabled = true;
+            // Asignar valores a variables globales
+            placaMotoO = placaMoto;
+            idClienteO = data.Clientes_idCliente;
+            alert('La moto ya está registrada');
+            pasarPestannaMoto();
+            // TODO: Lógica adicional si es necesario
+        } else {
+            console.log(`La moto ${placaMotoO} no está registrada`);
+        }
+    } catch (error) {
+        console.error('Error al buscar la motocicleta:', error);
+    }
 }
+
 
 //Funciona validado
 function registrarMoto() {
@@ -332,7 +323,7 @@ function registrarMoto() {
         success: function (result) {
             let parsedResult = JSON.parse(result);
             if (parsedResult !== false) {
-                pasarPestañaMoto();
+                pasarPestannaMoto();
                 console.log("Se registró correctamente la moto");
             } else {
                 //ta listo esto.
@@ -343,7 +334,7 @@ function registrarMoto() {
 }
 
 //Funciona validado
-function pasarPestañaMoto() {
+function pasarPestannaMoto() {
 
     //remueve clases y habilita pestañas
     //nav link.
@@ -589,7 +580,7 @@ function registrarMotivo() {
         success: function (result) {
             let parsedResult = JSON.parse(result);
             if (parsedResult !== false) {
-                pasarPestañaMoto();
+                pasarPestannaMoto();
                 console.log("Se registró correctamente la moto");
             } else {
                 //ta listo esto.

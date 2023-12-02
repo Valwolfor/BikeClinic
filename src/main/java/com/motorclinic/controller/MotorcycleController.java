@@ -1,5 +1,6 @@
 package com.motorclinic.controller;
 
+import com.motorclinic.entity.Customer;
 import com.motorclinic.entity.Motorcycle;
 import com.motorclinic.services.interfaces.MotorcycleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,20 @@ public class MotorcycleController {
         return (motorcycle != null) ?
                 new ResponseEntity<>(motorcycle, HttpStatus.OK) :
                 new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    //TODO: innecesario
+//    @GetMapping("/owner/{customerId}")
+//    public ResponseEntity<Motorcycle> getMotorcycleByOwner(@PathVariable Long customerId) {
+//        Customer customer = // Obtener el objeto Customer a partir del ID proporcionado
+//                Motorcycle motorcycle = motorcycleService.getMotorcycleByOwner(customer);
+//        return ResponseEntity.ok().body(motorcycle);
+//    }
+
+    @GetMapping("/plate/{plate}")
+    public ResponseEntity<Motorcycle> getMotorcycleByPlate(@PathVariable String plate) {
+        Motorcycle motorcycle = motorcycleService.getMotorcycleByPlate(plate);
+        return ResponseEntity.ok().body(motorcycle);
     }
 
     //Checked
