@@ -2,7 +2,7 @@ package com.motorclinic.entity;
 
 import jakarta.persistence.*;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "service_order")
@@ -19,7 +19,7 @@ public class ServiceOrder {
     private BigDecimal advanceValue;
 
     @Column(name = "date", nullable = false)
-    private LocalDateTime date;
+    private LocalDate date;
 
     @Column(name = "diagnostic_desc")
     private String diagnosticDesc;
@@ -72,11 +72,11 @@ public class ServiceOrder {
         this.advanceValue = advanceValue;
     }
 
-    public LocalDateTime getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

@@ -2,6 +2,8 @@ let idClienteO;
 let idMOtoO;
 let estadoO;
 let placaMotoO;
+let servicios;
+let productos;
 let idOrden;
 
 $(document).ready(function () {
@@ -9,6 +11,8 @@ $(document).ready(function () {
     validarCliente();
     validarMoto();
     obtenerListaMecanicos();
+    obtenerProductos();
+    obtenerServicios();
     checkCorreo();
 
 //Correcto, para botón registrar. sin validar.
@@ -28,6 +32,70 @@ $(document).ready(function () {
         event.preventDefault();
         registrarEstado();
 
+    });
+
+    $(document).ready(function () {
+        const checkboxDocumentos = document.getElementById('flexSwitchCheckDocumentos');
+        const documentosInput = document.getElementById('documentos');
+
+        // Agregar evento de cambio al checkbox de documentos
+        checkboxDocumentos.addEventListener('change', function () {
+            documentosInput.disabled = !checkboxDocumentos.checked;
+            documentosInput.value = ''; // Limpiar el campo de texto si se deshabilita
+        });
+
+        // Evento de cambio para el checkbox de anticipo
+        $("#flexSwitchCheckAnticipo").change(function () {
+            let valorAnticipoInput = document.getElementById("valAnticipo");
+
+            // Verificar si el checkbox de anticipo está marcado para habilitar/deshabilitar el campo de valor del anticipo
+            if (this.checked) {
+                valorAnticipoInput.disabled = false; // Habilita el campo del valor del anticipo
+            } else {
+                valorAnticipoInput.disabled = true; // Deshabilita el campo del valor del anticipo
+                valorAnticipoInput.value = ""; // Restablece el valor del campo si el checkbox no está marcado
+            }
+        });
+
+        $("#btnReMotivo").click(function (event) {
+            event.preventDefault();
+            let anticipoCheckbox = document.getElementById("flexSwitchCheckAnticipo");
+            let valorAnticipoInput = document.getElementById("valAnticipo");
+
+            // Verificar si el anticipo está marcado y si el valor del anticipo es necesario
+            if (anticipoCheckbox.checked && valorAnticipoInput.value === "") {
+                // Si el anticipo está marcado pero no se ingresó valor, muestra un mensaje de error
+                alert("Debe ingresar un valor para el anticipo.");
+                return; // Detiene la ejecución de la función en este punto
+            }
+
+            registrarMotivo();
+        });
+    });
+
+    document.getElementById('btnTerminar').addEventListener('click', function (event) {
+        event.preventDefault();
+
+        const confirmar = confirm("¿Seguro que desea terminar el registro de la Orden de Servicio?");
+
+        if (confirmar) {
+            // Recargar la página para reiniciar todas las variables
+            location.reload();
+        }
+    });
+
+    document.getElementById('btnRegistroAdd').addEventListener('click', function (event) {
+        event.preventDefault();
+        registrarRegistro();
+    });
+
+    document.getElementById('tbodyMecServicios').addEventListener('click', function (event) {
+        if (event.target.classList.contains('btnBorrar')) {
+            const rowToDelete = event.target.closest('tr');
+            const id = event.target.dataset.id;
+
+            borrarRegistro(id, rowToDelete);
+        }
     });
 
     $("#flexRadioIndicadoresN").change(function (event) {
@@ -108,13 +176,15 @@ function registrarCliente() {
     })
         .then(response => {
             if (!response.ok) {
-                idClienteO = response.id;
+
                 throw new Error('Hubo un problema al registrar el cliente');
             }
             return response.json();
         })
         .then(parsedResult => {
             if (parsedResult !== false) {
+
+                idClienteO = parsedResult.id;
                 pasarPestannaCliente();
                 console.log("Se registró correctamente el cliente");
             } else {
@@ -339,6 +409,8 @@ async function registrarMoto() {
 
         const parsedResult = await response.json();
         if (parsedResult !== false) {
+
+            idMOtoO = parsedResult.id;
             pasarPestannaMoto();
             console.log("Se registró correctamente la moto");
         } else {
@@ -348,7 +420,6 @@ async function registrarMoto() {
         console.error('Error al registrar la motocicleta:', error);
     }
 }
-
 
 //Funciona validado
 function pasarPestannaMoto() {
@@ -391,6 +462,45 @@ function obtenerListaMecanicos() {
     });
 }
 
+function obtenerServicios() {
+    $.ajax({
+        type: "GET",
+        dataType: "json",
+        url: "http://localhost:8090/motorclinic/api/services",
+        success: function (result) {
+            if (result !== false) {
+                servicios = result;
+                mostrarServicios(result);
+            } else {
+                console.log("Hubo un problema al llamar los datos de lista de servicios.");
+            }
+        },
+        error: function (error) {
+            console.error('Hubo un error al obtener los servicios:', error);
+        }
+    });
+}
+
+function obtenerProductos() {
+    $.ajax({
+        type: "GET",
+        dataType: "json",
+        url: "http://localhost:8090/motorclinic/api/products",
+        success: function (result) {
+            if (result !== false) {
+                productos = result
+                mostrarProductos(result);
+            } else {
+                console.log("Hubo un problema al llamar los datos de lista de productos.");
+            }
+        },
+        error: function (error) {
+            console.error('Hubo un error al obtener los productos:', error);
+        }
+    });
+}
+
+
 //Funciona Validado
 function mostrarMecanicos(listaMecanicos) {
 
@@ -401,26 +511,42 @@ function mostrarMecanicos(listaMecanicos) {
             mecanicoActivo = mecanico;
         }
         selects += '<option value="' + mecanicoActivo.id + '" >' +
-            mecanicoActivo.firtsName + ' ' + mecanicoActivo.lastName +
+            mecanicoActivo.firstName + ' ' + mecanicoActivo.lastName +
             '</option>';
     });
     $('#Mecanico').html(selects);
 }
 
+function mostrarServicios(listaServicios) {
+
+    let selects = "";
+    $.each(listaServicios, function (index, servicio) {
+
+        selects += '<option value="' + servicio.idService + '" >' +
+            servicio.serviceName +
+            '</option>';
+    });
+    $('#servicios').html(selects);
+}
+
+function mostrarProductos(listaProductos) {
+
+    let selects = "";
+    $.each(listaProductos, function (index, producto) {
+
+        selects += '<option value="' + producto.idProduct + '" >' +
+            producto.productName +
+            '</option>';
+    });
+    $('#productos').html(selects);
+}
+
 //ZONA estado
 //Funciona, Checkbox sin check funcionando.
-//Valida indicadores ok.
+//Falta validadores que no se llenó un elemento.
 // debería no dejar registrar con el mismo km
 function registrarEstado() {
     let indicadores = document.querySelector('input[name=flexRadioIndicadores]:checked').value;
-    // Descomentar las siguientes líneas si necesitas manejar la descripción de indicadores
-    // let desIndicadores;
-    // if (indicadores === 'No apto') {
-    //     desIndicadores = $("#DescripcionInd").val();
-    //     $("#alertDesc-estado").removeClass("d-none");
-    // } else {
-    //     desIndicadores = null;
-    // }
 
     let aceite = document.querySelector('input[name=flexRadioAceite]:checked').value;
     let nivelAceite = document.querySelector('input[name=flexRadioAceiteNivel]:checked').value;
@@ -524,45 +650,43 @@ function pasarPestannaEstado() {
     $("#nav-motivo").addClass("active");
 }
 
-
-// EsTOY AQUIIIIIII!!!
 //ZONA ORDEN de servicio
 //MOTIVO 
 function registrarMotivo() {
-    let fecha = new Date().toISOString().slice(0, 10);
-    let mecanico = document.getElementById('Mecanico').value;
-    let motivo = document.getElementById('Motivo').value;
-    let documentos = Array.from(document.querySelectorAll('input[type=checkbox][name=documentos]:checked'))
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Añade un 0 inicial si es necesario
+    const day = String(currentDate.getDate()).padStart(2, '0'); // Añade un 0 inicial si es necesario
+    const formattedDate = `${year}-${month}-${day}`;
+    const mecanico = document.getElementById('Mecanico').value;
+    const motivo = document.getElementById('Motivo').value;
+    const documentos = Array.from(document.querySelectorAll('input[type=checkbox][name=documentos]:checked'))
         .map(el => el.value).join(", ");
-    let anticipo = document.getElementById("flexSwitchCheckAnticipo").checked ? "Sí" : "No";
-    let valorAnticipo = anticipo === 'Sí' ? document.getElementById("valAnticipo").value : 0;
-    let autorizacionRuta = document.getElementById("flexSwitchCheckRuta").checked ? "Sí" : "No";
-    let descripcionDiagnostico = $("#Dmotivo").val();
+    const anticipo = document.getElementById("flexSwitchCheckAnticipo").checked ? "True" : "False";
+    const valorAnticipo = anticipo === 'Sí' ? document.getElementById("valAnticipo").value : 0;
+    const autorizacionRuta = document.getElementById("flexSwitchCheckRuta").checked ? "True" : "False";
+    const descripcionDiagnostico = $("#Dmotivo").val();
 
-    fetch("http://localhost:8090/motor/api/service-orders", {
+    const data = {
+        motorcycle: {id: idMOtoO},
+        documents: documentos,
+        motorcyclePlate: placaMotoO,
+        status: {id: estadoO},
+        mechanic: {id: mecanico},
+        date: formattedDate,
+        diagnosticDesc: descripcionDiagnostico,
+        reason: motivo,
+        routeAuth: autorizacionRuta,
+        advance: anticipo,
+        advanceValue: valorAnticipo,
+    };
+
+    fetch("http://localhost:8090/motorclinic/api/service-orders", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-            motorcycle: {
-                id: idMOtoO
-            },
-            documents: documentos,
-            motorcyclePlate: placaMotoO,
-            status: {
-                id: estadoO
-            },
-            mechanic: {
-                id: mecanico
-            },
-            date: fecha,
-            diagnosticDesc: descripcionDiagnostico,
-            reason: motivo,
-            routeAuth: autorizacionRuta,
-            advance: anticipo,
-            advanceValue: valorAnticipo,
-        }),
+        body: JSON.stringify(data),
     })
         .then(response => {
             if (!response.ok) {
@@ -572,7 +696,8 @@ function registrarMotivo() {
         })
         .then(parsedResult => {
             if (parsedResult !== false) {
-                pasarPestannaMoto();
+                idOrden = parsedResult.id;
+                pasarPestannaMotivo();
                 console.log("Se registró correctamente la moto");
             } else {
                 $("#register-moto").removeClass("d-none");
@@ -583,5 +708,97 @@ function registrarMotivo() {
             // Manejar el error según sea necesario
         });
 }
+
+function pasarPestannaMotivo() {
+    // Remueve clases y habilita pestañas para "Motivo de ingreso"
+    $("#nav-motivo-tab").removeClass("active");
+    $('#nav-motivo-tab').prop('aria-selected', false);
+    $("#nav-motivo-tab").prop('disabled', true);
+    $("#nav-motivo").removeClass("show");
+    $("#nav-motivo").removeClass("active");
+
+    // Activa y muestra pestaña "Servicios a realizar"
+    $("#nav-servicio-tab").addClass("active");
+    $('#nav-servicio-tab').prop('aria-selected', true);
+    $("#nav-servicio-tab").prop('disabled', false);
+    $("#nav-servicio").addClass("show");
+    $("#nav-servicio").addClass("active");
+}
+
+//REGISTROS
+function registrarRegistro() {
+    const servicioSeleccionado = document.getElementById('servicios').value;
+    const productoSeleccionado = document.getElementById('productos').value;
+    const aprobado = document.getElementById('checkboxAprobado').checked;
+
+    // Verificar si se han seleccionado servicio y producto
+    if (servicioSeleccionado !== "No seleccionado" && productoSeleccionado !== "No seleccionado") {
+        // Crear el objeto con los datos del registro
+        const nuevoRegistro = {
+            service: {
+                idService: servicioSeleccionado
+            },
+            product: {
+                idProduct: productoSeleccionado
+            },
+            order: {
+                id: idOrden
+            },
+            approved: aprobado
+        };
+
+        // Realizar la petición POST para enviar el registro al servidor
+        fetch('http://localhost:8090/motorclinic/api/records', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(nuevoRegistro)
+        })
+            .then(response => {
+                if (response.ok) {
+                    return response.json(); // Convertir la respuesta a JSON
+                } else {
+                    throw new Error('Error al agregar el registro');
+                }
+            })
+            .then(data => {
+                // `data` contiene el cuerpo de la respuesta en formato JSON
+                const tbody = document.getElementById('tbodyMecServicios');
+                const newRow = document.createElement('tr');
+
+                newRow.innerHTML = `
+        <td>${data.service.idService} ${data.service.serviceName} ${data.service.serviceValue}</td>
+        <td>${data.product.idProduct} ${data.service.productName} ${data.service.productValue}</td>
+        <td>${data.approved ? 'Aprobado' : 'No Aprobado'}</td>
+        <td><button class="btn btn-danger btn-sm btnBorrar" data-id="${data.id}">Borrar</button></td>
+    `;
+
+                tbody.appendChild(newRow);
+                console.log('Registro agregado correctamente');
+            })
+            .catch(error => {
+                console.error('Error en la petición:', error);
+            });
+    }
+}
+
+function borrarRegistro(id, row) {
+    fetch(`http://localhost:8090/motorclinic/api/records/${id}`, {
+        method: 'DELETE'
+    })
+        .then(response => {
+            if (response.ok) {
+                row.remove();
+                console.log('Registro eliminado correctamente');
+            } else {
+                console.error('Error al eliminar el registro');
+            }
+        })
+        .catch(error => {
+            console.error('Error en la petición:', error);
+        });
+}
+
 
 

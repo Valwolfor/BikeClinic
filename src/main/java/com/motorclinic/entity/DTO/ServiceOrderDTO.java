@@ -3,13 +3,13 @@ package com.motorclinic.entity.DTO;
 import com.motorclinic.entity.ServiceOrder;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class ServiceOrderDTO {
     private Long id;
     private String advance;
     private BigDecimal advanceValue;
-    private LocalDateTime date;
+    private LocalDate date;
     private String diagnosticDesc;
     private String documents;
     private String motorcyclePlate;
@@ -61,11 +61,11 @@ public class ServiceOrderDTO {
         this.advanceValue = advanceValue;
     }
 
-    public LocalDateTime getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

@@ -8,6 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RestController
@@ -39,6 +42,8 @@ public class ServiceOrderController {
     //Checked
     @PostMapping
     public ResponseEntity<ServiceOrder> createServiceOrder(@RequestBody ServiceOrder serviceOrder) {
+
+        serviceOrder.setDate(LocalDate.now());
         ServiceOrder createdServiceOrder = serviceOrderService.createServiceOrder(serviceOrder);
         return new ResponseEntity<>(createdServiceOrder, HttpStatus.CREATED);
     }
