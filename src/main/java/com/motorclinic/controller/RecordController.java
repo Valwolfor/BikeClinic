@@ -48,6 +48,7 @@ public class RecordController {
         return new ResponseEntity<>(createdRecord, HttpStatus.CREATED);
     }
 
+
     @PutMapping("/{id}")
     public ResponseEntity<RecordServiceProduct> updateRecord(@PathVariable Long id, @RequestBody RecordServiceProduct record) {
         record.setId(id);

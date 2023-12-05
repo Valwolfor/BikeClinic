@@ -405,6 +405,7 @@ async function registrarMoto() {
         if (parsedResult !== false) {
 
             idMOtoO = parsedResult.id;
+            placaMotoO = parsedResult.plate;
             pasarPestannaMoto();
             console.log("Se registró correctamente la moto");
         } else {
@@ -653,10 +654,6 @@ function registrarMotivo() {
     const motivo = document.getElementById('Motivo').value;
     const checkDocuments = document.getElementById("flexSwitchCheckDocumentos").checked ? "True" : "False";
     const documentos = checkDocuments === "True" ? document.getElementById("documentos").value : " ";
-
-    console.log("Antes de creación del objeto.");
-    console.log(documentos);
-
     const anticipo = document.getElementById("flexSwitchCheckAnticipo").checked ? "True" : "False";
     const valorAnticipo = anticipo === 'True' ? document.getElementById("valAnticipo").value : 0;
     const autorizacionRuta = document.getElementById("flexSwitchCheckRuta").checked ? "True" : "False";
@@ -664,7 +661,7 @@ function registrarMotivo() {
 
     const data = {
         motorcycle: {id: idMOtoO},
-        documents: documentos.join(", "),
+        documents: documentos,
         motorcyclePlate: placaMotoO,
         status: {id: estadoO},
         mechanic: {id: mecanico},
@@ -677,7 +674,6 @@ function registrarMotivo() {
     };
 
     console.log("Después de creación del objeto.");
-    console.log(documentos);
     console.log(data);
 
     fetch("http://localhost:8090/motorclinic/api/service-orders", {
@@ -768,8 +764,8 @@ function registrarRegistro() {
                 console.log(data);
 
                 newRow.innerHTML = `
-        <td>${data.service.idService} ${data.service.serviceName} ${data.service.serviceValue}</td>
-        <td>${data.product.idProduct} ${data.product.productName} ${data.product.productValue}</td>
+        <td>${data.service.idService} </td>
+        <td>${data.product.idProduct} </td>
         <td>${data.approved ? 'Aprobado' : 'No Aprobado'}</td>
         <td><button class="btn btn-danger btn-sm btnBorrar" data-id="${data.id}">Borrar</button></td>
     `;
