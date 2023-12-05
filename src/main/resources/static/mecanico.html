@@ -51,18 +51,18 @@
         <nav>
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
                 <button class="nav-link active" id="nav-cliente-tab" data-bs-toggle="tab" data-bs-target="#nav-cliente"
-                        type="button" role="tab" aria-controls="nav-cliente" aria-selected="true" >Registro
+                        type="button" role="tab" aria-controls="nav-cliente" aria-selected="false" >Registro
                     cliente
                 </button>
                 <button class="nav-link " id="nav-moto-tab" data-bs-toggle="tab" data-bs-target="#nav-moto"
                         type="button" role="tab" aria-controls="nav-moto" aria-selected="false" disabled>Registro moto
                 </button>
                 <button class="nav-link" id="nav-estado-tab" data-bs-toggle="tab" data-bs-target="#nav-estado"
-                        type="button" role="tab" aria-controls="nav-estado" aria-selected="false" disabled>Estado
+                        type="button" role="tab" aria-controls="nav-estado" aria-selected="true" >Estado
                     vehículo
                 </button>
                 <button class="nav-link" id="nav-motivo-tab" data-bs-toggle="tab" data-bs-target="#nav-motivo"
-                        type="button" role="tab" aria-controls="nav-motivo" aria-selected="false" disabled>Motivo de
+                        type="button" role="tab" aria-controls="nav-motivo" aria-selected="false" >Motivo de
                     ingreso
                 </button>
                 <button class="nav-link" id="nav-servicio-tab" data-bs-toggle="tab" data-bs-target="#nav-servicio"
@@ -334,7 +334,7 @@
                                     </div>
                                 </div>
                                 <div class="col-6 mb-3">
-                                    <label for="documentos" class="form-label">Documentos (separados solo por espacio --NO comas o puntos):</label>
+                                    <label for="documentos" class="form-label">Documentos (separados por coma):</label>
                                     <input type="text" class="form-control" id="documentos" name="documentos"
                                            placeholder="Documento 1, Documento 2, ..." disabled>
                                 </div>
@@ -502,27 +502,27 @@
                             <div class="col-2 mb-2">
                                 <p>Luces aptas :</p>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="Farola" id="flexCheckFarola">
+                                    <input class="form-check-input" type="checkbox" value="Farola" id="flexCheckFarola" name="lucesAptas">
                                     <label class="form-check-label" for="flexCheckFarola">
                                         Farola
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="Stop" id="flexCheckStop">
+                                    <input class="form-check-input" type="checkbox" value="Stop" id="flexCheckStop" name="lucesAptas">
                                     <label class="form-check-label" for="flexCheckStop">
                                         Stop
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="Direcionales"
-                                           id="flexCheckDirecionales">
+                                           id="flexCheckDirecionales" name="lucesAptas">
                                     <label class="form-check-label" for="flexCheckDirecionales">
                                         Direcionales
                                     </label>
                                 </div>
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="Auxiliares"
-                                           id="flexCheckAuxiliares">
+                                           id="flexCheckAuxiliares" name="lucesAptas">
                                     <label class="form-check-label" for="flexCheckAuxiliares">
                                         Auxiliares
                                     </label>

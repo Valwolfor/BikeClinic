@@ -6,6 +6,8 @@ let servicios;
 let productos;
 let idOrden;
 
+let lucesAptas;
+
 $(document).ready(function () {
 
     validarCliente();
@@ -50,11 +52,31 @@ $(document).ready(function () {
 
             // Verificar si el checkbox de anticipo está marcado para habilitar/deshabilitar el campo de valor del anticipo
             if (this.checked) {
+
                 valorAnticipoInput.disabled = false; // Habilita el campo del valor del anticipo
             } else {
+
                 valorAnticipoInput.disabled = true; // Deshabilita el campo del valor del anticipo
-                valorAnticipoInput.value = ""; // Restablece el valor del campo si el checkbox no está marcado
             }
+        });
+
+        $("#flexRadioIndicadoresN").change(function () {
+            let descIndicadoresInput = document.getElementById("DescripcionInd");
+
+            if (this.checked) {
+                descIndicadoresInput.disabled = false;
+
+            } else {
+
+                descIndicadoresInput.disabled = true;
+            }
+        });
+
+        $('input[type="checkbox"][name="lucesAptas"]').change(function () {
+            lucesAptas = [];
+            $('input[type="checkbox"][name="lucesAptas"]:checked').each(function () {
+                lucesAptas.push($(this).val());
+            });
         });
 
         $("#btnReMotivo").click(function (event) {
@@ -95,34 +117,6 @@ $(document).ready(function () {
             const id = event.target.dataset.id;
 
             borrarRegistro(id, rowToDelete);
-        }
-    });
-
-    $("#flexRadioIndicadoresN").change(function (event) {
-        event.preventDefault();
-        let indicadores = document.querySelector('input[name=flexRadioIndicadores]:checked').value;
-        if (indicadores !== 'No apto') {
-            desIndicadores = "";
-            $("#alertDesc-estado").addClass("d-none");
-            $("#DescripcionInd").prop('disabled', true);
-        } else {
-            $("#DescripcionInd").prop('disabled', false);
-            desIndicadores = $("#DescripcionInd").val();
-            $("#alertDesc-estado").removeClass("d-none");
-        }
-    });
-
-    $("#flexRadioIndicadoresA").change(function (event) {
-        event.preventDefault();
-        let indicadores = document.querySelector('input[name=flexRadioIndicadores]:checked').value;
-        if (indicadores !== 'No apto') {
-            desIndicadores = "";
-            $("#alertDesc-estado").addClass("d-none");
-            $("#DescripcionInd").prop('disabled', true);
-        } else {
-            $("#DescripcionInd").prop('disabled', false);
-            desIndicadores = $("#DescripcionInd").val();
-            $("#alertDesc-estado").removeClass("d-none");
         }
     });
 
@@ -547,18 +541,12 @@ function mostrarProductos(listaProductos) {
 // debería no dejar registrar con el mismo km
 function registrarEstado() {
     let indicadores = document.querySelector('input[name=flexRadioIndicadores]:checked').value;
-
+    let desIndicadores = indicadores === 'No apto' ? document.getElementById("DescripcionInd").value : " ";
     let aceite = document.querySelector('input[name=flexRadioAceite]:checked').value;
     let nivelAceite = document.querySelector('input[name=flexRadioAceiteNivel]:checked').value;
     let liquidoFrenos = document.querySelector('input[name=flexRadioLFrenos]:checked').value;
     let liquidoEmbrague = document.querySelector('input[name=flexRadioLEmbrague]:checked').value;
     let liquidoRefrigerante = document.querySelector('input[name=flexRadioLRefrigerante]:checked').value;
-
-    let lucesAptas = [];
-    document.querySelectorAll('input[type=checkbox][name="lucesAptas"]:checked').forEach(function (el) {
-        lucesAptas.push(el.value);
-    });
-
     let espejos = document.querySelector('input[name=flexRadioEspejo]:checked').value;
     let claxon = document.querySelector('input[name=flexRadioClaxon]:checked').value;
     let tanque = document.querySelector('input[name=flexRadioTanque]:checked').value;
@@ -576,37 +564,40 @@ function registrarEstado() {
     let kilometraje = document.getElementById('Kilometraje').value;
     let combustible = document.querySelector('input[name=flexRadioGas]:checked').value;
 
+    const body = JSON.stringify({
+        indicators: indicadores,
+        indicatorsDesc: desIndicadores, // Descomentar si es necesario manejar la descripción
+        oil: aceite,
+        oilLevel: nivelAceite,
+        brakeFluid: liquidoFrenos,
+        clutchFluid: liquidoEmbrague,
+        coolant: liquidoRefrigerante,
+        lightsGood: lucesAptas.join(", "),
+        mirrors: espejos,
+        horn: claxon,
+        tank: tanque,
+        frontTire: llantaDelantera,
+        rearTire: llantaTrasera,
+        engine: motor,
+        chassis: chasis,
+        throttle: acelerador,
+        exhaust: escape,
+        transmission: trasmision,
+        clutch: embrague,
+        brakes: frenos,
+        chain: cadena,
+        footPegs: apoyaPies,
+        mileage: kilometraje,
+        fuel: combustible,
+    });
+
     fetch("http://localhost:8090/motorclinic/api/status", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-            indicators: indicadores,
-            indicatorsDesc: desIndicadores, // Descomentar si es necesario manejar la descripción
-            oil: aceite,
-            oilLevel: nivelAceite,
-            brakeFluid: liquidoFrenos,
-            clutchFluid: liquidoEmbrague,
-            coolant: liquidoRefrigerante,
-            lightsGood: lucesAptas.join(", "),
-            mirrors: espejos,
-            horn: claxon,
-            tank: tanque,
-            frontTire: llantaDelantera,
-            rearTire: llantaTrasera,
-            engine: motor,
-            chassis: chasis,
-            throttle: acelerador,
-            exhaust: escape,
-            transmission: trasmision,
-            clutch: embrague,
-            brakes: frenos,
-            chain: cadena,
-            footPegs: apoyaPies,
-            mileage: kilometraje,
-            fuel: combustible,
-        }),
+        body: body,
+
     })
         .then(response => {
             if (!response.ok) {
@@ -660,10 +651,14 @@ function registrarMotivo() {
     const formattedDate = `${year}-${month}-${day}`;
     const mecanico = document.getElementById('Mecanico').value;
     const motivo = document.getElementById('Motivo').value;
-    const documentos = Array.from(document.querySelectorAll('input[type=checkbox][name=documentos]:checked'))
-        .map(el => el.value);
+    const checkDocuments = document.getElementById("flexSwitchCheckDocumentos").checked ? "True" : "False";
+    const documentos = checkDocuments === "True" ? document.getElementById("documentos").value : " ";
+
+    console.log("Antes de creación del objeto.");
+    console.log(documentos);
+
     const anticipo = document.getElementById("flexSwitchCheckAnticipo").checked ? "True" : "False";
-    const valorAnticipo = anticipo === 'Sí' ? document.getElementById("valAnticipo").value : 0;
+    const valorAnticipo = anticipo === 'True' ? document.getElementById("valAnticipo").value : 0;
     const autorizacionRuta = document.getElementById("flexSwitchCheckRuta").checked ? "True" : "False";
     const descripcionDiagnostico = $("#Dmotivo").val();
 
@@ -680,6 +675,10 @@ function registrarMotivo() {
         advance: anticipo,
         advanceValue: valorAnticipo,
     };
+
+    console.log("Después de creación del objeto.");
+    console.log(documentos);
+    console.log(data);
 
     fetch("http://localhost:8090/motorclinic/api/service-orders", {
         method: "POST",
