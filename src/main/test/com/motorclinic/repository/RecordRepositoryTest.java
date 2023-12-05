@@ -11,7 +11,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 
@@ -142,7 +142,7 @@ public class RecordRepositoryTest {
         ServiceOrder serviceOrder = new ServiceOrder();
         serviceOrder.setAdvance("AdvanceDesc");
         serviceOrder.setAdvanceValue(BigDecimal.valueOf(100.0));
-        serviceOrder.setDate(LocalDateTime.now());
+        serviceOrder.setDate(LocalDate.now());
         serviceOrder.setDiagnosticDesc("DiagnosticDesc");
         serviceOrder.setDocuments("DocumentsDesc");
         serviceOrder.setMotorcyclePlate(motorcyclePlate);

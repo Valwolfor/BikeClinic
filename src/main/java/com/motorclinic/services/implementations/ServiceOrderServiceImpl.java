@@ -7,11 +7,11 @@ import com.motorclinic.entity.User;
 import com.motorclinic.repository.ServiceOrderRepository;
 import com.motorclinic.services.interfaces.ServiceOrderService;
 import jakarta.persistence.EntityNotFoundException;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -74,12 +74,12 @@ public class ServiceOrderServiceImpl implements ServiceOrderService {
         return mapServiceOrderToDTO(serviceOrder);
     }
     @Override
-    public List<ServiceOrder> getServiceOrderByDate(LocalDateTime date) {
+    public List<ServiceOrder> getServiceOrderByDate(LocalDate date) {
         return repository.findByDate(date);
     }
 
     @Override
-    public List<ServiceOrder> getByDateBetween(LocalDateTime start, LocalDateTime end) {
+    public List<ServiceOrder> getByDateBetween(LocalDate start, LocalDate end) {
         return repository.findByDateBetween(start, end);
     }
 

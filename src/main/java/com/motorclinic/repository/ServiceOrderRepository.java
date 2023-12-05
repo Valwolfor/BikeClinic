@@ -7,6 +7,7 @@ import com.motorclinic.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -16,10 +17,10 @@ public interface ServiceOrderRepository extends JpaRepository<ServiceOrder, Long
     List<ServiceOrder> findByMotorcyclePlate(String motorcyclePlate);
 
     // Encuentra todas las órdenes de servicio por fecha
-    List<ServiceOrder> findByDate(LocalDateTime date);
+    List<ServiceOrder> findByDate(LocalDate date);
 
     // Encuentra todas las órdenes de servicio entre dos fechas
-    List<ServiceOrder> findByDateBetween(LocalDateTime startDate, LocalDateTime endDate);
+    List<ServiceOrder> findByDateBetween(LocalDate startDate, LocalDate endDate);
 
     // Encuentra todas las órdenes de servicio por estado y fecha
     List<ServiceOrder> findByStatusAndDate(Status status, LocalDateTime date);

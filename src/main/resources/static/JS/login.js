@@ -30,7 +30,7 @@ function autenticarUsuario() {
         .then(result => {
             $("#login-error").addClass("d-none");
             let correo = result['email'];
-
+    // result.status === 'ACTIVE'
             if ($("#rol").prop("checked")) {
                 //TODO cooregir sobre sesion
                 document.location.href = "home.html?correo=" + correo;

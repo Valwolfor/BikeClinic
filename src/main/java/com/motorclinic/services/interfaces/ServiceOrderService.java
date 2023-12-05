@@ -5,6 +5,7 @@ import com.motorclinic.entity.DTO.ServiceOrderDTO;
 import com.motorclinic.entity.ServiceOrder;
 import com.motorclinic.entity.User;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -19,9 +20,9 @@ public interface ServiceOrderService {
 
     ServiceOrderDTO getServiceOrderById(Long serviceOrderId);
 
-    List<ServiceOrder> getServiceOrderByDate(LocalDateTime date);
+    List<ServiceOrder> getServiceOrderByDate(LocalDate date);
 
-    List<ServiceOrder> getByDateBetween(LocalDateTime start, LocalDateTime end);
+    List<ServiceOrder> getByDateBetween(LocalDate start, LocalDate end);
 
     List<ServiceOrder> getByCustomerId(Customer customer);
 

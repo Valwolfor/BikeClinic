@@ -1,6 +1,9 @@
 package com.motorclinic.entity;
 
 import jakarta.persistence.*;
+
+import java.util.Arrays;
+
 @Entity
 @Table(name = "status")
 public class Status {
@@ -54,6 +57,7 @@ public class Status {
     @Column(name = "indicators_desc", nullable = false)
     private String indicatorsDesc;
 
+    //TODO arreglar lo del registro de varios con mejor método.
     @Column(name = "lights_good", nullable = false)
     private String lightsGood;
 
@@ -209,14 +213,13 @@ public class Status {
         this.indicatorsDesc = indicatorsDesc;
     }
 
-    public String getLightsGood() {
-        return lightsGood;
-    }
-
     public void setLightsGood(String lightsGood) {
         this.lightsGood = lightsGood;
     }
 
+    public String getLightsGood() {
+        return lightsGood;
+    }
     public String getMileage() {
         return mileage;
     }

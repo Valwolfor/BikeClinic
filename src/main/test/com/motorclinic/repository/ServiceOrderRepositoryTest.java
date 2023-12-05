@@ -9,6 +9,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
@@ -83,7 +84,7 @@ public class ServiceOrderRepositoryTest {
     @Test
     public void testFindByDate() {
         // Arrange
-        LocalDateTime targetDate = LocalDateTime.now();
+        LocalDate targetDate = LocalDate.now();
         ServiceOrder serviceOrder1 = createServiceOrderWithDate(targetDate, "ABC123", "john.doe@example.com", "user@email.com", "password","DFEWE345", "GRE4532");
         ServiceOrder serviceOrder2 = createServiceOrderWithDate(targetDate, "ABC456", "john.doe@example2.com", "user@email2.com", "password2","DFEWE564", "GRE45672");
 
@@ -101,8 +102,8 @@ public class ServiceOrderRepositoryTest {
     @Test
     public void testFindByDateBetween() {
         // Arrange
-        LocalDateTime startDate = LocalDateTime.now();
-        LocalDateTime endDate = startDate.plusDays(5);
+        LocalDate startDate = LocalDate.now();
+        LocalDate endDate = startDate.plusDays(5);
         ServiceOrder serviceOrder1 = createServiceOrderWithDate(startDate.plusDays(2), "FSE456", "john.doe@example.com", "user@email.com", "password", "DFEWE345", "GRE4532");
         ServiceOrder serviceOrder2 = createServiceOrderWithDate(endDate.plusDays(1), "ASD436", "john.doe@example2.com", "user@email2.com", "password2", "DFEWE564", "GRE45672");
 
@@ -146,7 +147,7 @@ public class ServiceOrderRepositoryTest {
     }
 
 
-    private ServiceOrder createServiceOrderWithDate(LocalDateTime date, String plate, String email, String emailUser, String password, String engine, String chassis){
+    private ServiceOrder createServiceOrderWithDate(LocalDate date, String plate, String email, String emailUser, String password, String engine, String chassis){
         ServiceOrder newService = createServiceOrder(plate, email, emailUser, password, engine, chassis);
         newService.setDate(date);
         return newService;
@@ -156,7 +157,7 @@ public class ServiceOrderRepositoryTest {
         ServiceOrder serviceOrder = new ServiceOrder();
         serviceOrder.setAdvance("AdvanceDesc");
         serviceOrder.setAdvanceValue(BigDecimal.valueOf(100.0));
-        serviceOrder.setDate(LocalDateTime.now());
+        serviceOrder.setDate(LocalDate.now());
         serviceOrder.setDiagnosticDesc("DiagnosticDesc");
         serviceOrder.setDocuments("DocumentsDesc");
         serviceOrder.setMotorcyclePlate(motorcyclePlate);

@@ -661,7 +661,7 @@ function registrarMotivo() {
     const mecanico = document.getElementById('Mecanico').value;
     const motivo = document.getElementById('Motivo').value;
     const documentos = Array.from(document.querySelectorAll('input[type=checkbox][name=documentos]:checked'))
-        .map(el => el.value).join(", ");
+        .map(el => el.value);
     const anticipo = document.getElementById("flexSwitchCheckAnticipo").checked ? "True" : "False";
     const valorAnticipo = anticipo === 'Sí' ? document.getElementById("valAnticipo").value : 0;
     const autorizacionRuta = document.getElementById("flexSwitchCheckRuta").checked ? "True" : "False";
@@ -669,7 +669,7 @@ function registrarMotivo() {
 
     const data = {
         motorcycle: {id: idMOtoO},
-        documents: documentos,
+        documents: documentos.join(", "),
         motorcyclePlate: placaMotoO,
         status: {id: estadoO},
         mechanic: {id: mecanico},
@@ -766,10 +766,11 @@ function registrarRegistro() {
                 // `data` contiene el cuerpo de la respuesta en formato JSON
                 const tbody = document.getElementById('tbodyMecServicios');
                 const newRow = document.createElement('tr');
+                console.log(data);
 
                 newRow.innerHTML = `
         <td>${data.service.idService} ${data.service.serviceName} ${data.service.serviceValue}</td>
-        <td>${data.product.idProduct} ${data.service.productName} ${data.service.productValue}</td>
+        <td>${data.product.idProduct} ${data.product.productName} ${data.product.productValue}</td>
         <td>${data.approved ? 'Aprobado' : 'No Aprobado'}</td>
         <td><button class="btn btn-danger btn-sm btnBorrar" data-id="${data.id}">Borrar</button></td>
     `;
