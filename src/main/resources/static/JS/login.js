@@ -30,12 +30,19 @@ function autenticarUsuario() {
         .then(result => {
             $("#login-error").addClass("d-none");
             let correo = result['email'];
-    // result.status === 'ACTIVE'
-            if ($("#rol").prop("checked")) {
-                //TODO cooregir sobre sesion
-                document.location.href = "home.html?correo=" + correo;
+            // result.status === 'ACTIVE'
+
+            if (result.status === 'ACTIVE') {
+
+                if ($("#rol").prop("checked")) {
+                    //TODO cooregir sobre sesion
+                    document.location.href = "home.html?correo=" + correo;
+                } else {
+                    document.location.href = "mecanico.html?correo=" + correo;
+                }
             } else {
-                document.location.href = "mecanico.html?correo=" + correo;
+                console.log("No puede, está inhabilitado.")
+                $("#login-error-nopis").removeClass("d-none");
             }
         })
         .catch(error => {
