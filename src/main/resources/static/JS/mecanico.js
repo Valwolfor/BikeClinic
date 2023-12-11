@@ -504,10 +504,11 @@ function mostrarMecanicos(listaMecanicos) {
 
         if (mecanico.status === "ACTIVE") {
             mecanicoActivo = mecanico;
+            selects += '<option value="' + mecanicoActivo.id + '" >' +
+                mecanicoActivo.firstName + ' ' + mecanicoActivo.lastName +
+                '</option>';
         }
-        selects += '<option value="' + mecanicoActivo.id + '" >' +
-            mecanicoActivo.firstName + ' ' + mecanicoActivo.lastName +
-            '</option>';
+
     });
     $('#Mecanico').html(selects);
 }

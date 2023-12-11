@@ -14,11 +14,11 @@ Customer.email=nuevoemail@example.com
 
 User.admin.id=309
 User.admin.email=admin@example.com
-User.admin.password=password123
+User.admin.password=admin
 
 User.mechanic.id=311
 User.mechanic.email=mechanic@example.com
-User.mechanic.password=password456
+User.mechanic.password=mecha
 
 Motorcycle.id=101
 Motorcycle.chassisId=C345
@@ -40,3 +40,8 @@ control de registro con cliente y moto, validación de expresión regurar para p
 o el Validador
 En el registro se validara o mostrara el resumen del DX
 Servicio de gestión de orden de servicio
+edicion de datos mecánico
+En mecánico motos que están en taller y falta procesos.
+Mejorar los criterios y elementos de selección y generación del estado. 
+Manejar alerts en la gestion de erroes
+BD por tenants 
